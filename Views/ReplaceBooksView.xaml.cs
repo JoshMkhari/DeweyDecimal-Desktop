@@ -15,7 +15,7 @@ namespace JoshMkhariPROG7312Game.Views
     {
         private int _activatedBlockCount;
 
-        private bool[] _rectOrders = new bool [4];
+        private bool[] _rectOrders = new bool [4];//Store whether rectangle is ascending or descending
         private int[][] _rectanglesArr = new int[4][]; //https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
         // Creating 2 Stacks of Integers https://www.tutorialsteacher.com/csharp/csharp-stack
         
@@ -23,15 +23,28 @@ namespace JoshMkhariPROG7312Game.Views
         private Stack<int> _callNumbersBottom = new Stack<int>();//To store initial numbers in bottom rectangle
         private Stack<int> _callNumbersLeft = new Stack<int>();//To store initial numbers in left rectangle
         private Stack<int> _callNumbersRight = new Stack<int>();//To store initial numbers in right rectangle
-
-
         private int _callRecToMove;
+
+        private Double[] _rectCanvasLocationTop = new Double[10];
+        private Double[] _rectCanvasLocationLeft = new Double[10];
         public ReplaceBooksView()
         {
             
             InitializeComponent();
             _callRecToMove = 0;
             _activatedBlockCount = 0;
+            
+            _rectCanvasLocationTop[0] = Canvas.GetLeft(rectBlock1);
+            _rectCanvasLocationTop[1] = Canvas.GetLeft(rectBlock2);
+            _rectCanvasLocationTop[2] = Canvas.GetLeft(rectBlock3);
+            _rectCanvasLocationTop[3] = Canvas.GetLeft(rectBlock4);
+            _rectCanvasLocationTop[4] = Canvas.GetLeft(rectBlock5);
+            _rectCanvasLocationTop[5] = Canvas.GetLeft(rectBlock6);
+            _rectCanvasLocationTop[6] = Canvas.GetLeft(rectBlock7);
+            _rectCanvasLocationTop[7] = Canvas.GetLeft(rectBlock8);
+            _rectCanvasLocationTop[8] = Canvas.GetLeft(rectBlock9);
+            _rectCanvasLocationTop[9] = Canvas.GetLeft(rectBlock10);
+            
             List<int> callNumbers = new List<int>();//To store initial 10 values
             //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
             Random rnd = new Random();
@@ -319,6 +332,7 @@ namespace JoshMkhariPROG7312Game.Views
                     
                     _callNumbersRight.Push(PopCallBlock(_callRecToMove));
                     //Call animation (Move blocks)
+                    AnimateBlockMovement(3);
                     MessageBox.Show("top" + _callNumbersTop.Count + " vs right " + _callNumbersRight.Peek() +
                                     " with count " + _callNumbersRight.Count);
                 }
@@ -342,6 +356,7 @@ namespace JoshMkhariPROG7312Game.Views
                                 _rectOrders[1] = true;//Store Ascending for Right Rectangle
                             }
                             //Call animation (Move blocks)
+                            
                             MessageBox.Show("top" + _callNumbersTop.Count + " vs right " + _callNumbersRight.Peek() +
                                             " with count " + _callNumbersRight.Count);
                         }
@@ -389,6 +404,34 @@ namespace JoshMkhariPROG7312Game.Views
             }
         }
 
+        private void AnimateBlockMovement(int destination)
+        {
+            switch (_callRecToMove)//Determine origin
+            {
+                case 0://From Top
+                    // if your first control is specified you can use the following code
+                    foreach (Control c2 in Controls)
+                    {
+                        if (!c2.Equals(c1) && c2 is Button /* if you want it to be just buttons */
+                                           && c1.Bounds.IntersectsWith(c2.Bounds))
+                        {
+                            // c1 has touched c2
+                        }
+
+                    }
+                    //Calculate steps to top of rectangle
+                    //Check if going left, right, down
+                    //return _callNumbersTop.Pop();
+                case 1:
+                    //return _callNumbersBottom.Pop();
+                case 2:
+                    //return _callNumbersLeft.Pop();
+                default:
+                    break;
+                    ;
+                    //return _callNumbersRight.Pop();
+            }
+        }
         private void selectLeftRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             bool isEmptyRect = !_callNumbersLeft.Any();//check if the list is empty
