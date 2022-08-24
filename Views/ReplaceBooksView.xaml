@@ -273,6 +273,7 @@
                    Panel.ZIndex="20"
                    Width="73"
                    Height="146" 
+                   Fill="Transparent"
                    Canvas.Left="314" 
                    Canvas.Top="82" 
                    MouseLeftButtonDown="selectTopRect_MouseLeftButtonDown"/>
@@ -280,7 +281,8 @@
         <Rectangle x:Name="selectBottomRect"
                    Panel.ZIndex="20"
                    Width="73"
-                   Height="146" 
+                   Height="146"
+                   Fill="Transparent"
                    Canvas.Left="314" 
                    Canvas.Top="308"
                    MouseLeftButtonDown="selectBottomRect_MouseLeftButtonDown"/>
@@ -289,14 +291,17 @@
                    Panel.ZIndex="20"
                    Width="73"
                    Height="146" 
+                   Fill="Transparent"
                    Canvas.Left="167" 
                    Canvas.Top="205"
+                   
                    MouseLeftButtonDown="selectLeftRect_MouseLeftButtonDown"/>
 
         <Rectangle x:Name="selectRightRect"
                    Panel.ZIndex="20"
                    Width="73"
                    Height="146" 
+                   Fill="Transparent"
                    Canvas.Left="470" 
                    Canvas.Top="205"
                    MouseLeftButtonDown="selectRightRect_MouseLeftButtonDown"/>
