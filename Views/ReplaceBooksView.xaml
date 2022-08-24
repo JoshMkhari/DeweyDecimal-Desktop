@@ -117,104 +117,188 @@
             </Button.Background>
         </Button>
 
-        <Rectangle x:Name="rectBlock1"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#818181" 
-                   Canvas.Left="322" 
-                   Canvas.Top="198"/>
+        <Border x:Name="rectBlock1"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="198" 
+                Width="57" 
+                Height="22"
+                Background="#818181">
+            <TextBlock x:Name="txtRectBlock1"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
+        <Border x:Name="rectBlock2"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="171" 
+                Width="57" 
+                Height="22"
+                Background="#273349">
+            <TextBlock x:Name="txtRectBlock2"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
+        <Border x:Name="rectBlock3"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="144" 
+                Width="57" 
+                Height="22"
+                Background="#b5476a">
+            <TextBlock x:Name="txtRectBlock3"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
+        <Border x:Name="rectBlock4"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="117" 
+                Width="57" 
+                Height="22"
+                Background="#1e886d">
+            <TextBlock x:Name="txtRectBlock4"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
+        <Border x:Name="rectBlock5"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="90" 
+                Width="57" 
+                Height="22"
+                Background="#583354">
+            <TextBlock x:Name="txtRectBlock5"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
+        <Border x:Name="rectBlock6"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="315" 
+                Width="57" 
+                Height="22"
+                Background="#feca50">
+            <TextBlock x:Name="txtRectBlock6"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
 
-        <Rectangle x:Name="rectBlock2"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#273349" 
-                   Canvas.Left="322" 
-                   Canvas.Top="171"/>
+        <Border x:Name="rectBlock7"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="342" 
+                Width="57" 
+                Height="22"
+                Background="#70a8bc">
+            <TextBlock x:Name="txtRectBlock7"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
+        <Border x:Name="rectBlock8"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="369" 
+                Width="57" 
+                Height="22"
+                Background="#b0c653">
+            <TextBlock x:Name="txtRectBlock8"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
+        <Border x:Name="rectBlock9"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="396" 
+                Width="57" 
+                Height="22"
+                Background="#f0913c">
+            <TextBlock x:Name="txtRectBlock9"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
 
-        <Rectangle x:Name="rectBlock3"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#b5476a" 
-                   Canvas.Left="322" 
-                   Canvas.Top="144"/>
+        <Border x:Name="rectBlock10"
+                BorderThickness="2" 
+                BorderBrush="Black"
+                Panel.ZIndex="10"
+                Canvas.Left="322" 
+                Canvas.Top="422" 
+                Width="57" 
+                Height="22"
+                Background="#6c4722">
+            <TextBlock x:Name="txtRectBlock10"
+                   Text="303.CAT"
+                   HorizontalAlignment="Center">
+            </TextBlock>
+        </Border>
+        
 
-        <Rectangle x:Name="rectBlock4"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#1e886d" 
-                   Canvas.Left="322" 
-                   Canvas.Top="117"/>
+        <Rectangle x:Name="selectTopRect"
+                   Panel.ZIndex="20"
+                   Width="73"
+                   Height="146" 
+                   Canvas.Left="314" 
+                   Canvas.Top="82" 
+                   MouseLeftButtonDown="selectTopRect_MouseLeftButtonDown"/>
 
-        <Rectangle x:Name="rectBlock5"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#583354" 
-                   Canvas.Left="322" 
-                   Canvas.Top="90"/>
+        <Rectangle x:Name="selectBottomRect"
+                   Panel.ZIndex="20"
+                   Width="73"
+                   Height="146" 
+                   Canvas.Left="314" 
+                   Canvas.Top="308"
+                   MouseLeftButtonDown="selectBottomRect_MouseLeftButtonDown"/>
 
-        <Rectangle x:Name="rectBlock6"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#feca50" 
-                   Canvas.Left="322" 
-                   Canvas.Top="315"/>
+        <Rectangle x:Name="selectLeftRect"
+                   Panel.ZIndex="20"
+                   Width="73"
+                   Height="146" 
+                   Canvas.Left="167" 
+                   Canvas.Top="205"
+                   MouseLeftButtonDown="selectLeftRect_MouseLeftButtonDown"/>
 
-        <Rectangle x:Name="rectBlock7"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#70a8bc" 
-                   Canvas.Left="322" 
-                   Canvas.Top="342"/>
-
-        <Rectangle x:Name="rectBlock8"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#b0c653" 
-                   Canvas.Left="322" 
-                   Canvas.Top="369"/>
-
-        <Rectangle x:Name="rectBlock9"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#f0913c" 
-                   Canvas.Left="322" 
-                   Canvas.Top="396"/>
-
-        <Rectangle x:Name="rectBlock10"
-                   Panel.ZIndex="10"
-                   Width="57"
-                   Height="22"
-                   Stroke="Black" 
-                   StrokeThickness="2"
-                   Fill="#6c4722" 
-                   Canvas.Left="322" 
-                   Canvas.Top="422"/>
+        <Rectangle x:Name="selectRightRect"
+                   Panel.ZIndex="20"
+                   Width="73"
+                   Height="146" 
+                   Canvas.Left="470" 
+                   Canvas.Top="205"
+                   MouseLeftButtonDown="selectRightRect_MouseLeftButtonDown"/>
     </Canvas>
 </UserControl>
