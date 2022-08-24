@@ -136,17 +136,17 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void AssignValuesToBlocks()
         {
-            txtRectBlock1.Text = _rectanglesArr[0][0].ToString();
-            txtRectBlock2.Text = _rectanglesArr[0][1].ToString();
-            txtRectBlock3.Text = _rectanglesArr[0][2].ToString();
-            txtRectBlock4.Text = _rectanglesArr[0][3].ToString();
-            txtRectBlock5.Text = _rectanglesArr[0][4].ToString();
+            txtRectBlock1.Text = _callNumbersTop.ElementAt(4).ToString();
+            txtRectBlock2.Text = _callNumbersTop.ElementAt(3).ToString();
+            txtRectBlock3.Text = _callNumbersTop.ElementAt(2).ToString();
+            txtRectBlock4.Text = _callNumbersTop.ElementAt(1).ToString();
+            txtRectBlock5.Text = _callNumbersTop.ElementAt(0).ToString();
             
-            txtRectBlock6.Text = _rectanglesArr[1][0].ToString();
-            txtRectBlock7.Text = _rectanglesArr[1][1].ToString();
-            txtRectBlock8.Text = _rectanglesArr[1][2].ToString();
-            txtRectBlock9.Text = _rectanglesArr[1][3].ToString();
-            txtRectBlock10.Text = _rectanglesArr[1][4].ToString();
+            txtRectBlock6.Text = _callNumbersBottom.ElementAt(4).ToString();
+            txtRectBlock7.Text = _callNumbersBottom.ElementAt(3).ToString();
+            txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString();
+            txtRectBlock9.Text = _callNumbersBottom.ElementAt(1).ToString();
+            txtRectBlock10.Text = _callNumbersBottom.ElementAt(0).ToString();
         }
 
         private void ReplacingBooks_MouseDown(object sender, MouseButtonEventArgs e)
