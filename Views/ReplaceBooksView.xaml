@@ -127,7 +127,7 @@
                 Height="22"
                 Background="#818181">
             <TextBlock x:Name="txtRectBlock1"
-                   Text="303.CAT"
+                   Text="303.CAT One"
                    HorizontalAlignment="Center">
             </TextBlock>
         </Border>
