@@ -6,8 +6,215 @@
              xmlns:local="clr-namespace:JoshMkhariPROG7312Game.Views"
              mc:Ignorable="d" 
              d:DesignHeight="460" d:DesignWidth="800"
-             Background="#1B1B1B">
-    <Grid>
-            
-    </Grid>
+             Background="#f6efe7">
+
+    <Canvas x:Name="ReplacingBooks" 
+            MouseDown="ReplacingBooks_MouseDown" 
+            Focusable="True">
+
+        <Label FontSize="30" 
+               Name="txtMovesCount"
+               Content="Moves: 0" 
+               Canvas.Left="454" 
+               Canvas.Top="24"/>
+
+        <Label FontSize="20" 
+               Name="txtTopRectStorageCapacity"
+               Content="100%" 
+               Canvas.Left="322" 
+               Canvas.Top="218"/>
+
+        <Label FontSize="20" 
+               Name="txtBottomRectStorageCapacity"
+               Content="100%" 
+               Canvas.Left="322" 
+               Canvas.Top="444"/>
+
+        <Label FontSize="20" 
+               Name="txtLeftRectStorageCapacity"
+               Content="100%" 
+               Canvas.Left="174" 
+               Canvas.Top="340"/>
+
+        <Label FontSize="20" 
+               Name="txtRightRectStorageCapacity"
+               Content="100%"
+               Canvas.Left="477" 
+               Canvas.Top="340"/>
+
+        <Image Width="20"
+               Height="20"
+               Source="/Theme/Assets/UpBlack.png"
+               Name="imgTopRectUp" 
+               Canvas.Left="387" 
+               Canvas.Top="139"/>
+
+        <Image Width="20"
+               Height="20"
+               Source="/Theme/Assets/UpBlack.png"
+               Name="imgLeftRectUp" 
+               Canvas.Left="240" 
+               Canvas.Top="245"/>
+
+        <Image Width="20"
+               Height="20"
+               Source="/Theme/Assets/UpBlack.png"
+               Name="imgRightRectUp" 
+               Canvas.Left="450" 
+               Canvas.Top="245"/>
+
+        <Image Width="20"
+               Height="20"
+               Source="/Theme/Assets/DownBlack.png"
+               Name="imgRightRecDown" 
+               Canvas.Left="450" 
+               Canvas.Top="290"/>
+
+        <Image Width="20"
+               Height="20"
+               Source="/Theme/Assets/DownBlack.png"
+               Name="imgLeftRecDown" 
+               Canvas.Left="240" 
+               Canvas.Top="290"/>
+
+        <Image Width="20"
+               Height="20"
+               Source="/Theme/Assets/UpBlack.png"
+               Name="imgBottomRectUp" 
+               Canvas.Left="387" 
+               Canvas.Top="369"/>
+
+        <Image Width="800"
+               Height="460"
+               Source="/Theme/Assets/Background.png" 
+               Canvas.Left="-39"
+               Canvas.Top="46"/>
+
+        <Image Width="200"
+               Height="60"
+               Source="/Theme/Assets/Easy.png"
+               Name="imgDifficulty" 
+               Canvas.Left="65" 
+               Canvas.Top="19"/>
+
+        <Button Width="50"
+                Height="50"
+                Name="btnReset"
+                BorderBrush="Transparent"
+                BorderThickness="0" Canvas.Left="42" Canvas.Top="24">
+            <Button.Background>
+                <ImageBrush ImageSource="/Theme/Assets/Restart.png" Stretch="Fill" />
+            </Button.Background>
+        </Button>
+
+        <Button Width="50"
+                Height="50"
+                Name="btnSettings"
+                BorderBrush="Transparent"
+                BorderThickness="0" Canvas.Left="622" Canvas.Top="24">
+            <Button.Background>
+                <ImageBrush ImageSource="/Theme/Assets/Settings.png" Stretch="Fill" />
+            </Button.Background>
+        </Button>
+
+        <Rectangle x:Name="rectBlock1"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#818181" 
+                   Canvas.Left="322" 
+                   Canvas.Top="198"/>
+
+        <Rectangle x:Name="rectBlock2"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#273349" 
+                   Canvas.Left="322" 
+                   Canvas.Top="171"/>
+
+        <Rectangle x:Name="rectBlock3"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#b5476a" 
+                   Canvas.Left="322" 
+                   Canvas.Top="144"/>
+
+        <Rectangle x:Name="rectBlock4"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#1e886d" 
+                   Canvas.Left="322" 
+                   Canvas.Top="117"/>
+
+        <Rectangle x:Name="rectBlock5"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#583354" 
+                   Canvas.Left="322" 
+                   Canvas.Top="90"/>
+
+        <Rectangle x:Name="rectBlock6"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#feca50" 
+                   Canvas.Left="322" 
+                   Canvas.Top="315"/>
+
+        <Rectangle x:Name="rectBlock7"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#70a8bc" 
+                   Canvas.Left="322" 
+                   Canvas.Top="342"/>
+
+        <Rectangle x:Name="rectBlock8"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#b0c653" 
+                   Canvas.Left="322" 
+                   Canvas.Top="369"/>
+
+        <Rectangle x:Name="rectBlock9"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#f0913c" 
+                   Canvas.Left="322" 
+                   Canvas.Top="396"/>
+
+        <Rectangle x:Name="rectBlock10"
+                   Panel.ZIndex="10"
+                   Width="57"
+                   Height="22"
+                   Stroke="Black" 
+                   StrokeThickness="2"
+                   Fill="#6c4722" 
+                   Canvas.Left="322" 
+                   Canvas.Top="422"/>
+    </Canvas>
 </UserControl>

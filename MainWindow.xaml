@@ -59,11 +59,6 @@
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"/>
-                <RadioButton Content="Help"
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
 
             <ContentControl Grid.Row="1"

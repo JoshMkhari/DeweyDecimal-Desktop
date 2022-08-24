@@ -117,9 +117,36 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Logic\Replacing Books\" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Theme\Assets\twitter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\UpBlack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Restart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\DownBlack.png" />
+    <Resource Include="Theme\Assets\DownRed.png" />
+    <Resource Include="Theme\Assets\UpGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Difficult.png" />
+    <Resource Include="Theme\Assets\Easy.png" />
+    <Resource Include="Theme\Assets\Extreme.png" />
+    <Resource Include="Theme\Assets\Hard.png" />
+    <Resource Include="Theme\Assets\Insane.png" />
+    <Resource Include="Theme\Assets\Normal.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

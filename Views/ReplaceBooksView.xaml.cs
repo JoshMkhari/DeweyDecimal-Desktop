@@ -24,5 +24,10 @@ namespace JoshMkhariPROG7312Game.Views
         {
             InitializeComponent();
         }
+
+        private void ReplacingBooks_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }
