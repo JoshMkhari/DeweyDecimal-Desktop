@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -404,32 +405,61 @@ namespace JoshMkhariPROG7312Game.Views
             }
         }
 
+        //For both left and right rectangles
+        private int ReturnCurrentBlockYLeftRight(Stack<int> rectStack)
+        {
+            switch (rectStack.Count)
+            {
+                case 1://Rectangle at bottom of rect list
+                    return 320;
+                case 2://Second rectangle
+                    return 293;
+                case 3:
+                    return 266;
+                case 4:
+                    return 239;
+                default://Last rectangle
+                    return 213;
+            }
+        }
+        //Store locations where blocks must rest based on amount of items within rectangle
+        private int[] topRectCanvasYLocations = new[] { 198, 171, 144, 117, 0 }; //For top rectangle
+        private int[] bottomRectCanvasYLocations = new[] { 422, 396, 369, 342, 315 };//For bottom rectangle
+        
+        
         private void AnimateBlockMovement(int destination)
         {
+            int canvasLeft,canvasTop;
             switch (_callRecToMove)//Determine origin
             {
                 case 0://From Top
-                    // if your first control is specified you can use the following code
-                    foreach (Control c2 in Controls)
-                    {
-                        if (!c2.Equals(c1) && c2 is Button /* if you want it to be just buttons */
-                                           && c1.Bounds.IntersectsWith(c2.Bounds))
-                        {
-                            // c1 has touched c2
-                        }
-
-                    }
                     //Calculate steps to top of rectangle
-                    //Check if going left, right, down
-                    //return _callNumbersTop.Pop();
-                case 1:
-                    //return _callNumbersBottom.Pop();
-                case 2:
-                    //return _callNumbersLeft.Pop();
-                default:
+                
+                //Check current amount of elements in rectangle
+                    canvasTop = topRectCanvasYLocations[_callNumbersTop.Count-1];
+                    canvasLeft = 322; //Location on x axis where block must stop within top and bottom rectangles
                     break;
-                    ;
-                    //return _callNumbersRight.Pop();
+                
+                //Check if going left, right, down
+                //return _callNumbersTop.Pop();
+                
+                case 1://For bottom rectangle
+                    canvasLeft = 322;//Location on x axis where block must stop within top and bottom rectangles
+                    canvasTop = bottomRectCanvasYLocations[_callNumbersBottom.Count-1];
+                    break;
+                    //return _callNumbersBottom.Pop();
+                
+                case 2://For Left rectangle
+                    canvasTop = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
+                    //return _callNumbersLeft.Pop();
+                    canvasLeft = 175;//Location on x axis where block must stop within left rectangle 
+                    break;
+                
+                default://For right rectangle
+                    canvasTop = ReturnCurrentBlockYLeftRight(_callNumbersRight);
+                    canvasLeft = 478;//Location on x axis where block must stop within right rectangle 
+                    break;
+                //return _callNumbersRight.Pop();
             }
         }
         private void selectLeftRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
