@@ -448,7 +448,7 @@ namespace JoshMkhariPROG7312Game.Views
         {
             switch (rectStack.Count)
             {
-                case 1://Rectangle at bottom of rect list
+                default://Rectangle at bottom of rect list
                     return 320;
                 case 2://Second rectangle
                     return 293;
@@ -456,7 +456,7 @@ namespace JoshMkhariPROG7312Game.Views
                     return 266;
                 case 4:
                     return 239;
-                default://Last rectangle
+                case 5://Last rectangle
                     return 213;
             }
         }
@@ -541,7 +541,7 @@ namespace JoshMkhariPROG7312Game.Views
                     break;
   
             }
-            
+            Debug.WriteLine("this is destination Y" + destinationY);
             do
             {
                 Canvas.SetTop(border,Canvas.GetTop(border) +1);
