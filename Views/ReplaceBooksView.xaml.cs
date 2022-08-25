@@ -25,7 +25,10 @@ namespace JoshMkhariPROG7312Game.Views
         private Stack<int> _callNumbersBottom = new Stack<int>();//To store initial numbers in bottom rectangle
         private Stack<int> _callNumbersLeft = new Stack<int>();//To store initial numbers in left rectangle
         private Stack<int> _callNumbersRight = new Stack<int>();//To store initial numbers in right rectangle
-        private int _callRecToMove;
+        
+        private int _callRecToMove;//??????????????????????????????????????
+        private int _destination;
+        private int _yLocation;
 
         private Double[] _rectCanvasLocationTop = new Double[10];//To store Top location of blocks 
         private Double[] _rectCanvasLocationLeft = new Double[10];//To store Left location of blocks
@@ -178,6 +181,7 @@ namespace JoshMkhariPROG7312Game.Views
             rectValueNamePair.Add(_callNumbersTop.ElementAt(2),3); //storing the value with the rectangle name
             rectValueNamePair.Add(_callNumbersTop.ElementAt(1),4); //storing the value with the rectangle name
             rectValueNamePair.Add(_callNumbersTop.ElementAt(0),5); //storing the value with the rectangle name
+
             
             txtRectBlock6.Text = _callNumbersBottom.ElementAt(4).ToString();
             txtRectBlock7.Text = _callNumbersBottom.ElementAt(3).ToString();
@@ -363,9 +367,11 @@ namespace JoshMkhariPROG7312Game.Views
                     selectRightRect.StrokeThickness = 3;
                     selectRightRect.Stroke = blackBrush;
                     
-                    _callNumbersRight.Push(PopCallBlock(_callRecToMove));
+                    
                     //Call animation (Move blocks)
-                    AnimateBlockMovement(3);
+                    _destination = 3;
+                    AnimateBlockMovement();
+                    _callNumbersRight.Push(PopCallBlock(_callRecToMove));
                     MessageBox.Show("top" + _callNumbersTop.Count + " vs right " + _callNumbersRight.Peek() +
                                     " with count " + _callNumbersRight.Count);
                 }
@@ -390,8 +396,8 @@ namespace JoshMkhariPROG7312Game.Views
                             }
                             //Call animation (Move blocks)
                             
-                            MessageBox.Show("top" + _callNumbersTop.Count + " vs right " + _callNumbersRight.Peek() +
-                                            " with count " + _callNumbersRight.Count);
+                            //MessageBox.Show("top" + _callNumbersTop.Count + " vs right " + _callNumbersRight.Peek() +
+                                           // " with count " + _callNumbersRight.Count);
                         }
                         else
                         {
@@ -458,55 +464,93 @@ namespace JoshMkhariPROG7312Game.Views
         private int[] topRectCanvasYLocations = new[] { 198, 171, 144, 117, 0 }; //For top rectangle
         private int[] bottomRectCanvasYLocations = new[] { 422, 396, 369, 342, 315 };//For bottom rectangle
 
-        private void MoveRectangle(int rectangleNumber)
+        private void MoveRectangle(int rectangleNumber, int source)
         {
             switch (rectangleNumber)
             {
                 case 1:
-                    StartJourney(rectBlock1);
+                    StartYJourneyUp(rectBlock1,source);
                     break;
                 case 2:
-                    StartJourney(rectBlock2);
+                    StartYJourneyUp(rectBlock2,source);
                     break;
                 case 3:
-                    StartJourney(rectBlock3);
+                    StartYJourneyUp(rectBlock3,source);
                     break;
                 case 4:
-                    StartJourney(rectBlock4);
+                    StartYJourneyUp(rectBlock4,source);
                     break;
                 case 5:
-                    StartJourney(rectBlock5);
+                    StartYJourneyUp(rectBlock5,source);
                     break;
                 case 6:
-                    StartJourney(rectBlock6);
+                    StartYJourneyUp(rectBlock6,source);
                     break;
                 case 7:
-                    StartJourney(rectBlock7);
+                    StartYJourneyUp(rectBlock7,source);
                     break;
                 case 8:
-                    StartJourney(rectBlock8);
+                    StartYJourneyUp(rectBlock8,source);
                     break;
                 case 9:
-                    StartJourney(rectBlock9);
+                    StartYJourneyUp(rectBlock9,source);
                     break;
                 case 10:
-                    StartJourney(rectBlock10);
+                    StartYJourneyUp(rectBlock10,source);
                     break;
             }
         }
 
+        private void StartXJourneyRight(Border border)
+        {
+            Debug.WriteLine("This is left now " +Canvas.GetLeft(border));
+            do
+            {
+                Canvas.SetLeft(border,Canvas.GetLeft(border) + 1);
+                
+            } while (Canvas.GetLeft(border)<478);
+        }
+
         //https://stackoverflow.com/questions/10298216/moving-any-control-in-wpf
-        public void StartJourney(Border border)
+        private void StartYJourneyUp(Border border, int source)
         {
             do
             {
                 Canvas.SetTop(border,Canvas.GetTop(border) -1);
                 
-            } while (Canvas.GetTop(border)>60);
+            } while (Canvas.GetTop(border)>source);
+            
+            StartXJourneyRight(border);
+            StartYJourneyDown(border);
+        }
 
+        private void StartYJourneyDown(Border border)
+        {
+            Debug.WriteLine("this is " + _destination);
+            int destinationY = 0;
+            switch (_destination)
+            {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    destinationY = ReturnCurrentBlockYLeftRight(_callNumbersRight);
+                    break;
+  
+            }
+            
+            do
+            {
+                Canvas.SetTop(border,Canvas.GetTop(border) +1);
+                
+            } while (Canvas.GetTop(border)<destinationY);
+            //Check destination amount of elements
             
         }
-        private void AnimateBlockMovement(int destination)
+        private void AnimateBlockMovement()
         {
             int canvasLeft,canvasTop;
             switch (_callRecToMove)//Determine origin
@@ -523,7 +567,7 @@ namespace JoshMkhariPROG7312Game.Views
                     {
                         if (rectValueNamePair.Keys.ElementAt(i)==_callNumbersTop.Peek())
                         {
-                            MoveRectangle(rectValueNamePair.Values.ElementAt(i));
+                            MoveRectangle(rectValueNamePair.Values.ElementAt(i),60);
                             break;
                         }
                     }
