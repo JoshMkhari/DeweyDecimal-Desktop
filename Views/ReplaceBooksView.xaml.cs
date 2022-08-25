@@ -238,20 +238,71 @@ namespace JoshMkhariPROG7312Game.Views
             Thread.Sleep(1000);// Keep Red for 1 second
             ActivateBlockColour(rect,3);//Make Transparent
         }
-        private void selectTopRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+
+        private void ClearAllFocus()
         {
-            bool isEmptyRect = !_callNumbersTop.Any();//check if the list is empty
+            ActivateBlockColour(selectTopRect,3);//Make Transparent
+            ActivateBlockColour(selectBottomRect,3);//Make Transparent
+            ActivateBlockColour(selectLeftRect,3);//Make Transparent
+            ActivateBlockColour(selectRightRect,3);//Make Transparent
+        }
+
+        private void UpdateStack(int rectangleNumber)
+        {
+            AnimateBlockMovement();
+            switch (rectangleNumber)
+            {
+                case 0:
+                    _callNumbersTop.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    break;                
+                case 1:
+                    _callNumbersBottom.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    break;                
+                case 2:
+                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    break;                
+                case 3:
+                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    break;
+            }
+
+            if (_callNumbersLeft.Count > 1)
+            {
+                if (_callNumbersLeft.ElementAt(0) > _callNumbersLeft.ElementAt(1))
+                {
+                    _rectOrders[1] = false;//Store Descending for Top Rectangle
+                }
+                else
+                {
+                    _rectOrders[1] = true;//Store Ascending for Top Rectangle
+                }
+            }            
+            if (_callNumbersRight.Count > 1)
+            {
+                if (_callNumbersRight.ElementAt(0) > _callNumbersRight.ElementAt(1))
+                {
+                    _rectOrders[1] = false;//Store Descending for Top Rectangle
+                }
+                else
+                {
+                    _rectOrders[1] = true;//Store Ascending for Top Rectangle
+                }
+            }
+        }
+        private void SelectedRectangle(Rectangle currentRectangle, Stack<int> currentRectangleStack, int rectangleNumber)
+        {
+            bool isEmptyRect = !currentRectangleStack.Any();//check if the list is empty
             if (_activatedBlockCount == 0)//This is start block
             {
                 //check num of blocks within rect
                 if (isEmptyRect)//No more blocks to move
                 {
-                    ActivateRedError(selectTopRect);
+                    ActivateRedError(currentRectangle);
                 }
                 else
                 {
-                    _originRectangleNumber = 0;//Represents Top
-                    ActivateBlockColour(selectTopRect,0);//Display Gold as this is start block
+                    _originRectangleNumber = rectangleNumber;//Represents Top
+                    ActivateBlockColour(currentRectangle,0);//Display Gold as this is start block
                 }
             }
             else //this is destination block
@@ -261,63 +312,43 @@ namespace JoshMkhariPROG7312Game.Views
                 {
                     if (_originRectangleNumber != 0)//Make sure the source and the destination are not the same
                     {
-                        ActivateBlockColour(selectRightRect,1);//Make Blue
-                        _destinationRectangleNumber = 0;//Set destination 
-                        
-                        AnimateBlockMovement();//Move block?????????????????????????????????????????????????????????????????????????????????????????????????????????????????
-                        _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push from stack
-                    
-                        ActivateBlockColour(selectRightRect,3);//Make Transparent
-                        _activatedBlockCount = 0;//reset activated block count
+                        ActivateBlockColour(currentRectangle,1);//Make Blue
+                        _destinationRectangleNumber = rectangleNumber;//Set destination 
+                        UpdateStack(rectangleNumber);
                     }
                     else
                     {
-                        ActivateRedError(selectTopRect);
+                        ActivateRedError(currentRectangle);
                     }
                 }
                 else
                 {
-                    if (_callNumbersTop.Count < 5)//If there is still space for the block
+                    if (currentRectangleStack.Count < 5)//If there is still space for the block
                     {
-                        if (_callNumbersTop.Count == 1)//If there is only one block inside
+                        if (currentRectangleStack.Count == 1)//If there is only one block inside
                         { 
-                            _callNumbersTop.Push(PopCallBlock(_originRectangleNumber)); //add second block
-                            ActivateBlockColour(selectTopRect,3);//Make Transparent
-                            if (_callNumbersTop.ElementAt(0) > _callNumbersTop.ElementAt(1))
-                            {
-                                _rectOrders[0] = false;//Store Descending for Top Rectangle
-                            }
-                            else
-                            {
-                                _rectOrders[0] = true;//Store Ascending for Top Rectangle
-                            }
+                            UpdateStack(rectangleNumber);
                         }
                         else
                         {
-                            if (PopCallBlock(_originRectangleNumber) > _callNumbersTop.Peek())//If new addition is greater than top num
+                            if (PeepCallBlock(_originRectangleNumber) > currentRectangleStack.Peek())//If new addition is greater than top num
                             {
-                                _callNumbersTop.Push(PopCallBlock(_originRectangleNumber)); //add block
-                                ActivateBlockColour(selectTopRect,3);//Make Transparent
+                                UpdateStack(rectangleNumber);
                             }
                             else
                             {
-                                ActivateBlockColour(selectTopRect,2);//Display Red
-                                Thread.Sleep(1000);// Keep Red for 1 second
-                                ActivateBlockColour(selectTopRect,3);//Make Transparent
+                                ActivateRedError(currentRectangle);
                             }
                             //What is my order
-                            if (_rectOrders[0])//If ascending
+                            if (_rectOrders[rectangleNumber])//If ascending
                             {
-                                if (PopCallBlock(_originRectangleNumber) > _callNumbersTop.Peek())//If new addition is greater than top num
+                                if (PeepCallBlock(_originRectangleNumber) > currentRectangleStack.Peek())//If new addition is greater than top num
                                 {
-                                    _callNumbersTop.Push(PopCallBlock(_originRectangleNumber)); //add block
-                                    ActivateBlockColour(selectTopRect,3);//Make Transparent
+                                    UpdateStack(rectangleNumber);
                                 }
                                 else
                                 {
-                                    ActivateBlockColour(selectTopRect,2);//Display Red
-                                    Thread.Sleep(1000);// Keep Red for 1 second
-                                    ActivateBlockColour(selectTopRect,3);//Make Transparent
+                                    ActivateRedError(currentRectangle);
                                 }
                             }
                             //Does it match my order?
@@ -325,260 +356,26 @@ namespace JoshMkhariPROG7312Game.Views
                     }
                     else
                     {
-                        ActivateBlockColour(selectTopRect,2);//Display Red
-                        Thread.Sleep(1000);// Keep Red for 1 second
-                        ActivateBlockColour(selectTopRect,3);//Make Transparent
+                        ActivateRedError(currentRectangle);
                     }
                 }
             }
         }
-
+        private void selectTopRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SelectedRectangle(selectTopRect, _callNumbersTop, 0);
+        }
         private void selectBottomRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            bool isEmptyRect = !_callNumbersBottom.Any();//check if the list is empty
-            if (_activatedBlockCount == 0)//This is start block
-            {
-                //check num of blocks within rect
-                if (isEmptyRect)//No more blocks to move
-                {
-                    MessageBox.Show("Code X to appear and say empty");
-                }
-                else
-                {
-                    _originRectangleNumber = 1;//Represents Bottom
-                }
-                
-                _activatedBlockCount++;//Program now knows start, waiting for destination
-            }
-            else //this is destination block
-            {
-                //check num of blocks within rect
-                
-                if (isEmptyRect)//can add block
-                {
-                    _callNumbersBottom.Push(PopCallBlock(_originRectangleNumber));
-                }
-                else
-                {
-                    if (_callNumbersBottom.Count < 5)//If there is still space for the block
-                    {
-                        if (PopCallBlock(_originRectangleNumber) > _callNumbersTop.Peek())//If new addition is greater than top num
-                        {
-                            _callNumbersTop.Push(PopCallBlock(_originRectangleNumber)); //add block
-                        }
-                        else
-                        {
-                            MessageBox.Show("This is an ascending list only X");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("No Space Error");
-                    }
-                }
-            }
+            SelectedRectangle(selectBottomRect, _callNumbersBottom, 1);
         }
-
         private void selectRightRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         { 
-            bool isEmptyRect = !_callNumbersRight.Any();//check if the list is empty
-            if (_activatedBlockCount == 0)//This is start block
-            {
-                //check num of blocks within rect
-                if (isEmptyRect)//No more blocks to move
-                {
-                    MessageBox.Show("Code X to appear and say empty");
-                }
-                else
-                {
-                    _originRectangleNumber = 3;//Represents Right
-                    ActivateBlockColour(selectRightRect,1);//Make Gold
-                }
-                
-                _activatedBlockCount++;//Program now knows start, waiting for destination
-            }
-            else //this is destination block
-            {
-                //check num of blocks within rect
-                
-                if (isEmptyRect)//can add block
-                {
-                    ActivateBlockColour(selectRightRect,1);//Make Blue
-                    
-                    //Call animation (Move blocks)
-                    _destinationRectangleNumber = 3;//Set destination 
-                    AnimateBlockMovement();//Move block
-                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push from stack
-                    
-                    ActivateBlockColour(selectRightRect,3);//Make Transparent
-                    _activatedBlockCount = 0;//reset activated block count
-
-                }
-                else
-                {
-                    if (_callNumbersRight.Count < 5)//If there is still space for the block
-                    {
-                        if (_callNumbersRight.Count == 1)//If there is only one block inside
-                        { 
-                            ActivateBlockColour(selectRightRect,1);//Make Transparent
-                            
-                            //Call animation (Move blocks)
-                            _destinationRectangleNumber = 3;//Set destination 
-                            AnimateBlockMovement();//Move block
-                            _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push from stack
-                            ActivateBlockColour(selectRightRect,3);//Make Transparent
-                            _activatedBlockCount = 0;//reset activated block count
-                            
-                            if (_callNumbersRight.ElementAt(0) > _callNumbersRight.ElementAt(1))
-                            {
-                                _rectOrders[1] = false;//Store Descending for Right Rectangle
-                            }
-                            else
-                            {
-                                _rectOrders[1] = true;//Store Ascending for Right Rectangle
-                            }
-
-                        }
-                        else
-                        {
-                            if (PopCallBlock(_originRectangleNumber) > _callNumbersRight.Peek())//If new addition is greater than top num
-                            {
-                                ActivateBlockColour(selectRightRect,1);//Make Blue
-                                //Call animation (Move blocks)
-                                _destinationRectangleNumber = 3;//Set destination 
-                                AnimateBlockMovement();//Move block
-                                _callNumbersRight.Push(PopCallBlock(_originRectangleNumber)); //add block
-                                ActivateBlockColour(selectRightRect,3);//Make Transparent
-                            }
-                            else
-                            {
-                                MessageBox.Show("This is an ascending list only X");
-                                
-                            }
-                            //What is my order
-                            if (_rectOrders[0])//If ascending
-                            {
-                                if (PopCallBlock(_originRectangleNumber) > _callNumbersRight.Peek())//If new addition is greater than top num
-                                {
-                                    //Call animation (Move blocks)
-                                    ActivateBlockColour(selectRightRect,1);//Make Blue
-                                    _destinationRectangleNumber = 3;//Set destination 
-                                    AnimateBlockMovement();//Move block
-                                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber)); //add block
-                                    ActivateBlockColour(selectRightRect,3);//Make Transparent
-                                }
-                                else
-                                {
-                                    MessageBox.Show("This is currently an ascending list");
-                                }
-                            }
-                            else
-                            {
-                                if (PopCallBlock(_originRectangleNumber) < _callNumbersRight.Peek())//If new addition is smaller than top num
-                                {
-                                    ActivateBlockColour(selectRightRect,1);//Make Blue
-                                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber)); //add block
-                                    ActivateBlockColour(selectRightRect,3);//Make Transparent
-                                }
-                                else
-                                {
-                                    MessageBox.Show("This is currently a descending list");
-                                }
-                            }
-                            //Does it match my order?
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("No Space Error");
-                    }
-                }
-            }
+            SelectedRectangle(selectRightRect, _callNumbersRight, 3);
         }
         private void selectLeftRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            bool isEmptyRect = !_callNumbersLeft.Any();//check if the list is empty
-            if (_activatedBlockCount == 0)//This is start block
-            {
-                //check num of blocks within rect
-                if (isEmptyRect)//No more blocks to move
-                {
-                    MessageBox.Show("Code X to appear and say empty");
-                }
-                else
-                {
-                    _originRectangleNumber = 2;//Represents Left
-                }
-                
-                _activatedBlockCount++;//Program now knows start, waiting for destination
-            }
-            else //this is destination block
-            {
-                //check num of blocks within rect
-                
-                if (isEmptyRect)//can add block
-                {
-                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber));
-                }
-                else
-                {
-                    if (_callNumbersLeft.Count < 5)//If there is still space for the block
-                    {
-                        if (_callNumbersLeft.Count == 1)//If there is only one block inside
-                        { 
-                            _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber)); //add second block
-                            SolidColorBrush blackBrush = new SolidColorBrush(Colors.Transparent);
-                            if (_callNumbersLeft.ElementAt(0) > _callNumbersLeft.ElementAt(1))
-                            {
-                                _rectOrders[0] = false;//Store Descending for Left Rectangle
-                            }
-                            else
-                            {
-                                _rectOrders[0] = true;//Store Ascending for Left Rectangle
-                            }
-                        }
-                        else
-                        {
-                            if (PopCallBlock(_originRectangleNumber) > _callNumbersLeft.Peek())//If new addition is greater than top num
-                            {
-                                _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber)); //add block
-                            }
-                            else
-                            {
-                                MessageBox.Show("This is an ascending list only X");
-                            }
-                            //What is my order
-                            if (_rectOrders[0])//If ascending
-                            {
-                                if (PopCallBlock(_originRectangleNumber) > _callNumbersLeft.Peek())//If new addition is greater than top num
-                                {
-                                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber)); //add block
-                                }
-                                else
-                                {
-                                    MessageBox.Show("This is currently an ascending list");
-                                }
-                            }
-                            else
-                            {
-                                if (PopCallBlock(_originRectangleNumber) < _callNumbersLeft.Peek())//If new addition is smaller than top num
-                                {
-                                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber)); //add block
-                                }
-                                else
-                                {
-                                    MessageBox.Show("This is currently a descending list");
-                                }
-                            }
-                            //Does it match my order?
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("No Space Error");
-                    }
-                }
-            }
+            SelectedRectangle(selectLeftRect, _callNumbersLeft, 2);
         }        
         //For both left and right rectangles
         private int ReturnCurrentBlockYLeftRight(Stack<int> rectStack)
@@ -880,10 +677,24 @@ namespace JoshMkhariPROG7312Game.Views
             }
         }
 
-        
+        private int PeepCallBlock(int recLocation)
+        {
+            switch (recLocation)
+            {
+                case 0:
+                    return _callNumbersTop.Peek();
+                case 1:
+                    return _callNumbersBottom.Peek();
+                case 2:
+                    return _callNumbersLeft.Peek();
+                default:
+                    return _callNumbersRight.Peek();
+            }
+        }
         private int PopCallBlock(int recLocation)
                  {
                      _activatedBlockCount = 0;
+                     ClearAllFocus();
                      switch (recLocation)
                      {
                          case 0:
