@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,8 +27,11 @@ namespace JoshMkhariPROG7312Game.Views
         private Stack<int> _callNumbersRight = new Stack<int>();//To store initial numbers in right rectangle
         private int _callRecToMove;
 
-        private Double[] _rectCanvasLocationTop = new Double[10];
-        private Double[] _rectCanvasLocationLeft = new Double[10];
+        private Double[] _rectCanvasLocationTop = new Double[10];//To store Top location of blocks 
+        private Double[] _rectCanvasLocationLeft = new Double[10];//To store Left location of blocks
+        
+        //https://www.tutorialsteacher.com/csharp/csharp-dictionary
+        private IDictionary<int, int> rectValueNamePair = new Dictionary<int, int>();//Stores Random value and Rectangle name
         public ReplaceBooksView()
         {
             
@@ -35,16 +39,28 @@ namespace JoshMkhariPROG7312Game.Views
             _callRecToMove = 0;
             _activatedBlockCount = 0;
             
-            _rectCanvasLocationTop[0] = Canvas.GetLeft(rectBlock1);
-            _rectCanvasLocationTop[1] = Canvas.GetLeft(rectBlock2);
-            _rectCanvasLocationTop[2] = Canvas.GetLeft(rectBlock3);
-            _rectCanvasLocationTop[3] = Canvas.GetLeft(rectBlock4);
-            _rectCanvasLocationTop[4] = Canvas.GetLeft(rectBlock5);
-            _rectCanvasLocationTop[5] = Canvas.GetLeft(rectBlock6);
-            _rectCanvasLocationTop[6] = Canvas.GetLeft(rectBlock7);
-            _rectCanvasLocationTop[7] = Canvas.GetLeft(rectBlock8);
-            _rectCanvasLocationTop[8] = Canvas.GetLeft(rectBlock9);
-            _rectCanvasLocationTop[9] = Canvas.GetLeft(rectBlock10);
+            //Storing current locations of all rectangles
+            _rectCanvasLocationTop[0] = Canvas.GetTop(rectBlock1);
+            _rectCanvasLocationTop[1] = Canvas.GetTop(rectBlock2);
+            _rectCanvasLocationTop[2] = Canvas.GetTop(rectBlock3);
+            _rectCanvasLocationTop[3] = Canvas.GetTop(rectBlock4);
+            _rectCanvasLocationTop[4] = Canvas.GetTop(rectBlock5);
+            _rectCanvasLocationTop[5] = Canvas.GetTop(rectBlock6);
+            _rectCanvasLocationTop[6] = Canvas.GetTop(rectBlock7);
+            _rectCanvasLocationTop[7] = Canvas.GetTop(rectBlock8);
+            _rectCanvasLocationTop[8] = Canvas.GetTop(rectBlock9);
+            _rectCanvasLocationTop[9] = Canvas.GetTop(rectBlock10);
+            
+            _rectCanvasLocationLeft[0] = Canvas.GetLeft(rectBlock1);
+            _rectCanvasLocationLeft[1] = Canvas.GetLeft(rectBlock2);
+            _rectCanvasLocationLeft[2] = Canvas.GetLeft(rectBlock3);
+            _rectCanvasLocationLeft[3] = Canvas.GetLeft(rectBlock4);
+            _rectCanvasLocationLeft[4] = Canvas.GetLeft(rectBlock5);
+            _rectCanvasLocationLeft[5] = Canvas.GetLeft(rectBlock6);
+            _rectCanvasLocationLeft[6] = Canvas.GetLeft(rectBlock7);
+            _rectCanvasLocationLeft[7] = Canvas.GetLeft(rectBlock8);
+            _rectCanvasLocationLeft[8] = Canvas.GetLeft(rectBlock9);
+            _rectCanvasLocationLeft[9] = Canvas.GetLeft(rectBlock10);
             
             List<int> callNumbers = new List<int>();//To store initial 10 values
             //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
@@ -156,11 +172,27 @@ namespace JoshMkhariPROG7312Game.Views
             txtRectBlock4.Text = _callNumbersTop.ElementAt(1).ToString();
             txtRectBlock5.Text = _callNumbersTop.ElementAt(0).ToString();
             
+            //https://www.tutorialsteacher.com/csharp/csharp-dictionary
+            rectValueNamePair.Add(_callNumbersTop.ElementAt(4),1); //storing the value with the rectangle name
+            rectValueNamePair.Add(_callNumbersTop.ElementAt(3),2); //storing the value with the rectangle name
+            rectValueNamePair.Add(_callNumbersTop.ElementAt(2),3); //storing the value with the rectangle name
+            rectValueNamePair.Add(_callNumbersTop.ElementAt(1),4); //storing the value with the rectangle name
+            rectValueNamePair.Add(_callNumbersTop.ElementAt(0),5); //storing the value with the rectangle name
+            
             txtRectBlock6.Text = _callNumbersBottom.ElementAt(4).ToString();
             txtRectBlock7.Text = _callNumbersBottom.ElementAt(3).ToString();
             txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString();
             txtRectBlock9.Text = _callNumbersBottom.ElementAt(1).ToString();
             txtRectBlock10.Text = _callNumbersBottom.ElementAt(0).ToString();
+            
+            //https://www.tutorialsteacher.com/csharp/csharp-dictionary
+            rectValueNamePair.Add(_callNumbersBottom.ElementAt(4),6); //storing the value with the rectangle name
+            rectValueNamePair.Add(_callNumbersBottom.ElementAt(3),7); //storing the value with the rectangle name
+            rectValueNamePair.Add(_callNumbersBottom.ElementAt(2),8); //storing the value with the rectangle name
+            rectValueNamePair.Add(_callNumbersBottom.ElementAt(1),9); //storing the value with the rectangle name
+            rectValueNamePair.Add(_callNumbersBottom.ElementAt(0),10); //storing the value with the rectangle name
+            
+            
         }
 
         private void ReplacingBooks_MouseDown(object sender, MouseButtonEventArgs e)
@@ -425,8 +457,55 @@ namespace JoshMkhariPROG7312Game.Views
         //Store locations where blocks must rest based on amount of items within rectangle
         private int[] topRectCanvasYLocations = new[] { 198, 171, 144, 117, 0 }; //For top rectangle
         private int[] bottomRectCanvasYLocations = new[] { 422, 396, 369, 342, 315 };//For bottom rectangle
-        
-        
+
+        private void MoveRectangle(int rectangleNumber)
+        {
+            switch (rectangleNumber)
+            {
+                case 1:
+                    StartJourney(rectBlock1);
+                    break;
+                case 2:
+                    StartJourney(rectBlock2);
+                    break;
+                case 3:
+                    StartJourney(rectBlock3);
+                    break;
+                case 4:
+                    StartJourney(rectBlock4);
+                    break;
+                case 5:
+                    StartJourney(rectBlock5);
+                    break;
+                case 6:
+                    StartJourney(rectBlock6);
+                    break;
+                case 7:
+                    StartJourney(rectBlock7);
+                    break;
+                case 8:
+                    StartJourney(rectBlock8);
+                    break;
+                case 9:
+                    StartJourney(rectBlock9);
+                    break;
+                case 10:
+                    StartJourney(rectBlock10);
+                    break;
+            }
+        }
+
+        //https://stackoverflow.com/questions/10298216/moving-any-control-in-wpf
+        public void StartJourney(Border border)
+        {
+            do
+            {
+                Canvas.SetTop(border,Canvas.GetTop(border) -1);
+                
+            } while (Canvas.GetTop(border)>60);
+
+            
+        }
         private void AnimateBlockMovement(int destination)
         {
             int canvasLeft,canvasTop;
@@ -436,7 +515,20 @@ namespace JoshMkhariPROG7312Game.Views
                     //Calculate steps to top of rectangle
                 
                 //Check current amount of elements in rectangle
-                    canvasTop = topRectCanvasYLocations[_callNumbersTop.Count-1];
+                    canvasTop = topRectCanvasYLocations[_callNumbersTop.Count-1];//Retrieves Y location of the rectangle on top
+                    
+                    //Now find out which rectangle it is
+
+                    for (int i = 0; i < rectValueNamePair.Count; i++)
+                    {
+                        if (rectValueNamePair.Keys.ElementAt(i)==_callNumbersTop.Peek())
+                        {
+                            MoveRectangle(rectValueNamePair.Values.ElementAt(i));
+                            break;
+                        }
+                    }
+
+
                     canvasLeft = 322; //Location on x axis where block must stop within top and bottom rectangles
                     break;
                 
@@ -562,9 +654,6 @@ namespace JoshMkhariPROG7312Game.Views
                              return _callNumbersRight.Pop();
                      }
                  }
-        private void checkRectangleOrder()
-                 {
-                     
-                 }
+
     }
 }
