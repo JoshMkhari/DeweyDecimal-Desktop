@@ -16,8 +16,8 @@ namespace JoshMkhariPROG7312Game
 
         private object _currentView;
 
-        public HomeViewModel HomeVM { get; set; }
-        public ReplaceBooksViewModel ReplaceVM { get; set; }
+        public HomeViewModel HomeVm { get; set; }
+        public ReplaceBooksViewModel ReplaceVm { get; set; }
         public object CurrentView
         {
             get { return _currentView; }
@@ -29,18 +29,18 @@ namespace JoshMkhariPROG7312Game
 
         public MainViewModel()
         {
-            HomeVM = new HomeViewModel();
-            ReplaceVM = new ReplaceBooksViewModel();
-            CurrentView = HomeVM;
+            HomeVm = new HomeViewModel();
+            ReplaceVm = new ReplaceBooksViewModel();
+            CurrentView = HomeVm;
 
             HomeViewCommand = new RelayCOmmand(o =>
             {
-                CurrentView = HomeVM;
+                CurrentView = HomeVm;
             });            
             
             ReplaceViewCommand = new RelayCOmmand(o =>
             {
-                CurrentView = ReplaceVM;
+                CurrentView = ReplaceVm;
             });
         }
     }
