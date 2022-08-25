@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace JoshMkhariPROG7312Game.Views
 {
@@ -26,10 +27,11 @@ namespace JoshMkhariPROG7312Game.Views
         private Stack<int> _callNumbersLeft = new Stack<int>();//To store initial numbers in left rectangle
         private Stack<int> _callNumbersRight = new Stack<int>();//To store initial numbers in right rectangle
         
-        private int _callRecToMove;//??????????????????????????????????????
-        private int _destination;
+        private int _originRectangleNumber;//??????????????????????????????????????
+        private int _destinationRectangleNumber;
         private int _yLocation;
 
+        private SolidColorBrush _blackBrush;
         private Double[] _rectCanvasLocationTop = new Double[10];//To store Top location of blocks 
         private Double[] _rectCanvasLocationLeft = new Double[10];//To store Left location of blocks
         
@@ -39,7 +41,7 @@ namespace JoshMkhariPROG7312Game.Views
         {
             
             InitializeComponent();
-            _callRecToMove = 0;
+            _originRectangleNumber = 4;
             _activatedBlockCount = 0;
             
             SolidColorBrush blackBrush = new SolidColorBrush(Colors.Blue);
@@ -202,11 +204,40 @@ namespace JoshMkhariPROG7312Game.Views
             
         }
 
+
+        //To colour block strokes
+        private void ActivateBlockColour(Rectangle rect, int mode)
+        {
+            switch (mode)
+            {
+                case 0:
+                    _blackBrush = new SolidColorBrush(Colors.Gold);//Sender
+                    _activatedBlockCount++;//Program now knows start, waiting for destination
+                    break;
+                case 1:
+                    _blackBrush = new SolidColorBrush(Colors.Blue);//Reciever
+                    break;
+                case 2:
+                    _blackBrush = new SolidColorBrush(Colors.Red);//Reciever
+                    break;
+                default:
+                    _blackBrush = new SolidColorBrush(Colors.Transparent);//Error
+                    break;
+            }
+            rect.StrokeThickness = 3;
+            rect.Stroke = _blackBrush;
+        }
         private void ReplacingBooks_MouseDown(object sender, MouseButtonEventArgs e)
         {
             
         }
 
+        private void ActivateRedError(Rectangle rect)
+        {
+            ActivateBlockColour(rect,2);//Display Red
+            Thread.Sleep(1000);// Keep Red for 1 second
+            ActivateBlockColour(rect,3);//Make Transparent
+        }
         private void selectTopRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             bool isEmptyRect = !_callNumbersTop.Any();//check if the list is empty
@@ -215,26 +246,34 @@ namespace JoshMkhariPROG7312Game.Views
                 //check num of blocks within rect
                 if (isEmptyRect)//No more blocks to move
                 {
-                    SolidColorBrush blackBrush = new SolidColorBrush(Colors.Red);
-                    TopRectStrokeChange(blackBrush);
+                    ActivateRedError(selectTopRect);
                 }
                 else
                 {
-                    _callRecToMove = 0;//Represents Top
-                    SolidColorBrush blackBrush = new SolidColorBrush(Colors.Gold);
-                    selectTopRect.StrokeThickness = 3;
-                    selectTopRect.Stroke = blackBrush;
+                    _originRectangleNumber = 0;//Represents Top
+                    ActivateBlockColour(selectTopRect,0);//Display Gold as this is start block
                 }
-                
-                _activatedBlockCount++;//Program now knows start, waiting for destination
             }
             else //this is destination block
             {
                 //check num of blocks within rect
-                
                 if (isEmptyRect)//can add block
                 {
-                    _callNumbersTop.Push(PopCallBlock(_callRecToMove));
+                    if (_originRectangleNumber != 0)//Make sure the source and the destination are not the same
+                    {
+                        ActivateBlockColour(selectRightRect,1);//Make Blue
+                        _destinationRectangleNumber = 0;//Set destination 
+                        
+                        AnimateBlockMovement();//Move block?????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+                        _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    
+                        ActivateBlockColour(selectRightRect,3);//Make Transparent
+                        _activatedBlockCount = 0;//reset activated block count
+                    }
+                    else
+                    {
+                        ActivateRedError(selectTopRect);
+                    }
                 }
                 else
                 {
@@ -242,7 +281,8 @@ namespace JoshMkhariPROG7312Game.Views
                     {
                         if (_callNumbersTop.Count == 1)//If there is only one block inside
                         { 
-                            _callNumbersTop.Push(PopCallBlock(_callRecToMove)); //add second block
+                            _callNumbersTop.Push(PopCallBlock(_originRectangleNumber)); //add second block
+                            ActivateBlockColour(selectTopRect,3);//Make Transparent
                             if (_callNumbersTop.ElementAt(0) > _callNumbersTop.ElementAt(1))
                             {
                                 _rectOrders[0] = false;//Store Descending for Top Rectangle
@@ -254,26 +294,30 @@ namespace JoshMkhariPROG7312Game.Views
                         }
                         else
                         {
-                            if (PopCallBlock(_callRecToMove) > _callNumbersTop.Peek())//If new addition is greater than top num
+                            if (PopCallBlock(_originRectangleNumber) > _callNumbersTop.Peek())//If new addition is greater than top num
                             {
-                                _callNumbersTop.Push(PopCallBlock(_callRecToMove)); //add block
+                                _callNumbersTop.Push(PopCallBlock(_originRectangleNumber)); //add block
+                                ActivateBlockColour(selectTopRect,3);//Make Transparent
                             }
                             else
                             {
-                                SolidColorBrush blackBrush = new SolidColorBrush(Colors.Red);
-                                TopRectStrokeChange(blackBrush);
+                                ActivateBlockColour(selectTopRect,2);//Display Red
+                                Thread.Sleep(1000);// Keep Red for 1 second
+                                ActivateBlockColour(selectTopRect,3);//Make Transparent
                             }
                             //What is my order
                             if (_rectOrders[0])//If ascending
                             {
-                                if (PopCallBlock(_callRecToMove) > _callNumbersTop.Peek())//If new addition is greater than top num
+                                if (PopCallBlock(_originRectangleNumber) > _callNumbersTop.Peek())//If new addition is greater than top num
                                 {
-                                    _callNumbersTop.Push(PopCallBlock(_callRecToMove)); //add block
+                                    _callNumbersTop.Push(PopCallBlock(_originRectangleNumber)); //add block
+                                    ActivateBlockColour(selectTopRect,3);//Make Transparent
                                 }
                                 else
                                 {
-                                    SolidColorBrush blackBrush = new SolidColorBrush(Colors.Red);
-                                    TopRectStrokeChange(blackBrush);
+                                    ActivateBlockColour(selectTopRect,2);//Display Red
+                                    Thread.Sleep(1000);// Keep Red for 1 second
+                                    ActivateBlockColour(selectTopRect,3);//Make Transparent
                                 }
                             }
                             //Does it match my order?
@@ -281,19 +325,14 @@ namespace JoshMkhariPROG7312Game.Views
                     }
                     else
                     {
-                        SolidColorBrush blackBrush = new SolidColorBrush(Colors.Red);
-                        TopRectStrokeChange(blackBrush);
+                        ActivateBlockColour(selectTopRect,2);//Display Red
+                        Thread.Sleep(1000);// Keep Red for 1 second
+                        ActivateBlockColour(selectTopRect,3);//Make Transparent
                     }
                 }
             }
         }
 
-        private void TopRectStrokeChange(SolidColorBrush blackBrush)
-        {
-            selectTopRect.StrokeThickness = 3;
-            selectTopRect.Stroke = blackBrush;
-        }
-        
         private void selectBottomRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             bool isEmptyRect = !_callNumbersBottom.Any();//check if the list is empty
@@ -306,7 +345,7 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 else
                 {
-                    _callRecToMove = 1;//Represents Bottom
+                    _originRectangleNumber = 1;//Represents Bottom
                 }
                 
                 _activatedBlockCount++;//Program now knows start, waiting for destination
@@ -317,15 +356,15 @@ namespace JoshMkhariPROG7312Game.Views
                 
                 if (isEmptyRect)//can add block
                 {
-                    _callNumbersBottom.Push(PopCallBlock(_callRecToMove));
+                    _callNumbersBottom.Push(PopCallBlock(_originRectangleNumber));
                 }
                 else
                 {
                     if (_callNumbersBottom.Count < 5)//If there is still space for the block
                     {
-                        if (PopCallBlock(_callRecToMove) > _callNumbersTop.Peek())//If new addition is greater than top num
+                        if (PopCallBlock(_originRectangleNumber) > _callNumbersTop.Peek())//If new addition is greater than top num
                         {
-                            _callNumbersTop.Push(PopCallBlock(_callRecToMove)); //add block
+                            _callNumbersTop.Push(PopCallBlock(_originRectangleNumber)); //add block
                         }
                         else
                         {
@@ -352,7 +391,8 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 else
                 {
-                    _callRecToMove = 3;//Represents Right
+                    _originRectangleNumber = 3;//Represents Right
+                    ActivateBlockColour(selectRightRect,1);//Make Gold
                 }
                 
                 _activatedBlockCount++;//Program now knows start, waiting for destination
@@ -363,18 +403,14 @@ namespace JoshMkhariPROG7312Game.Views
                 
                 if (isEmptyRect)//can add block
                 {
-                    SolidColorBrush blackBrush = new SolidColorBrush(Colors.Blue);
-                    //this.RegisterName("MySolidColorBorderBrush", blackBrush);
-                    selectRightRect.StrokeThickness = 3;
-                    selectRightRect.Stroke = blackBrush;
-                    
+                    ActivateBlockColour(selectRightRect,1);//Make Blue
                     
                     //Call animation (Move blocks)
-                    _destination = 3;//Set destination 
-                    AnimateBlockMovement(60);//Move block
-                    _callNumbersRight.Push(PopCallBlock(_callRecToMove));//Push from stack
+                    _destinationRectangleNumber = 3;//Set destination 
+                    AnimateBlockMovement();//Move block
+                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push from stack
                     
-                    
+                    ActivateBlockColour(selectRightRect,3);//Make Transparent
                     _activatedBlockCount = 0;//reset activated block count
 
                 }
@@ -384,14 +420,13 @@ namespace JoshMkhariPROG7312Game.Views
                     {
                         if (_callNumbersRight.Count == 1)//If there is only one block inside
                         { 
-                            SolidColorBrush blackBrush = new SolidColorBrush(Colors.Blue);
-                            selectRightRect.StrokeThickness = 3;
-                            selectRightRect.Stroke = blackBrush;
+                            ActivateBlockColour(selectRightRect,1);//Make Transparent
                             
                             //Call animation (Move blocks)
-                            _destination = 3;//Set destination 
-                            AnimateBlockMovement(60);//Move block
-                            _callNumbersRight.Push(PopCallBlock(_callRecToMove));//Push from stack
+                            _destinationRectangleNumber = 3;//Set destination 
+                            AnimateBlockMovement();//Move block
+                            _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                            ActivateBlockColour(selectRightRect,3);//Make Transparent
                             _activatedBlockCount = 0;//reset activated block count
                             
                             if (_callNumbersRight.ElementAt(0) > _callNumbersRight.ElementAt(1))
@@ -406,26 +441,31 @@ namespace JoshMkhariPROG7312Game.Views
                         }
                         else
                         {
-                            if (PopCallBlock(_callRecToMove) > _callNumbersRight.Peek())//If new addition is greater than top num
+                            if (PopCallBlock(_originRectangleNumber) > _callNumbersRight.Peek())//If new addition is greater than top num
                             {
+                                ActivateBlockColour(selectRightRect,1);//Make Blue
                                 //Call animation (Move blocks)
-                                _destination = 3;//Set destination 
-                                AnimateBlockMovement(60);//Move block
-                                _callNumbersRight.Push(PopCallBlock(_callRecToMove)); //add block
+                                _destinationRectangleNumber = 3;//Set destination 
+                                AnimateBlockMovement();//Move block
+                                _callNumbersRight.Push(PopCallBlock(_originRectangleNumber)); //add block
+                                ActivateBlockColour(selectRightRect,3);//Make Transparent
                             }
                             else
                             {
                                 MessageBox.Show("This is an ascending list only X");
+                                
                             }
                             //What is my order
                             if (_rectOrders[0])//If ascending
                             {
-                                if (PopCallBlock(_callRecToMove) > _callNumbersRight.Peek())//If new addition is greater than top num
+                                if (PopCallBlock(_originRectangleNumber) > _callNumbersRight.Peek())//If new addition is greater than top num
                                 {
                                     //Call animation (Move blocks)
-                                    _destination = 3;//Set destination 
-                                    AnimateBlockMovement(60);//Move block
-                                    _callNumbersRight.Push(PopCallBlock(_callRecToMove)); //add block
+                                    ActivateBlockColour(selectRightRect,1);//Make Blue
+                                    _destinationRectangleNumber = 3;//Set destination 
+                                    AnimateBlockMovement();//Move block
+                                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber)); //add block
+                                    ActivateBlockColour(selectRightRect,3);//Make Transparent
                                 }
                                 else
                                 {
@@ -434,9 +474,11 @@ namespace JoshMkhariPROG7312Game.Views
                             }
                             else
                             {
-                                if (PopCallBlock(_callRecToMove) < _callNumbersRight.Peek())//If new addition is smaller than top num
+                                if (PopCallBlock(_originRectangleNumber) < _callNumbersRight.Peek())//If new addition is smaller than top num
                                 {
-                                    _callNumbersRight.Push(PopCallBlock(_callRecToMove)); //add block
+                                    ActivateBlockColour(selectRightRect,1);//Make Blue
+                                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber)); //add block
+                                    ActivateBlockColour(selectRightRect,3);//Make Transparent
                                 }
                                 else
                                 {
@@ -453,7 +495,91 @@ namespace JoshMkhariPROG7312Game.Views
                 }
             }
         }
-
+        private void selectLeftRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            bool isEmptyRect = !_callNumbersLeft.Any();//check if the list is empty
+            if (_activatedBlockCount == 0)//This is start block
+            {
+                //check num of blocks within rect
+                if (isEmptyRect)//No more blocks to move
+                {
+                    MessageBox.Show("Code X to appear and say empty");
+                }
+                else
+                {
+                    _originRectangleNumber = 2;//Represents Left
+                }
+                
+                _activatedBlockCount++;//Program now knows start, waiting for destination
+            }
+            else //this is destination block
+            {
+                //check num of blocks within rect
+                
+                if (isEmptyRect)//can add block
+                {
+                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber));
+                }
+                else
+                {
+                    if (_callNumbersLeft.Count < 5)//If there is still space for the block
+                    {
+                        if (_callNumbersLeft.Count == 1)//If there is only one block inside
+                        { 
+                            _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber)); //add second block
+                            SolidColorBrush blackBrush = new SolidColorBrush(Colors.Transparent);
+                            if (_callNumbersLeft.ElementAt(0) > _callNumbersLeft.ElementAt(1))
+                            {
+                                _rectOrders[0] = false;//Store Descending for Left Rectangle
+                            }
+                            else
+                            {
+                                _rectOrders[0] = true;//Store Ascending for Left Rectangle
+                            }
+                        }
+                        else
+                        {
+                            if (PopCallBlock(_originRectangleNumber) > _callNumbersLeft.Peek())//If new addition is greater than top num
+                            {
+                                _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber)); //add block
+                            }
+                            else
+                            {
+                                MessageBox.Show("This is an ascending list only X");
+                            }
+                            //What is my order
+                            if (_rectOrders[0])//If ascending
+                            {
+                                if (PopCallBlock(_originRectangleNumber) > _callNumbersLeft.Peek())//If new addition is greater than top num
+                                {
+                                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber)); //add block
+                                }
+                                else
+                                {
+                                    MessageBox.Show("This is currently an ascending list");
+                                }
+                            }
+                            else
+                            {
+                                if (PopCallBlock(_originRectangleNumber) < _callNumbersLeft.Peek())//If new addition is smaller than top num
+                                {
+                                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber)); //add block
+                                }
+                                else
+                                {
+                                    MessageBox.Show("This is currently a descending list");
+                                }
+                            }
+                            //Does it match my order?
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No Space Error");
+                    }
+                }
+            }
+        }        
         //For both left and right rectangles
         private int ReturnCurrentBlockYLeftRight(Stack<int> rectStack)
         {
@@ -472,83 +598,105 @@ namespace JoshMkhariPROG7312Game.Views
                     return 213;
             }
         }
-        //Store locations where blocks must rest based on amount of items within rectangle
-        private int[] topRectCanvasYLocations = new[] { 198, 171, 144, 117, 0 }; //For top rectangle
-        private int[] bottomRectCanvasYLocations = new[] { 422, 396, 369, 342, 315 };//For bottom rectangle
 
-        private void MoveRectangle(int rectangleNumber, int source)
+
+        private void MoveRectangle(int rectangleNumber, int originRectTop)
         {
             switch (rectangleNumber)
             {
                 case 1:
-                    StartYJourneyUp(rectBlock1,source);
+                    StartYJourney(rectBlock1,originRectTop);
                     break;
                 case 2:
-                    StartYJourneyUp(rectBlock2,source);
+                    StartYJourney(rectBlock2,originRectTop);
                     break;
                 case 3:
-                    StartYJourneyUp(rectBlock3,source);
+                    StartYJourney(rectBlock3,originRectTop);
                     break;
                 case 4:
-                    StartYJourneyUp(rectBlock4,source);
+                    StartYJourney(rectBlock4,originRectTop);
                     break;
                 case 5:
-                    StartYJourneyUp(rectBlock5,source);
+                    StartYJourney(rectBlock5,originRectTop);
                     break;
                 case 6:
-                    StartYJourneyUp(rectBlock6,source);
+                    StartYJourney(rectBlock6,originRectTop);
                     break;
                 case 7:
-                    StartYJourneyUp(rectBlock7,source);
+                    StartYJourney(rectBlock7,originRectTop);
                     break;
                 case 8:
-                    StartYJourneyUp(rectBlock8,source);
+                    StartYJourney(rectBlock8,originRectTop);
                     break;
                 case 9:
-                    StartYJourneyUp(rectBlock9,source);
+                    StartYJourney(rectBlock9,originRectTop);
                     break;
                 case 10:
-                    StartYJourneyUp(rectBlock10,source);
+                    StartYJourney(rectBlock10,originRectTop);
                     break;
             }
         }
 
-        private void StartXJourneyRight(Border border)
+        private void StartXJourneyRight(Border border, int stop)
         {
             Debug.WriteLine("This is left now " +Canvas.GetLeft(border));
             do
             {
                 Canvas.SetLeft(border,Canvas.GetLeft(border) + 1);
                 
-            } while (Canvas.GetLeft(border)<478);
+            } while (Canvas.GetLeft(border)<stop);
         }
-
-        //https://stackoverflow.com/questions/10298216/moving-any-control-in-wpf
-        private void StartYJourneyUp(Border border, int top)
+        private void StartXJourneyLeft(Border border, int stop)
         {
+            Debug.WriteLine("This is left now " + Canvas.GetLeft(border));
+            do
+            {
+                Canvas.SetLeft(border,Canvas.GetLeft(border) - 1);
+                
+            } while (Canvas.GetLeft(border)>stop);
+        }
+        private void StartYJourneyUp(Border border)
+        {
+            int destinationY = 0;
+            switch (_destinationRectangleNumber)
+            {
+                case 0: //For Top Block
+                    destinationY = ReturnCurrentBlockYTopBottom(_callNumbersTop,topRectCanvasYLocations);
+                    break;
+                case 1:// For Bottom block
+                    destinationY = ReturnCurrentBlockYTopBottom(_callNumbersBottom,bottomRectCanvasYLocations);
+                    break;
+                case 2: //For left Block
+                    destinationY = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
+                    break;
+                case 3:// For right block
+                    destinationY = ReturnCurrentBlockYLeftRight(_callNumbersRight);
+                    break;
+  
+            }
+            Debug.WriteLine("this is destination Y" + destinationY);
             do
             {
                 Canvas.SetTop(border,Canvas.GetTop(border) -1);
                 
-            } while (Canvas.GetTop(border)>top);
-            
-            StartXJourneyRight(border);
-            StartYJourneyDown(border);
+            } while (Canvas.GetTop(border)>destinationY);
+            //Check destination amount of elements
         }
-
         private void StartYJourneyDown(Border border)
         {
-            Debug.WriteLine("this is " + _destination);
             int destinationY = 0;
-            switch (_destination)
+            switch (_destinationRectangleNumber)
             {
-                case 0:
+                case 0: //For Top Block
+                    destinationY = ReturnCurrentBlockYTopBottom(_callNumbersTop,topRectCanvasYLocations);
                     break;
-                case 1:
+                case 1:// For Bottom block
+                    destinationY = ReturnCurrentBlockYTopBottom(_callNumbersBottom,bottomRectCanvasYLocations);
                     break;
-                case 2:
+                case 2: //For left Block
+                    destinationY = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
                     break;
-                case 3:
+                case 3:// For right block
                     destinationY = ReturnCurrentBlockYLeftRight(_callNumbersRight);
                     break;
   
@@ -562,137 +710,176 @@ namespace JoshMkhariPROG7312Game.Views
             //Check destination amount of elements
             
         }
-        private void AnimateBlockMovement(int top)
+
+        //https://stackoverflow.com/questions/10298216/moving-any-control-in-wpf
+        private void StartYJourney(Border border, int top)
         {
-            switch (_callRecToMove)//Determine origin
+            //Move up based on current location to top of current rectangle
+            do
+            {
+                Canvas.SetTop(border,Canvas.GetTop(border) -1);
+                
+            } while (Canvas.GetTop(border)>top);
+            
+            //Determine if need to be going left or right
+
+            
+            switch (_destinationRectangleNumber)//0 Top, 1 Bottom, 2 Left, 3 Right
+            {
+                case 0 : //Going to top
+                    switch (_originRectangleNumber)
+                    {
+                        case 1://Starting from bottom
+                            StartYJourneyUp(border); //Just go straight up
+                            break;
+                        case 2://Starting from left
+                            StartXJourneyRight(border,322);
+                            //Then go right until reach 322
+                            break;
+                        case 3://Starting from right
+                            StartXJourneyLeft(border,322);
+                        //Then go left until reach 322
+                            break;
+                    }
+                    break;
+                case 1 : //Going to Bottom 285
+                    switch (_originRectangleNumber)
+                    {
+                        case 0://Starting from Top
+                            //Just go straight down
+                            StartYJourneyDown(border);
+                            break;
+                        case 2://Starting from left
+                            //Go right until reach 322
+                            StartXJourneyRight(border,322);
+                        //Then go down until reach saved location
+                            break;
+                        case 3://Starting from right
+                            //Go left until reach 322
+                            StartXJourneyLeft(border,322);
+                        //Then go down reach saved location
+                            break;
+                    }
+                    break;
+                case 2 : //Going to Left 180
+                    switch (_originRectangleNumber)
+                    {
+                        case 0://Starting from top
+                            //Go left until 175
+                            StartXJourneyLeft(border,175);
+                            //Then go down reach saved location
+                            StartYJourneyDown(border);
+                            break;
+                        case 1://Starting from bottom
+                            StartXJourneyLeft(border,175);
+                            //Then go down reach saved location
+                            StartYJourneyUp(border);
+                            break;
+                        case 3://Starting from right
+                            StartXJourneyLeft(border,175);
+                            //Then go down reach saved location
+                            StartYJourneyDown(border);
+                            break;
+                    }
+                    break;
+                case 3 : //Going to Right one
+                    switch (_originRectangleNumber)
+                    { //478
+                        case 0://Starting from top
+                            //Go right until 478
+                            StartXJourneyRight(border,478);
+                            //Then go down reach saved location
+                            StartYJourneyDown(border);
+                            break;
+                        case 1://Starting from bottom
+                            //Go up until top of right and left
+                            //Go right until 478
+                            StartXJourneyRight(border,478);
+                            //Then go down reach saved location
+                            StartYJourneyUp(border);
+                            break;
+                        case 2://Starting from left
+                            //Go right until 478
+                            StartXJourneyRight(border,478);
+                            //Then go down reach saved location
+                            StartYJourneyDown(border);
+                            break;
+                    }
+                    break;
+            }
+            
+        }
+        //Store locations where blocks must rest based on amount of items within rectangle
+        private int[] topRectCanvasYLocations = new[] { 198, 171, 144, 117, 0 }; //For top rectangle
+        private int[] bottomRectCanvasYLocations = new[] { 422, 396, 369, 342, 315 };//For bottom rectangle
+
+        private int ReturnCurrentBlockYTopBottom(Stack<int> rectStack, int[] locations)
+        {
+            int location = rectStack.Count - 1;
+            if (location < 0)
+                location++;
+
+            return locations[location];
+        }
+
+        private void AnimateBlockMovement()
+        {
+            switch (_originRectangleNumber)//Determine origin
             {
                 case 0://From Top
-                    //Calculate steps to top of rectangle
-                
-                //Check current amount of elements in rectangle
-                    //canvasTop = topRectCanvasYLocations[_callNumbersTop.Count-1];//Retrieves Y location of the rectangle on top
                     
-                    //Now find out which rectangle it is
-
                     for (int i = 0; i < rectValueNamePair.Count; i++)
                     {
                         if (rectValueNamePair.Keys.ElementAt(i)==_callNumbersTop.Peek())
                         {
-                            MoveRectangle(rectValueNamePair.Values.ElementAt(i),top);
+                            MoveRectangle(rectValueNamePair.Values.ElementAt(i),60);
                             break;
                         }
                     }
-
-
                     //canvasLeft = 322; //Location on x axis where block must stop within top and bottom rectangles
                     break;
                 
-                //Check if going left, right, down
-                //return _callNumbersTop.Pop();
-                
-                case 1://For bottom rectangle
+                case 1://For bottom rectangle 285
                     //canvasLeft = 322;//Location on x axis where block must stop within top and bottom rectangles
-                    //canvasTop = bottomRectCanvasYLocations[_callNumbersBottom.Count-1];
+                    for (int i = 0; i < rectValueNamePair.Count; i++)
+                    {
+                        if (rectValueNamePair.Keys.ElementAt(i)==_callNumbersBottom.Peek())
+                        {
+                            MoveRectangle(rectValueNamePair.Values.ElementAt(i),285);
+                            break;
+                        }
+                    }
                     break;
-                    //return _callNumbersBottom.Pop();
-                
+
                 case 2://For Left rectangle
                     //canvasTop = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
                     //return _callNumbersLeft.Pop();
+                    for (int i = 0; i < rectValueNamePair.Count; i++)
+                    {
+                        if (rectValueNamePair.Keys.ElementAt(i)==_callNumbersLeft.Peek())
+                        {
+                            MoveRectangle(rectValueNamePair.Values.ElementAt(i),180);
+                            break;
+                        }
+                    }
                     //canvasLeft = 175;//Location on x axis where block must stop within left rectangle 
                     break;
-                
-                default://For right rectangle
+                default:
+                    for (int i = 0; i < rectValueNamePair.Count; i++)
+                    {
+                        if (rectValueNamePair.Keys.ElementAt(i)==_callNumbersRight.Peek())
+                        {
+                            MoveRectangle(rectValueNamePair.Values.ElementAt(i),180);
+                            break;
+                        }
+                    }
+                    //For right rectangle
                     //canvasTop = ReturnCurrentBlockYLeftRight(_callNumbersRight);
                     //canvasLeft = 478;//Location on x axis where block must stop within right rectangle 
                     break;
-                //return _callNumbersRight.Pop();
             }
         }
-        private void selectLeftRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            bool isEmptyRect = !_callNumbersLeft.Any();//check if the list is empty
-            if (_activatedBlockCount == 0)//This is start block
-            {
-                //check num of blocks within rect
-                if (isEmptyRect)//No more blocks to move
-                {
-                    MessageBox.Show("Code X to appear and say empty");
-                }
-                else
-                {
-                    _callRecToMove = 2;//Represents Left
-                }
-                
-                _activatedBlockCount++;//Program now knows start, waiting for destination
-            }
-            else //this is destination block
-            {
-                //check num of blocks within rect
-                
-                if (isEmptyRect)//can add block
-                {
-                    _callNumbersLeft.Push(PopCallBlock(_callRecToMove));
-                }
-                else
-                {
-                    if (_callNumbersLeft.Count < 5)//If there is still space for the block
-                    {
-                        if (_callNumbersLeft.Count == 1)//If there is only one block inside
-                        { 
-                            _callNumbersLeft.Push(PopCallBlock(_callRecToMove)); //add second block
-                            if (_callNumbersLeft.ElementAt(0) > _callNumbersLeft.ElementAt(1))
-                            {
-                                _rectOrders[0] = false;//Store Descending for Left Rectangle
-                            }
-                            else
-                            {
-                                _rectOrders[0] = true;//Store Ascending for Left Rectangle
-                            }
-                        }
-                        else
-                        {
-                            if (PopCallBlock(_callRecToMove) > _callNumbersLeft.Peek())//If new addition is greater than top num
-                            {
-                                _callNumbersLeft.Push(PopCallBlock(_callRecToMove)); //add block
-                            }
-                            else
-                            {
-                                MessageBox.Show("This is an ascending list only X");
-                            }
-                            //What is my order
-                            if (_rectOrders[0])//If ascending
-                            {
-                                if (PopCallBlock(_callRecToMove) > _callNumbersLeft.Peek())//If new addition is greater than top num
-                                {
-                                    _callNumbersLeft.Push(PopCallBlock(_callRecToMove)); //add block
-                                }
-                                else
-                                {
-                                    MessageBox.Show("This is currently an ascending list");
-                                }
-                            }
-                            else
-                            {
-                                if (PopCallBlock(_callRecToMove) < _callNumbersLeft.Peek())//If new addition is smaller than top num
-                                {
-                                    _callNumbersLeft.Push(PopCallBlock(_callRecToMove)); //add block
-                                }
-                                else
-                                {
-                                    MessageBox.Show("This is currently a descending list");
-                                }
-                            }
-                            //Does it match my order?
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("No Space Error");
-                    }
-                }
-            }
-        }        
+
         
         private int PopCallBlock(int recLocation)
                  {
