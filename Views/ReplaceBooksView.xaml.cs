@@ -18,8 +18,8 @@ namespace JoshMkhariPROG7312Game.Views
     {
         private int _activatedBlockCount;
 
-        private bool[] _rectOrders = new bool [4];//Store whether rectangle is ascending or descending
-        private int[][] _rectanglesArr = new int[4][]; //https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
+        private char[] _rectangleSortOrder = new char [4];//Store whether rectangle is ascending or descending
+        //private int[][] _rectanglesArr = new int[4][]; //https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
         // Creating 2 Stacks of Integers https://www.tutorialsteacher.com/csharp/csharp-stack
         
         private Stack<int> _callNumbersTop = new Stack<int>();//To store initial numbers in top rectangle
@@ -157,7 +157,6 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 callNumbers.ForEach(o => _callNumbersBottom.Push(o));//store the remaining numbers within this stack
             }
-
             else
             {
                 callNumbers.ForEach(o => _callNumbersTop.Push(o));////store the remaining numbers within this stack
@@ -165,10 +164,10 @@ namespace JoshMkhariPROG7312Game.Views
             callNumbers.Clear();
 
             //https://www.geeksforgeeks.org/stack-toarray-method-in-java-with-example/
-            _rectanglesArr[0] = _callNumbersTop.ToArray();
-            _rectanglesArr[1] = _callNumbersBottom.ToArray();
-            _rectanglesArr[2] = new int[5];
-            _rectanglesArr[3] = new int[5];
+            //_rectanglesArr[0] = _callNumbersTop.ToArray();
+           // _rectanglesArr[1] = _callNumbersBottom.ToArray();
+           // _rectanglesArr[2] = new int[5];
+            //_rectanglesArr[3] = new int[5];
 
             AssignValuesToBlocks();
         }
@@ -232,11 +231,12 @@ namespace JoshMkhariPROG7312Game.Views
             
         }
 
-        private void ActivateRedError(Rectangle rect)
+        private void ActivateRedError(Rectangle rect,String errorText)
         {
             ActivateBlockColour(rect,2);//Display Red
-            Thread.Sleep(1000);// Keep Red for 1 second
-            ActivateBlockColour(rect,3);//Make Transparent
+            MessageBox.Show("Action not allowed " + errorText);
+            ClearAllFocus();
+            _activatedBlockCount = 0;
         }
 
         private void ClearAllFocus()
@@ -270,22 +270,22 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 if (_callNumbersLeft.ElementAt(0) > _callNumbersLeft.ElementAt(1))
                 {
-                    _rectOrders[1] = false;//Store Descending for Top Rectangle
+                    _rectangleSortOrder[2] = 'D';//Store Descending for Top Rectangle
                 }
                 else
                 {
-                    _rectOrders[1] = true;//Store Ascending for Top Rectangle
+                    _rectangleSortOrder[2] = 'A';//Store Ascending for Top Rectangle
                 }
             }            
             if (_callNumbersRight.Count > 1)
             {
                 if (_callNumbersRight.ElementAt(0) > _callNumbersRight.ElementAt(1))
                 {
-                    _rectOrders[1] = false;//Store Descending for Top Rectangle
+                    _rectangleSortOrder[3] = 'D';//Store Descending for Top Rectangle
                 }
                 else
                 {
-                    _rectOrders[1] = true;//Store Ascending for Top Rectangle
+                    _rectangleSortOrder[3] = 'A';//Store Ascending for Top Rectangle
                 }
             }
         }
@@ -297,7 +297,7 @@ namespace JoshMkhariPROG7312Game.Views
                 //check num of blocks within rect
                 if (isEmptyRect)//No more blocks to move
                 {
-                    ActivateRedError(currentRectangle);
+                    ActivateRedError(currentRectangle,"This rectangle is empty, cannot send anything from it");
                 }
                 else
                 {
@@ -310,7 +310,7 @@ namespace JoshMkhariPROG7312Game.Views
                 //check num of blocks within rect
                 if (isEmptyRect)//can add block
                 {
-                    if (_originRectangleNumber != 0)//Make sure the source and the destination are not the same
+                    if (_originRectangleNumber != rectangleNumber)//Make sure the source and the destination are not the same
                     {
                         ActivateBlockColour(currentRectangle,1);//Make Blue
                         _destinationRectangleNumber = rectangleNumber;//Set destination 
@@ -318,7 +318,7 @@ namespace JoshMkhariPROG7312Game.Views
                     }
                     else
                     {
-                        ActivateRedError(currentRectangle);
+                        ActivateRedError(currentRectangle,"You cannot send a call number to the same start");
                     }
                 }
                 else
@@ -331,16 +331,8 @@ namespace JoshMkhariPROG7312Game.Views
                         }
                         else
                         {
-                            if (PeepCallBlock(_originRectangleNumber) > currentRectangleStack.Peek())//If new addition is greater than top num
-                            {
-                                UpdateStack(rectangleNumber);
-                            }
-                            else
-                            {
-                                ActivateRedError(currentRectangle);
-                            }
                             //What is my order
-                            if (_rectOrders[rectangleNumber])//If ascending
+                            if (_rectangleSortOrder[rectangleNumber] == 'A')//If ascending
                             {
                                 if (PeepCallBlock(_originRectangleNumber) > currentRectangleStack.Peek())//If new addition is greater than top num
                                 {
@@ -348,15 +340,26 @@ namespace JoshMkhariPROG7312Game.Views
                                 }
                                 else
                                 {
-                                    ActivateRedError(currentRectangle);
+                                    ActivateRedError(currentRectangle,"This is a ascending list");
+                                }
+                            }else if (_rectangleSortOrder[rectangleNumber] == 'D') //If Descending
+                            {
+                                if (PeepCallBlock(_originRectangleNumber) < currentRectangleStack.Peek()) //If new addition is greater than top num
+                                {
+                                    UpdateStack(rectangleNumber);
+                                }
+                                else
+                                {
+                                    ActivateRedError(currentRectangle,"This is a descending list");
                                 }
                             }
+
                             //Does it match my order?
                         }
                     }
                     else
                     {
-                        ActivateRedError(currentRectangle);
+                        ActivateRedError(currentRectangle,"Full");
                     }
                 }
             }
