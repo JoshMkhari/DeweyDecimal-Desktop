@@ -3,23 +3,24 @@ using System.Windows.Input;
 
 namespace JoshMkhariPROG7312Game.Core
 {
-    class RelayCOmmand : ICommand
+    internal class RelayCOmmand : ICommand
     {
+        private readonly Func<object, bool> _canExecute;
 
-        private Action<object> _execute;
-        private Func<object, bool> _canExecute;
-        
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
+        private readonly Action<object> _execute;
 
         public RelayCOmmand(Action<object> execute, Func<object, bool> canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
         }
+
+        public event EventHandler CanExecuteChanged
+        {
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
+        }
+
         public bool CanExecute(object parameter)
         {
             return _canExecute == null || _canExecute(parameter);

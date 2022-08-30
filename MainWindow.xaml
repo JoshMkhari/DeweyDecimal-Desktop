@@ -12,28 +12,28 @@
         AllowsTransparency="True">
 
     <Window.DataContext>
-        <local:MainViewModel/>
+        <local:MainViewModel />
     </Window.DataContext>
-    
+
     <Border Background="#272537"
             CornerRadius="20">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="75"/>
-                <RowDefinition/>
+                <RowDefinition Height="75" />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
             <TextBlock Text="Game Name"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment ="Left"
-                   Margin="20,0,0,0"
-                   Foreground="White"
-                   FontSize="22"/>
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="20,0,0,0"
+                       Foreground="White"
+                       FontSize="22" />
 
             <StackPanel Grid.Row="1">
                 <RadioButton Content="Home"
@@ -42,29 +42,29 @@
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
-                             Command="{Binding HomeViewCommand}"/>
+                             Command="{Binding HomeViewCommand}" />
                 <RadioButton Content="Replacing Books"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
-                             Command="{Binding ReplaceViewCommand}"/>
+                             Command="{Binding ReplaceViewCommand}" />
                 <RadioButton Content="Identifying areas"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}" />
                 <RadioButton Content="Finding call numbers"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}" />
             </StackPanel>
 
             <ContentControl Grid.Row="1"
                             Grid.Column="1"
                             Margin="10"
-                            Content="{Binding CurrentView}"/>
+                            Content="{Binding CurrentView}" />
         </Grid>
 
 
