@@ -27,6 +27,10 @@ namespace JoshMkhariPROG7312Game.Views
         private Stack<int> _callNumbersLeft = new Stack<int>();//To store initial numbers in left rectangle
         private Stack<int> _callNumbersRight = new Stack<int>();//To store initial numbers in right rectangle
         
+        //Store locations where blocks must rest based on amount of items within rectangle
+        private int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 0 }; //For top rectangle
+        private int[] _bottomRectCanvasYLocations = { 422, 396, 369, 342, 315 };//For bottom rectangle
+        
         private int _originRectangleNumber;//??????????????????????????????????????
         private int _destinationRectangleNumber;//The rectangle a block is being transferred to
 
@@ -44,7 +48,7 @@ namespace JoshMkhariPROG7312Game.Views
             SolidColorBrush blackBrush = new SolidColorBrush(Colors.Blue);
             this.RegisterName("MySolidColorBorderBrush", blackBrush);
 
-            List<int> callNumbers = new List<int>();//To store initial 10 values
+            Stack<int> callNumbers = new Stack<int>();//To store initial 10 values
             //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
             Random rnd = new Random();
             do
@@ -53,7 +57,7 @@ namespace JoshMkhariPROG7312Game.Views
                 bool isEmpty = !callNumbers.Any();//check if the list is empty
                 if (isEmpty)
                 {
-                    callNumbers.Add(randomNum);//add a value
+                    callNumbers.Push(randomNum);//add a value
                 }
                 else
                 {
@@ -67,7 +71,7 @@ namespace JoshMkhariPROG7312Game.Views
                         }
                         else
                         {
-                            callNumbers.Add(randomNum);//Add the value that was not found
+                            callNumbers.Push(randomNum);//Add the value that was not found
                             found = false;//Stop the do while
                         }
                     } while (found);
@@ -75,66 +79,15 @@ namespace JoshMkhariPROG7312Game.Views
                 }
             } while (callNumbers.Count < 10);//Repeat until 10 random numbers have been stored
 
+            for (int i = 0; i < 5; i++)
+            {
+                _callNumbersTop.Push(callNumbers.ElementAt(i));
+            }            
+            for (int i = 5; i < 10; i++)
+            {
+                _callNumbersBottom.Push(callNumbers.ElementAt(i));
+            }
             
-            bool topFull = false;
-            bool botFull = false;
-            do
-            {
-                bool isEmptyRect;
-                int rectChoice = rnd.Next(2);//stores random integers < 2
-                if (rectChoice == 0)//Top rectangle was chosen
-                {
-                    isEmptyRect = !_callNumbersTop.Any();//check if the list is empty
-                    if (isEmptyRect)
-                    {
-                        _callNumbersTop.Push(rnd.Next(1000));//add a value
-                    }
-                    else
-                    {
-                        if (_callNumbersTop.Count < 5)//Check that there are less than 5 elements
-                        {
-                            int location = rnd.Next(callNumbers.Count - 1);//Choose a random number within the list
-                            _callNumbersTop.Push(callNumbers.ElementAt(location));//Push random number to the rectangle list
-                            callNumbers.RemoveAt(location);//Remove the number that was just pushed
-                        }
-                        else
-                        {
-                            topFull = true;
-                        }
-                    }
-                }
-                else
-                {
-                    isEmptyRect = !_callNumbersBottom.Any();//check if the list is empty
-                    if (isEmptyRect)
-                    {
-                        _callNumbersBottom.Push(rnd.Next(1000));//add a value
-                    }
-                    else
-                    {
-                        if (_callNumbersBottom.Count < 5)//Check that there are less than 5 elements
-                        {
-                            int location = rnd.Next(callNumbers.Count - 1);//Choose a random number within the list
-                            _callNumbersBottom.Push(callNumbers.ElementAt(location));//Push random number to the rectangle list
-                            callNumbers.RemoveAt(location);//Remove the number that was just pushed
-                        }
-                        else
-                        {
-                            botFull = true;
-                        }
-                    }
-                }
-
-            } while (!topFull || !botFull);//Stop when either the top rect or bottom rect is full
-            Console.WriteLine("We make it this far");
-            if (topFull)//if the top one was the stack to be full https://stackoverflow.com/questions/19141259/how-to-enqueue-a-list-of-items-in-c
-            {
-                callNumbers.ForEach(o => _callNumbersBottom.Push(o));//store the remaining numbers within this stack
-            }
-            else
-            {
-                callNumbers.ForEach(o => _callNumbersTop.Push(o));////store the remaining numbers within this stack
-            }
             callNumbers.Clear();
 
             //https://www.geeksforgeeks.org/stack-toarray-method-in-java-with-example/
@@ -174,10 +127,32 @@ namespace JoshMkhariPROG7312Game.Views
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(3),9); //storing the value with the rectangle name
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(4),10); //storing the value with the rectangle name
             
-            
+            Debug.WriteLine("Top");
+            foreach (var VARIABLE in _callNumbersTop)
+            {
+                Debug.WriteLine(VARIABLE + ' ');
+            }            
+            Debug.WriteLine(" ");
+            Debug.WriteLine("Bottom");
+            foreach (var VARIABLE in _callNumbersBottom)
+            {
+                Debug.WriteLine(VARIABLE);
+            }       
+            Debug.WriteLine(" ");
+            Debug.WriteLine("Left");
+            foreach (var VARIABLE in _callNumbersLeft)
+            {
+                Debug.WriteLine(VARIABLE + ' ');
+            }    
+            Debug.WriteLine(" ");
+            Debug.WriteLine("Right");
+            foreach (var VARIABLE in _callNumbersRight)
+            {
+                Debug.WriteLine(VARIABLE + ' ');
+            }
+            Debug.WriteLine(" ");
         }
-
-
+        
         //To colour block strokes
         private void ActivateBlockColour(Rectangle rect, int mode)
         {
@@ -205,67 +180,79 @@ namespace JoshMkhariPROG7312Game.Views
             
         }
 
-        private void ActivateRedError(Rectangle rect,String errorText)
+        //To make a block show red when an error occurs
+        private void ActivateRedError(Rectangle rect,string errorText)
         {
             ActivateBlockColour(rect,2);//Display Red
             MessageBox.Show("Action not allowed " + errorText);
             ClearAllFocus();
             _activatedBlockCount = 0;
         }
-
+        //To clear all colours surrounding blocks
         private void ClearAllFocus()
         {
             ActivateBlockColour(selectTopRect,3);//Make Transparent
             ActivateBlockColour(selectBottomRect,3);//Make Transparent
             ActivateBlockColour(selectLeftRect,3);//Make Transparent
             ActivateBlockColour(selectRightRect,3);//Make Transparent
+            _activatedBlockCount = 0;
+            _destinationRectangleNumber = 0;
         }
 
+        //To push a block number from one stack to another
         private void UpdateStack(int rectangleNumber)
         {
             AnimateBlockMovement();
             switch (rectangleNumber)
             {
                 case 0:
-                    _callNumbersTop.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    _callNumbersTop.Push(PopCallBlock(_originRectangleNumber));//Push to top stack
+                    Debug.WriteLine("Pushed a block to top");
                     break;                
                 case 1:
-                    _callNumbersBottom.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    _callNumbersBottom.Push(PopCallBlock(_originRectangleNumber));//Push to bottom stack
+                    Debug.WriteLine("Pushed a block to bottom");
                     break;                
                 case 2:
-                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    _callNumbersLeft.Push(PopCallBlock(_originRectangleNumber));//Push to left stack
+                    Debug.WriteLine("Pushed a block to left");
                     break;                
                 case 3:
-                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push from stack
+                    _callNumbersRight.Push(PopCallBlock(_originRectangleNumber));//Push to right stack
+                    Debug.WriteLine("Pushed a block to right");
                     break;
             }
 
             if (_callNumbersLeft.Count > 1)
             {
-                if (_callNumbersLeft.ElementAt(0) > _callNumbersLeft.ElementAt(1))
+                if (_callNumbersLeft.ElementAt(0) < _callNumbersLeft.ElementAt(1))
                 {
-                    _rectangleSortOrder[2] = 'D';//Store Descending for Top Rectangle
+                    _rectangleSortOrder[2] = 'D';//Store Descending for Left Rectangle
+                    Debug.WriteLine("Left block is descending");
                 }
                 else
                 {
-                    _rectangleSortOrder[2] = 'A';//Store Ascending for Top Rectangle
+                    _rectangleSortOrder[2] = 'A';//Store Ascending for Left Rectangle
+                    Debug.WriteLine("Left block is ascending");
                 }
             }            
             if (_callNumbersRight.Count > 1)
             {
-                if (_callNumbersRight.ElementAt(0) > _callNumbersRight.ElementAt(1))
+                if (_callNumbersRight.ElementAt(0) < _callNumbersRight.ElementAt(1))
                 {
-                    _rectangleSortOrder[3] = 'D';//Store Descending for Top Rectangle
+                    _rectangleSortOrder[3] = 'D';//Store Descending for Right Rectangle
+                    Debug.WriteLine("Right block is descending");
                 }
                 else
                 {
-                    _rectangleSortOrder[3] = 'A';//Store Ascending for Top Rectangle
+                    _rectangleSortOrder[3] = 'A';//Store Ascending for Right Rectangle
+                    Debug.WriteLine("Right block is ascending");
                 }
             }
         }
         private void SelectedRectangle(Rectangle currentRectangle, Stack<int> currentRectangleStack, int rectangleNumber)
         {
-            bool isEmptyRect = !currentRectangleStack.Any();//check if the list is empty
+            var isEmptyRect = !currentRectangleStack.Any();//check if the list is empty
             if (_activatedBlockCount == 0)//This is start block
             {
                 //check num of blocks within rect
@@ -275,7 +262,7 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 else
                 {
-                    _originRectangleNumber = rectangleNumber;//Represents Top
+                    _originRectangleNumber = rectangleNumber;//Represents 
                     ActivateBlockColour(currentRectangle,0);//Display Gold as this is start block
                 }
             }
@@ -288,6 +275,7 @@ namespace JoshMkhariPROG7312Game.Views
                     {
                         ActivateBlockColour(currentRectangle,1);//Make Blue
                         _destinationRectangleNumber = rectangleNumber;//Set destination 
+                        Debug.WriteLine("if (isEmptyRect) _destinationRectangleNumber " + rectangleNumber);
                         UpdateStack(rectangleNumber);
                     }
                     else
@@ -301,29 +289,45 @@ namespace JoshMkhariPROG7312Game.Views
                     {
                         if (currentRectangleStack.Count == 1)//If there is only one block inside
                         { 
+                            ActivateBlockColour(currentRectangle,1);//Make Blue
+                            _destinationRectangleNumber = rectangleNumber;//Set destination 
+                            Debug.WriteLine("if (currentRectangleStack.Count == 1) _destinationRectangleNumber " + rectangleNumber);
                             UpdateStack(rectangleNumber);
                         }
                         else
                         {
+                            Debug.WriteLine(" ");
+                            Debug.WriteLine("originRectangle Number " + _originRectangleNumber);
+                            Debug.WriteLine("Current Rectangle Number " + rectangleNumber);
                             //What is my order
                             if (_rectangleSortOrder[rectangleNumber] == 'A')//If ascending
                             {
-                                if (PeepCallBlock(_originRectangleNumber) > currentRectangleStack.Peek())//If new addition is greater than top num
+                                if (PeepCallBlock(_originRectangleNumber) > PeepCallBlock(rectangleNumber))//If new addition is greater than top num
                                 {
+                                    ActivateBlockColour(currentRectangle,1);//Make Blue
+                                    _destinationRectangleNumber = rectangleNumber;//Set destination 
+                                    Debug.WriteLine("if Asscending _destinationRectangleNumber " + rectangleNumber);
                                     UpdateStack(rectangleNumber);
                                 }
                                 else
                                 {
+                                    Debug.WriteLine(" ");
+                                    Debug.WriteLine("You tried to add " +  PeepCallBlock(_originRectangleNumber) + " which is smaller than " + PeepCallBlock(rectangleNumber));
                                     ActivateRedError(currentRectangle,"This is a ascending list");
                                 }
                             }else if (_rectangleSortOrder[rectangleNumber] == 'D') //If Descending
                             {
-                                if (PeepCallBlock(_originRectangleNumber) < currentRectangleStack.Peek()) //If new addition is greater than top num
+                                if (PeepCallBlock(_originRectangleNumber) < PeepCallBlock(rectangleNumber)) //If new addition is greater than top num
                                 {
+                                    ActivateBlockColour(currentRectangle,1);//Make Blue
+                                    _destinationRectangleNumber = rectangleNumber;//Set destination 
+                                    Debug.WriteLine("if Descending _destinationRectangleNumber " + rectangleNumber);
                                     UpdateStack(rectangleNumber);
                                 }
                                 else
                                 {
+                                    Debug.WriteLine(" ");
+                                    Debug.WriteLine("You tried to add " +  PeepCallBlock(_originRectangleNumber) + " which is greater than " + PeepCallBlock(rectangleNumber));
                                     ActivateRedError(currentRectangle,"This is a descending list");
                                 }
                             }
@@ -345,15 +349,16 @@ namespace JoshMkhariPROG7312Game.Views
         private void selectBottomRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectedRectangle(selectBottomRect, _callNumbersBottom, 1);
-        }
-        private void selectRightRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        { 
-            SelectedRectangle(selectRightRect, _callNumbersRight, 3);
-        }
+        }        
         private void selectLeftRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectedRectangle(selectLeftRect, _callNumbersLeft, 2);
         }        
+        private void selectRightRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        { 
+            SelectedRectangle(selectRightRect, _callNumbersRight, 3);
+        }
+
         //For both left and right rectangles
         private int ReturnCurrentBlockYLeftRight(Stack<int> rectStack)
         {
@@ -412,7 +417,7 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void StartXJourneyRight(Border border, int stop)
         {
-            Debug.WriteLine("This is left now " +Canvas.GetLeft(border));
+           // Debug.WriteLine("This is left now " +Canvas.GetLeft(border));
             do
             {
                 Canvas.SetLeft(border,Canvas.GetLeft(border) + 1);
@@ -421,7 +426,7 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void StartXJourneyLeft(Border border, int stop)
         {
-            Debug.WriteLine("This is left now " + Canvas.GetLeft(border));
+           // Debug.WriteLine("This is left now " + Canvas.GetLeft(border));
             do
             {
                 Canvas.SetLeft(border,Canvas.GetLeft(border) - 1);
@@ -431,6 +436,7 @@ namespace JoshMkhariPROG7312Game.Views
         private void StartYJourneyUp(Border border)
         {
             int destinationY = 0;
+            Debug.WriteLine("_destinationRectangleNumber " + _destinationRectangleNumber);
             switch (_destinationRectangleNumber)
             {
                 case 0: //For Top Block
@@ -447,8 +453,8 @@ namespace JoshMkhariPROG7312Game.Views
                     break;
   
             }
-            Debug.WriteLine("this is destination Y " + destinationY);
-            Debug.WriteLine("this is current Y " + Canvas.GetTop(border));
+            //Debug.WriteLine("this is destination Y " + destinationY);
+           // Debug.WriteLine("this is current Y " + Canvas.GetTop(border));
             do
             {
                 Canvas.SetTop(border,Canvas.GetTop(border) +1);
@@ -473,6 +479,7 @@ namespace JoshMkhariPROG7312Game.Views
         private void StartYJourneyDown(Border border)
         {
             int destinationY = 0;
+            Debug.WriteLine("_destinationRectangleNumber " + _destinationRectangleNumber);
             switch (_destinationRectangleNumber)
             {
                 case 0: //For Top Block
@@ -489,7 +496,7 @@ namespace JoshMkhariPROG7312Game.Views
                     break;
   
             }
-            Debug.WriteLine("this is destination Y" + destinationY);
+            //Debug.WriteLine("this is destination Y" + destinationY);
             do
             {
                 Canvas.SetTop(border,Canvas.GetTop(border) +1);
@@ -511,7 +518,7 @@ namespace JoshMkhariPROG7312Game.Views
             
             //Determine if need to be going left or right
 
-            
+            Debug.WriteLine("_destinationRectangleNumber " + _destinationRectangleNumber);
             switch (_destinationRectangleNumber)//0 Top, 1 Bottom, 2 Left, 3 Right
             {
                 case 0 : //Going to top
@@ -597,9 +604,6 @@ namespace JoshMkhariPROG7312Game.Views
             }
             
         }
-        //Store locations where blocks must rest based on amount of items within rectangle
-        private int[] _topRectCanvasYLocations = new[] { 198, 171, 144, 117, 0 }; //For top rectangle
-        private int[] _bottomRectCanvasYLocations = new[] { 422, 396, 369, 342, 315 };//For bottom rectangle
 
         private int ReturnCurrentBlockYTopBottom(Stack<int> rectStack, int[] locations)
         {
@@ -670,6 +674,7 @@ namespace JoshMkhariPROG7312Game.Views
 
         private int PeepCallBlock(int recLocation)
         {
+
             switch (recLocation)
             {
                 case 0:
