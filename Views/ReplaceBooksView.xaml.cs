@@ -48,7 +48,8 @@ namespace JoshMkhariPROG7312Game.Views
             InitializeComponent();
             _originalRectangleNumber = 4;
             _activatedBlockCount = 0;
-
+            _rectangleSortOrder[0] = 'A';
+            _rectangleSortOrder[1] = 'A';
             var blackBrush = new SolidColorBrush(Colors.Blue);
             RegisterName("MySolidColorBorderBrush", blackBrush);
 
