@@ -20,16 +20,16 @@ namespace JoshMkhariPROG7312Game.Views
         private SolidColorBrush _blackBrush;
         private readonly int[] _bottomRectCanvasYLocations = { 422, 396, 369, 342, 315 }; //For bottom rectangle
 
-        private readonly Stack<int>
-            _callNumbersBottom = new Stack<int>(); //To store initial numbers in bottom rectangle
+            //private Stack<int> _callNumbersBottom = new Stack<int>(); //To store initial numbers in bottom rectangle
 
-        private readonly Stack<int> _callNumbersLeft = new Stack<int>(); //To store initial numbers in left rectangle
+        //private Stack<int> _callNumbersLeft = new Stack<int>(); //To store initial numbers in left rectangle
 
-        private readonly Stack<int> _callNumbersRight = new Stack<int>(); //To store initial numbers in right rectangle
+        //private Stack<int> _callNumbersRight = new Stack<int>(); //To store initial numbers in right rectangle
         //private int[][] _rectanglesArr = new int[4][]; //https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
         // Creating 2 Stacks of Integers https://www.tutorialsteacher.com/csharp/csharp-stack
 
-        private readonly Stack<int> _callNumbersTop = new Stack<int>(); //To store initial numbers in top rectangle
+        private Stack<int> _callNumbersTop, _callNumbersBottom, _callNumbersLeft, _callNumbersRight; //To store initial numbers in top rectangle
+        
         private int _destinationRectangleNumber; //The rectangle a block is being transferred to
 
         private int _originalRectangleNumber; //??????????????????????????????????????
@@ -75,6 +75,11 @@ namespace JoshMkhariPROG7312Game.Views
                 } while (found);
             } while (callNumbers.Count < 10); //Repeat until 10 random numbers have been stored
             
+            _callNumbersTop = new Stack<int>();
+            _callNumbersBottom = new Stack<int>();
+            _callNumbersLeft = new Stack<int>();
+            _callNumbersRight = new Stack<int>();
+            
             for (var i = 0; i < 5; i++) _callNumbersTop.Push(callNumbers.ElementAt(i));
 
             for (var i = 5; i < 10; i++) _callNumbersBottom.Push(callNumbers.ElementAt(i));
@@ -103,7 +108,7 @@ namespace JoshMkhariPROG7312Game.Views
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(2), 3); //storing the value with the rectangle name
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(1), 4); //storing the value with the rectangle name
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(0), 5); //storing the value with the rectangle name
-
+            
             txtRectBlock6.Text = _callNumbersBottom.ElementAt(0).ToString();
             txtRectBlock7.Text = _callNumbersBottom.ElementAt(1).ToString();
             txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString();
@@ -121,19 +126,19 @@ namespace JoshMkhariPROG7312Game.Views
             DisplayValuesInRectangles();
         }
 
-        public void DisplayValuesInRectangles()
+        private void DisplayValuesInRectangles()
         {
             Debug.WriteLine("Top");
-            foreach (var VARIABLE in _callNumbersTop) Debug.WriteLine(VARIABLE + ' ');
+            foreach (var VARIABLE in _callNumbersTop) Debug.WriteLine(VARIABLE.ToString());
             Debug.WriteLine(" ");
             Debug.WriteLine("Bottom");
-            foreach (var VARIABLE in _callNumbersBottom) Debug.WriteLine(VARIABLE);
+            foreach (var VARIABLE in _callNumbersBottom) Debug.WriteLine(VARIABLE.ToString());
             Debug.WriteLine(" ");
             Debug.WriteLine("Left");
-            foreach (var VARIABLE in _callNumbersLeft) Debug.WriteLine(VARIABLE + ' ');
+            foreach (var VARIABLE in _callNumbersLeft) Debug.WriteLine(VARIABLE.ToString());
             Debug.WriteLine(" ");
             Debug.WriteLine("Right");
-            foreach (var VARIABLE in _callNumbersRight) Debug.WriteLine(VARIABLE + ' ');
+            foreach (var VARIABLE in _callNumbersRight) Debug.WriteLine(VARIABLE.ToString());
             Debug.WriteLine(" ");
         }
 
