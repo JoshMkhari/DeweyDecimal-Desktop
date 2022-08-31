@@ -388,39 +388,39 @@ namespace JoshMkhariPROG7312Game.Views
         }
 
 
-        private void MoveRectangle(int rectangleNumber, int originRectTop)
+        private void MoveRectangle(int blockNumber, int originRectangle)
         {
-            switch (rectangleNumber)
+            switch (blockNumber)
             {
                 case 1:
-                    StartYJourney(rectBlock1, originRectTop);
+                    StartYJourney(rectBlock1, originRectangle);
                     break;
                 case 2:
-                    StartYJourney(rectBlock2, originRectTop);
+                    StartYJourney(rectBlock2, originRectangle);
                     break;
                 case 3:
-                    StartYJourney(rectBlock3, originRectTop);
+                    StartYJourney(rectBlock3, originRectangle);
                     break;
                 case 4:
-                    StartYJourney(rectBlock4, originRectTop);
+                    StartYJourney(rectBlock4, originRectangle);
                     break;
                 case 5:
-                    StartYJourney(rectBlock5, originRectTop);
+                    StartYJourney(rectBlock5, originRectangle);
                     break;
                 case 6:
-                    StartYJourney(rectBlock6, originRectTop);
+                    StartYJourney(rectBlock6, originRectangle);
                     break;
                 case 7:
-                    StartYJourney(rectBlock7, originRectTop);
+                    StartYJourney(rectBlock7, originRectangle);
                     break;
                 case 8:
-                    StartYJourney(rectBlock8, originRectTop);
+                    StartYJourney(rectBlock8, originRectangle);
                     break;
                 case 9:
-                    StartYJourney(rectBlock9, originRectTop);
+                    StartYJourney(rectBlock9, originRectangle);
                     break;
                 case 10:
-                    StartYJourney(rectBlock10, originRectTop);
+                    StartYJourney(rectBlock10, originRectangle);
                     break;
             }
         }
@@ -446,19 +446,23 @@ namespace JoshMkhariPROG7312Game.Views
         private void StartYJourneyUp(Border border)
         {
             var destinationY = 0;
-            Debug.WriteLine("_destinationRectangleNumber " + _destinationRectangleNumber);
+            Debug.WriteLine("_destinationRectangleNumber nigga please" + _destinationRectangleNumber);
             switch (_destinationRectangleNumber)
             {
                 case 0: //For Top Block
+                    Debug.WriteLine("We going up");
                     destinationY = ReturnCurrentBlockYTopBottom(_callNumbersTop, _topRectCanvasYLocations);
                     break;
                 case 1: // For Bottom block
+                    Debug.WriteLine("We down up");
                     destinationY = ReturnCurrentBlockYTopBottom(_callNumbersBottom, _bottomRectCanvasYLocations);
                     break;
                 case 2: //For left Block
+                    Debug.WriteLine("We going left");
                     destinationY = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
                     break;
                 case 3: // For right block
+                    Debug.WriteLine("We going right");
                     destinationY = ReturnCurrentBlockYLeftRight(_callNumbersRight);
                     break;
             }
@@ -469,11 +473,7 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 Canvas.SetTop(border, Canvas.GetTop(border) + 1);
             } while (Canvas.GetTop(border) < destinationY); //285<320
-
-            //285<218
-            //285>320
-
-            //285>320
+            
 
             if (Canvas.GetTop(border) > destinationY) //320 <320  285< 218
                 do
@@ -486,7 +486,7 @@ namespace JoshMkhariPROG7312Game.Views
         private void StartYJourneyDown(Border border)
         {
             var destinationY = 0;
-            Debug.WriteLine("_destinationRectangleNumber " + _destinationRectangleNumber);
+            Debug.WriteLine("_destinationRectangleNumber nigga please " + _destinationRectangleNumber);
             switch (_destinationRectangleNumber)
             {
                 case 0: //For Top Block
@@ -522,16 +522,18 @@ namespace JoshMkhariPROG7312Game.Views
 
             //Determine if need to be going left or right
 
-            Debug.WriteLine("_destinationRectangleNumber " + _destinationRectangleNumber);
+            Debug.WriteLine("_destinationRectangleNumber before YJourney " + _destinationRectangleNumber);
             switch (_destinationRectangleNumber) //0 Top, 1 Bottom, 2 Left, 3 Right
             {
                 case 0: //Going to top
                     switch (_originalRectangleNumber)
                     {
                         case 1: //Starting from bottom
+                            Debug.WriteLine("We moving toppp");
                             StartYJourneyUp(border); //Just go straight up
                             break;
                         case 2: //Starting from left
+                            
                             StartXJourneyRight(border, 322);
                             //Then go right until reach 322
                             break;
@@ -540,7 +542,6 @@ namespace JoshMkhariPROG7312Game.Views
                             //Then go left until reach 322
                             break;
                     }
-
                     break;
                 case 1: //Going to Bottom 285
                     switch (_originalRectangleNumber)
@@ -615,19 +616,23 @@ namespace JoshMkhariPROG7312Game.Views
 
         private int ReturnCurrentBlockYTopBottom(Stack<int> rectStack, int[] locations)
         {
-            var location = rectStack.Count - 1;
-            if (location < 0)
-                location++;
-
+            Debug.WriteLine("");
+            int location; //To store where to place the block
+            if (rectStack.Any())//If there are elements within the stack
+            {
+                location = rectStack.Count - 1;//then the 
+            }
+            else
+                location = 0;
+            Debug.WriteLine("To move to this location " + locations[location]);
             return locations[location];
         }
 
         private void AnimateBlockMovement()
         {
-            switch (_originalRectangleNumber) //Determine origin
+            switch (_originalRectangleNumber) //Based on original rectangle number between 0-3 
             {
                 case 0: //From Top
-
                     for (var i = 0; i < _rectValueNamePair.Count; i++)
                         if (_rectValueNamePair.Keys.ElementAt(i) == _callNumbersTop.Peek())
                         {
@@ -638,7 +643,7 @@ namespace JoshMkhariPROG7312Game.Views
                     //canvasLeft = 322; //Location on x axis where block must stop within top and bottom rectangles
                     break;
 
-                case 1: //For bottom rectangle 285
+                case 1: //From bottom rectangle
                     //canvasLeft = 322;//Location on x axis where block must stop within top and bottom rectangles
                     for (var i = 0; i < _rectValueNamePair.Count; i++)
                         if (_rectValueNamePair.Keys.ElementAt(i) == _callNumbersBottom.Peek())
@@ -649,7 +654,7 @@ namespace JoshMkhariPROG7312Game.Views
 
                     break;
 
-                case 2: //For Left rectangle
+                case 2: //From Left rectangle
                     //canvasTop = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
                     //return _callNumbersLeft.Pop();
                     for (var i = 0; i < _rectValueNamePair.Count; i++)
@@ -661,7 +666,7 @@ namespace JoshMkhariPROG7312Game.Views
 
                     //canvasLeft = 175;//Location on x axis where block must stop within left rectangle 
                     break;
-                default:
+                default://From Right rectangle
                     for (var i = 0; i < _rectValueNamePair.Count; i++)
                         if (_rectValueNamePair.Keys.ElementAt(i) == _callNumbersRight.Peek())
                         {
