@@ -199,19 +199,15 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 case 0:
                     _callNumbersTop.Push(PopCallBlock(_originalRectangleNumber)); //Push to top stack
-                    Debug.WriteLine("Pushed a block to top");
                     break;
                 case 1:
                     _callNumbersBottom.Push(PopCallBlock(_originalRectangleNumber)); //Push to bottom stack
-                    Debug.WriteLine("Pushed a block to bottom");
                     break;
                 case 2:
                     _callNumbersLeft.Push(PopCallBlock(_originalRectangleNumber)); //Push to left stack
-                    Debug.WriteLine("Pushed a block to left");
                     break;
                 case 3:
                     _callNumbersRight.Push(PopCallBlock(_originalRectangleNumber)); //Push to right stack
-                    Debug.WriteLine("Pushed a block to right");
                     break;
             }
 
@@ -469,17 +465,21 @@ namespace JoshMkhariPROG7312Game.Views
 
             //Debug.WriteLine("this is destination Y " + destinationY);
             // Debug.WriteLine("this is current Y " + Canvas.GetTop(border));
+            Debug.WriteLine("0 ");
+            Debug.WriteLine("Current location " + Canvas.GetTop(border) + " with a destination of " + destinationY);
             do
             {
                 Canvas.SetTop(border, Canvas.GetTop(border) + 1);
             } while (Canvas.GetTop(border) < destinationY); //285<320
-            
-
+            Debug.WriteLine("1 ");
+            Debug.WriteLine("Current location " + Canvas.GetTop(border) + " with a destination of " + destinationY);
             if (Canvas.GetTop(border) > destinationY) //320 <320  285< 218
                 do
                 {
                     Canvas.SetTop(border, Canvas.GetTop(border) - 1);
                 } while (Canvas.GetTop(border) > destinationY); //285>320  285>218
+            Debug.WriteLine("2 ");
+            Debug.WriteLine("Current location " + Canvas.GetTop(border) + " with a destination of " + destinationY);
             //Check destination amount of elements
         }
 
@@ -529,7 +529,7 @@ namespace JoshMkhariPROG7312Game.Views
                     switch (_originalRectangleNumber)
                     {
                         case 1: //Starting from bottom
-                            Debug.WriteLine("We moving toppp");
+                            Debug.WriteLine("We moving top from bottom");
                             StartYJourneyUp(border); //Just go straight up
                             break;
                         case 2: //Starting from left
@@ -548,6 +548,7 @@ namespace JoshMkhariPROG7312Game.Views
                     {
                         case 0: //Starting from Top
                             //Just go straight down
+                            Debug.WriteLine("We moving down from top");
                             StartYJourneyDown(border);
                             break;
                         case 2: //Starting from left
@@ -617,10 +618,11 @@ namespace JoshMkhariPROG7312Game.Views
         private int ReturnCurrentBlockYTopBottom(Stack<int> rectStack, int[] locations)
         {
             Debug.WriteLine("");
+            
             int location; //To store where to place the block
             if (rectStack.Any())//If there are elements within the stack
             {
-                location = rectStack.Count - 1;//then the 
+                location = rectStack.Count;//then the 
             }
             else
                 location = 0;
