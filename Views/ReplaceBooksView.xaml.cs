@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace JoshMkhariPROG7312Game.Views
@@ -149,6 +150,17 @@ namespace JoshMkhariPROG7312Game.Views
         //To colour block strokes
         private void ActivateBlockColour(Rectangle rect, int mode)
         {
+            if (_callNumbersLeft.Count < 1)
+            {
+                imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }            
+            if (_callNumbersRight.Count < 1)
+            {
+                imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+                imgRightRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
+            
             switch (mode)
             {
                 case 0:
@@ -221,11 +233,13 @@ namespace JoshMkhariPROG7312Game.Views
                 if (_callNumbersLeft.ElementAt(0) < _callNumbersLeft.ElementAt(1))
                 {
                     _rectangleSortOrder[2] = 'D'; //Store Descending for Left Rectangle
+                    imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
                     Debug.WriteLine("Left block is descending");
                 }
                 else
                 {
                     _rectangleSortOrder[2] = 'A'; //Store Ascending for Left Rectangle
+                    imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
                     Debug.WriteLine("Left block is ascending");
                 }
             }
@@ -235,11 +249,13 @@ namespace JoshMkhariPROG7312Game.Views
                 if (_callNumbersRight.ElementAt(0) < _callNumbersRight.ElementAt(1))
                 {
                     _rectangleSortOrder[3] = 'D'; //Store Descending for Right Rectangle
+                    imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
                     Debug.WriteLine("Right block is descending");
                 }
                 else
                 {
                     _rectangleSortOrder[3] = 'A'; //Store Ascending for Right Rectangle
+                    imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
                     Debug.WriteLine("Right block is ascending");
                 }
             }
