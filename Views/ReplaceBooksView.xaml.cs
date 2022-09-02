@@ -43,6 +43,7 @@ namespace JoshMkhariPROG7312Game.Views
         //Store locations where blocks must rest based on amount of items within rectangle
         private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90 }; //For top rectangle
 
+        private int _movesCount;
         public ReplaceBooksView()
         {
             InitializeComponent();
@@ -50,6 +51,8 @@ namespace JoshMkhariPROG7312Game.Views
             _activatedBlockCount = 0;
             _rectangleSortOrder[0] = 'A';
             _rectangleSortOrder[1] = 'A';
+            _movesCount = 0;
+            
             var blackBrush = new SolidColorBrush(Colors.Blue);
             RegisterName("MySolidColorBorderBrush", blackBrush);
 
@@ -195,6 +198,8 @@ namespace JoshMkhariPROG7312Game.Views
         private void UpdateStack(int rectangleNumber)
         {
             AnimateBlockMovement();
+            _movesCount++;
+            txtMovesCount.Content = "Moves: " + _movesCount;
             switch (rectangleNumber)
             {
                 case 0:
@@ -262,8 +267,7 @@ namespace JoshMkhariPROG7312Game.Views
                 //check num of blocks within rect
                 if (isEmptyRect) //can add block
                 {
-                    if (_originalRectangleNumber !=
-                        currentRectangleNumber) //Make sure the source and the destination are not the same
+                    if (_originalRectangleNumber != currentRectangleNumber) //Make sure the source and the destination are not the same
                     {
                         ActivateBlockColour(currentRectangle, 1); //Make Blue
                         _destinationRectangleNumber = currentRectangleNumber; //Set destination 
@@ -277,68 +281,76 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 else
                 {
-                    if (currentRectangleStack.Count < 5) //If there is still space for the block
+                    if (_originalRectangleNumber == currentRectangleNumber)
                     {
-                        if (currentRectangleStack.Count == 1) //If there is only one block inside
+                        ActivateRedError(currentRectangle, "You cannot send a call number to the same start");
+                    }
+                    else
+                    { 
+                        if (currentRectangleStack.Count < 5) //If there is still space for the block
                         {
-                            ActivateBlockColour(currentRectangle, 1); //Make Blue
-                            _destinationRectangleNumber = currentRectangleNumber; //Set destination 
-                            Debug.WriteLine("if (currentRectangleStack.Count == 1) _destinationRectangleNumber " +
-                                            currentRectangleNumber);
-                            UpdateStack(currentRectangleNumber);
+                            if (currentRectangleStack.Count == 1) //If there is only one block inside
+                            {
+                                ActivateBlockColour(currentRectangle, 1); //Make Blue
+                                _destinationRectangleNumber = currentRectangleNumber; //Set destination 
+                                Debug.WriteLine("if (currentRectangleStack.Count == 1) _destinationRectangleNumber " +
+                                                currentRectangleNumber);
+                                UpdateStack(currentRectangleNumber);
+                            }
+                            else
+                            {
+                                Debug.WriteLine(" ");
+                                Debug.WriteLine("originRectangle Number " + _originalRectangleNumber);
+                                Debug.WriteLine("Current Rectangle Number " + currentRectangleNumber);
+                                //What is my order
+                                if (_rectangleSortOrder[currentRectangleNumber] == 'A') //If ascending
+                                {
+                                    if (PeepCallBlock(_originalRectangleNumber) >
+                                        PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
+                                    {
+                                        ActivateBlockColour(currentRectangle, 1); //Make Blue
+                                        _destinationRectangleNumber = currentRectangleNumber; //Set destination 
+                                        Debug.WriteLine("if Asscending _destinationRectangleNumber " +
+                                                        currentRectangleNumber);
+                                        UpdateStack(currentRectangleNumber);
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine(" ");
+                                        Debug.WriteLine("You tried to add " + PeepCallBlock(_originalRectangleNumber) +
+                                                        " which is smaller than " + PeepCallBlock(currentRectangleNumber));
+                                        ActivateRedError(currentRectangle, "This is a ascending list");
+                                    }
+                                }
+                                else if (_rectangleSortOrder[currentRectangleNumber] == 'D') //If Descending
+                                {
+                                    if (PeepCallBlock(_originalRectangleNumber) <
+                                        PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
+                                    {
+                                        ActivateBlockColour(currentRectangle, 1); //Make Blue
+                                        _destinationRectangleNumber = currentRectangleNumber; //Set destination 
+                                        Debug.WriteLine("if Descending _destinationRectangleNumber " +
+                                                        currentRectangleNumber);
+                                        UpdateStack(currentRectangleNumber);
+                                    }
+                                    else
+                                    {
+                                        Debug.WriteLine(" ");
+                                        Debug.WriteLine("You tried to add " + PeepCallBlock(_originalRectangleNumber) +
+                                                        " which is greater than " + PeepCallBlock(currentRectangleNumber));
+                                        ActivateRedError(currentRectangle, "This is a descending list");
+                                    }
+                                }
+
+                                //Does it match my order?
+                            }
                         }
                         else
                         {
-                            Debug.WriteLine(" ");
-                            Debug.WriteLine("originRectangle Number " + _originalRectangleNumber);
-                            Debug.WriteLine("Current Rectangle Number " + currentRectangleNumber);
-                            //What is my order
-                            if (_rectangleSortOrder[currentRectangleNumber] == 'A') //If ascending
-                            {
-                                if (PeepCallBlock(_originalRectangleNumber) >
-                                    PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
-                                {
-                                    ActivateBlockColour(currentRectangle, 1); //Make Blue
-                                    _destinationRectangleNumber = currentRectangleNumber; //Set destination 
-                                    Debug.WriteLine("if Asscending _destinationRectangleNumber " +
-                                                    currentRectangleNumber);
-                                    UpdateStack(currentRectangleNumber);
-                                }
-                                else
-                                {
-                                    Debug.WriteLine(" ");
-                                    Debug.WriteLine("You tried to add " + PeepCallBlock(_originalRectangleNumber) +
-                                                    " which is smaller than " + PeepCallBlock(currentRectangleNumber));
-                                    ActivateRedError(currentRectangle, "This is a ascending list");
-                                }
-                            }
-                            else if (_rectangleSortOrder[currentRectangleNumber] == 'D') //If Descending
-                            {
-                                if (PeepCallBlock(_originalRectangleNumber) <
-                                    PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
-                                {
-                                    ActivateBlockColour(currentRectangle, 1); //Make Blue
-                                    _destinationRectangleNumber = currentRectangleNumber; //Set destination 
-                                    Debug.WriteLine("if Descending _destinationRectangleNumber " +
-                                                    currentRectangleNumber);
-                                    UpdateStack(currentRectangleNumber);
-                                }
-                                else
-                                {
-                                    Debug.WriteLine(" ");
-                                    Debug.WriteLine("You tried to add " + PeepCallBlock(_originalRectangleNumber) +
-                                                    " which is greater than " + PeepCallBlock(currentRectangleNumber));
-                                    ActivateRedError(currentRectangle, "This is a descending list");
-                                }
-                            }
+                            ActivateRedError(currentRectangle, "Full");
+                        }   
+                    }
 
-                            //Does it match my order?
-                        }
-                    }
-                    else
-                    {
-                        ActivateRedError(currentRectangle, "Full");
-                    }
                 }
             }
 
