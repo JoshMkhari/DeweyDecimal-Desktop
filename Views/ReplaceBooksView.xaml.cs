@@ -41,7 +41,7 @@ namespace JoshMkhariPROG7312Game.Views
             _rectValueNamePair = new Dictionary<int, int>(); //Stores Random value and Rectangle name
 
         //Store locations where blocks must rest based on amount of items within rectangle
-        private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 0 }; //For top rectangle
+        private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90 }; //For top rectangle
 
         public ReplaceBooksView()
         {
@@ -536,10 +536,12 @@ namespace JoshMkhariPROG7312Game.Views
                             
                             StartXJourneyRight(border, 322);
                             //Then go right until reach 322
+                            StartYJourneyUp(border); //Just go straight up
                             break;
                         case 3: //Starting from right
                             StartXJourneyLeft(border, 322);
                             //Then go left until reach 322
+                            StartYJourneyUp(border); //Just go straight up
                             break;
                     }
                     break;
@@ -555,11 +557,13 @@ namespace JoshMkhariPROG7312Game.Views
                             //Go right until reach 322
                             StartXJourneyRight(border, 322);
                             //Then go down until reach saved location
+                            StartYJourneyDown(border);
                             break;
                         case 3: //Starting from right
                             //Go left until reach 322
                             StartXJourneyLeft(border, 322);
                             //Then go down reach saved location
+                            StartYJourneyDown(border);
                             break;
                     }
 
@@ -622,11 +626,14 @@ namespace JoshMkhariPROG7312Game.Views
             int location; //To store where to place the block
             if (rectStack.Any())//If there are elements within the stack
             {
-                location = rectStack.Count;//then the 
+                location = rectStack.Count;
             }
             else
                 location = 0;
+            Debug.WriteLine("Num items in stack " + rectStack.Count);
+            Debug.WriteLine("Location to be sent to is  " + location);
             Debug.WriteLine("To move to this location " + locations[location]);
+            Debug.WriteLine("");
             return locations[location];
         }
 
