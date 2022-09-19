@@ -20,31 +20,26 @@ namespace JoshMkhariPROG7312Game.Views
     public partial class ReplaceBooksView : UserControl
     {
         //Declerations
-        private ReplaceBooksViewModel _replaceBooksViewModel = new ReplaceBooksViewModel();
+        private ReplaceBooksViewModel _replaceBooksViewModel;//Used to access all variables and methods within model
         public ReplaceBooksView()
         {
             InitializeComponent();
-            
+            _replaceBooksViewModel = new ReplaceBooksViewModel();
 
             var blackBrush = new SolidColorBrush(Colors.Blue);
             RegisterName("MySolidColorBorderBrush", blackBrush);
             
-            _callNumbers = new Stack<double>(); //To store initial 10 values
-            _callNumbersStrings = new Stack<string>(); //To store initial chars
+            _replaceBooksViewModel.CallNumbers = new List<double>(); //To store initial 10 values
+            _replaceBooksViewModel.CallNumbersStrings = new List<string>(); //To store initial chars
             //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
             var rnd = new Random();
 
             for (int i = 0; i < 10; i++)
             {
-                _callNumbers.Push((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value
-                _callNumbersStrings.Push(" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90));
+                _replaceBooksViewModel.CallNumbers.Add((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value
+                _replaceBooksViewModel.CallNumbersStrings.Add(" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90));
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
-            _callNumbersTop = new Stack<double>();
-            _callNumbersBottom = new Stack<double>();
-            _callNumbersLeft = new Stack<double>();
-            _callNumbersRight = new Stack<double>();
-
             InitializeStacks();
             
             AssignValuesToBlocks();

@@ -33,7 +33,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
         private IDictionary<int, bool>
             ActiveAscDescStacks{ get; set;} //Stores Set difficulty for current game
 
-        ReplaceBooksViewModel()
+        public ReplaceBooksViewModel()
         {
             OnSettingsPage = false;
             CurrentDifficulty = 0;
