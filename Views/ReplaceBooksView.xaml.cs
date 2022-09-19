@@ -88,30 +88,39 @@ namespace JoshMkhariPROG7312Game.Views
             AssignValuesToBlocks();
         }
 
-        private String RandomLetters()
+        private String NumberFormatter(double input)
         {
-            var rnd = new Random();
+            String num = input.ToString();
             
-            //StringBuilder stringBuilder = new StringBuilder();
-            //for (int i = 0; i < 3; i++)
+            //Look for comma
+            int commaLocation = 0;
+            for (int i = 0; i < num.Length; i++)
             {
-            //    int num = rnd.Next(65, 90);
-            //    Debug.WriteLine("Look at me " + num.ToString());
-                //ASCII codes
-                //https://www.geeksforgeeks.org/ascii-table/#:~:text=In%20total%2C%20there%20are%20256%20ASCII%20characters%2C%20and,%28most%20commonly%20referred%29%203%20Extended%20ASCII%20characters%20%28128-255%29
-             //   stringBuilder.Append((char) num);//https://stackoverflow.com/questions/3414900/how-to-get-a-char-from-an-ascii-character-code-in-c-sharp
+                if (num.Substring(i, 1).Equals(","))
+                {
+                    //Comma found
+                    commaLocation = i;
+                }
             }
-            //String letters = ((char) rnd.Next(65, 90)).ToString() + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90)
-            return ((char) rnd.Next(65, 90)).ToString() + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append(num);
+            while (commaLocation!=3)
+            {
+                stringBuilder.Insert(0, "0");
+                commaLocation++;
+            }
+            
+            return stringBuilder.ToString();
         }
         private void AssignValuesToBlocks()
         {
             var rnd = new Random();
-            txtRectBlock1.Text = _callNumbersTop.ElementAt(4).ToString() + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock2.Text = _callNumbersTop.ElementAt(3).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock3.Text = _callNumbersTop.ElementAt(2).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock4.Text = _callNumbersTop.ElementAt(1).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock5.Text = _callNumbersTop.ElementAt(0).ToString()+(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock1.Text = NumberFormatter(_callNumbersTop.ElementAt(4)) +" " + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock2.Text = NumberFormatter(_callNumbersTop.ElementAt(3))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock3.Text =  NumberFormatter(_callNumbersTop.ElementAt(2))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock4.Text =  NumberFormatter(_callNumbersTop.ElementAt(1))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock5.Text =  NumberFormatter(_callNumbersTop.ElementAt(0))+" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
             
             //https://www.tutorialsteacher.com/csharp/csharp-dictionary
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(4), 1); //storing the value with the rectangle name
@@ -120,12 +129,12 @@ namespace JoshMkhariPROG7312Game.Views
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(1), 4); //storing the value with the rectangle name
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(0), 5); //storing the value with the rectangle name
             
-            txtRectBlock6.Text = _callNumbersBottom.ElementAt(0).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock7.Text = _callNumbersBottom.ElementAt(1).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock9.Text = _callNumbersBottom.ElementAt(3).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock10.Text = _callNumbersBottom.ElementAt(4).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock6.Text =  NumberFormatter(_callNumbersBottom.ElementAt(0))+" " + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock7.Text =  NumberFormatter(_callNumbersBottom.ElementAt(1))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock8.Text =  NumberFormatter(_callNumbersBottom.ElementAt(2))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock8.Text =  NumberFormatter(_callNumbersBottom.ElementAt(2))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock9.Text =  NumberFormatter(_callNumbersBottom.ElementAt(3))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock10.Text =  NumberFormatter(_callNumbersBottom.ElementAt(4))+" " + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
 
             //https://www.tutorialsteacher.com/csharp/csharp-dictionary
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(0), 6); //storing the value with the rectangle name
@@ -568,13 +577,13 @@ namespace JoshMkhariPROG7312Game.Views
                             break;
                         case 2: //Starting from left
                             
-                            StartXJourneyRight(border, 322);
-                            //Then go right until reach 322
+                            StartXJourneyRight(border, 321);
+                            //Then go right until reach 321
                             StartYJourneyUp(border); //Just go straight up
                             break;
                         case 3: //Starting from right
-                            StartXJourneyLeft(border, 322);
-                            //Then go left until reach 322
+                            StartXJourneyLeft(border, 321);
+                            //Then go left until reach 321
                             StartYJourneyUp(border); //Just go straight up
                             break;
                     }
@@ -588,14 +597,14 @@ namespace JoshMkhariPROG7312Game.Views
                             StartYJourneyDown(border);
                             break;
                         case 2: //Starting from left
-                            //Go right until reach 322
-                            StartXJourneyRight(border, 322);
+                            //Go right until reach 321
+                            StartXJourneyRight(border, 321);
                             //Then go down until reach saved location
                             StartYJourneyDown(border);
                             break;
                         case 3: //Starting from right
-                            //Go left until reach 322
-                            StartXJourneyLeft(border, 322);
+                            //Go left until reach 321
+                            StartXJourneyLeft(border, 321);
                             //Then go down reach saved location
                             StartYJourneyDown(border);
                             break;
@@ -683,11 +692,11 @@ namespace JoshMkhariPROG7312Game.Views
                             break;
                         }
 
-                    //canvasLeft = 322; //Location on x axis where block must stop within top and bottom rectangles
+                    //canvasLeft = 321; //Location on x axis where block must stop within top and bottom rectangles
                     break;
 
                 case 1: //From bottom rectangle
-                    //canvasLeft = 322;//Location on x axis where block must stop within top and bottom rectangles
+                    //canvasLeft = 321;//Location on x axis where block must stop within top and bottom rectangles
                     for (var i = 0; i < _rectValueNamePair.Count; i++)
                         if (_rectValueNamePair.Keys.ElementAt(i) == _callNumbersBottom.Peek())
                         {
