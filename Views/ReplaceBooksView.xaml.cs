@@ -37,7 +37,7 @@ namespace JoshMkhariPROG7312Game.Views
         private int _originalRectangleNumber; //??????????????????????????????????????
 
         private readonly char[] _rectangleSortOrder = new char [4]; //Store whether rectangle is ascending or descending
-
+        private double[] _stackSizes = new double[4];
         //https://www.tutorialsteacher.com/csharp/csharp-dictionary
         private readonly IDictionary<double, int>
             _rectValueNamePair = new Dictionary<double, int>(); //Stores Random value and Rectangle name
@@ -791,7 +791,7 @@ namespace JoshMkhariPROG7312Game.Views
            
            //Reset Block Locations
         }
-
+        
         private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Change whatever you want
@@ -802,17 +802,31 @@ namespace JoshMkhariPROG7312Game.Views
             btnSaveSettings.Visibility = Visibility.Visible;
             btnCloseSettings.Visibility = Visibility.Visible;
             //btnSettings.Source = new BitmapImage(new Uri(@"/Theme/Assets/Save.png", UriKind.Relative));;
+            
+            Canvas.SetLeft(txtTopRectStorageCapacity,322);
+            Canvas.SetLeft(txtBottomRectStorageCapacity,322);
+            Canvas.SetLeft(txtLeftRectStorageCapacity,174);
+            Canvas.SetLeft(txtRightRectStorageCapacity,477);
+            
+            txtTopRectStorageCapacity.Content = "Size:";
+            txtBottomRectStorageCapacity.Content = "Size:";
+            txtLeftRectStorageCapacity.Content = "Size:";
+            txtRightRectStorageCapacity.Content = "Size:";
+
+            DockPanelTop.Visibility = Visibility.Visible;
+            DockPanelBottom.Visibility = Visibility.Visible;
+            DockPanelLeft.Visibility = Visibility.Visible;
+            DockPanelRight.Visibility = Visibility.Visible;
         }
 
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //Change difficulty to preset
-            throw new NotImplementedException();
+
         }
 
         private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
         }
 
         private void BtnCloseSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -823,6 +837,108 @@ namespace JoshMkhariPROG7312Game.Views
 
             btnSaveSettings.Visibility = Visibility.Collapsed;
             btnCloseSettings.Visibility = Visibility.Collapsed;
+            
+            Canvas.SetLeft(txtTopRectStorageCapacity,332);
+            Canvas.SetLeft(txtBottomRectStorageCapacity,332);
+            Canvas.SetLeft(txtLeftRectStorageCapacity,184);
+            Canvas.SetLeft(txtRightRectStorageCapacity,487);
+
+            double size = 5;
+            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / size)*100 + "%";
+            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / size)*100 + "%";
+            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / size)*100 + "%";
+            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / size)*100 + "%";
+            
+            DockPanelTop.Visibility = Visibility.Collapsed;
+            DockPanelBottom.Visibility = Visibility.Collapsed;
+            DockPanelLeft.Visibility = Visibility.Collapsed;
+            DockPanelRight.Visibility = Visibility.Collapsed;
+            
+        }
+
+        private void TStackSizeTop_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TStackSizeTop.Text == "")
+            {
+                TStackSizeTop.Text = "5";
+            }
+        }
+
+        private void TStackSizeTop_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (int.TryParse(TStackSizeTop.Text, out int value)) return;
+            StackSizeTop.Value = 5;
+            TStackSizeTop.Text = "5";
+            e.Handled = true;
+        }
+
+       
+        private void StackSizeTop_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _stackSizes[0] = StackSizeTop.Value;
+        }
+
+        private void TStackSizeBottom_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TStackSizeBottom.Text == "")
+            {
+                TStackSizeBottom.Text = "5";
+            }
+        }
+
+        private void TStackSizeBottom_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (int.TryParse(TStackSizeBottom.Text, out int value)) return;
+            StackSizeBottom.Value = 5;
+            TStackSizeBottom.Text = "5";
+            e.Handled = true;
+        }
+
+        private void StackSizeBottom_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _stackSizes[1] = StackSizeBottom.Value;
+        }
+
+        private void TStackSizeLeft_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TStackSizeLeft.Text == "")
+            {
+                TStackSizeLeft.Text = "5";
+            }
+        }
+
+        private void TStackSizeLeft_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (int.TryParse(TStackSizeLeft.Text, out int value)) return;
+            StackSizeLeft.Value = 5;
+            TStackSizeLeft.Text = "5";
+            e.Handled = true;
+        }
+
+        private void StackSizeLeft_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _stackSizes[2] = StackSizeLeft.Value;
+        }
+
+        private void TStackSizeRight_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (TStackSizeRight.Text == "")
+            {
+                TStackSizeRight.Text = "5";
+            }
+        }
+
+        private void TStackSizeRight_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (int.TryParse(TStackSizeRight.Text, out int value)) return;
+            StackSizeRight.Value = 5;
+            TStackSizeRight.Text = "5";
+            e.Handled = true;
+        }
+
+        private void StackSizeRight_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _stackSizes[3] = StackSizeRight.Value;
         }
     }
 }
