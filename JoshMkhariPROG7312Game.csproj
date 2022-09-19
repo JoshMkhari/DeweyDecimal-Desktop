@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -35,31 +35,31 @@
         <WarningLevel>4</WarningLevel>
     </PropertyGroup>
     <ItemGroup>
-        <Reference Include="System"/>
-        <Reference Include="System.Data"/>
-        <Reference Include="System.Xml"/>
-        <Reference Include="Microsoft.CSharp"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="System.Xml.Linq"/>
-        <Reference Include="System.Data.DataSetExtensions"/>
-        <Reference Include="System.Net.Http"/>
+        <Reference Include="System" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Xml.Linq" />
+        <Reference Include="System.Data.DataSetExtensions" />
+        <Reference Include="System.Net.Http" />
         <Reference Include="System.Xaml">
             <RequiredTargetFramework>4.0</RequiredTargetFramework>
         </Reference>
-        <Reference Include="WindowsBase"/>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
+        <Reference Include="WindowsBase" />
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
     </ItemGroup>
     <ItemGroup>
         <ApplicationDefinition Include="App.xaml">
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </ApplicationDefinition>
-        <Compile Include="Core\ObservableObjects.cs"/>
-        <Compile Include="Core\RelayCOmmand.cs"/>
-        <Compile Include="ViewModels\HomeViewModel.cs"/>
-        <Compile Include="ViewModels\MainViewModel.cs"/>
-        <Compile Include="ViewModels\ReplaceBooksViewModel.cs"/>
+        <Compile Include="Core\ObservableObjects.cs" />
+        <Compile Include="Core\RelayCOmmand.cs" />
+        <Compile Include="ViewModels\HomeViewModel.cs" />
+        <Compile Include="ViewModels\MainViewModel.cs" />
+        <Compile Include="ViewModels\ReplaceBooksViewModel.cs" />
         <Compile Include="Views\HomeView.xaml.cs">
             <DependentUpon>HomeView.xaml</DependentUpon>
         </Compile>
@@ -115,38 +115,42 @@
         </None>
     </ItemGroup>
     <ItemGroup>
-        <None Include="App.config"/>
+        <None Include="App.config" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Logic\Replacing Books\"/>
+        <Folder Include="Logic\Replacing Books\" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Theme\Assets\twitter.png"/>
+        <Resource Include="Theme\Assets\twitter.png" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Theme\Assets\Settings.png"/>
+        <Resource Include="Theme\Assets\Settings.png" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Theme\Assets\UpBlack.png"/>
+        <Resource Include="Theme\Assets\UpBlack.png" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Theme\Assets\Restart.png"/>
+        <Resource Include="Theme\Assets\Restart.png" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Theme\Assets\Background.png"/>
+        <Resource Include="Theme\Assets\Background.png" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Theme\Assets\DownBlack.png"/>
-        <Resource Include="Theme\Assets\DownRed.png"/>
-        <Resource Include="Theme\Assets\UpGreen.png"/>
+        <Resource Include="Theme\Assets\DownBlack.png" />
+        <Resource Include="Theme\Assets\DownRed.png" />
+        <Resource Include="Theme\Assets\UpGreen.png" />
     </ItemGroup>
     <ItemGroup>
-        <Resource Include="Theme\Assets\Difficult.png"/>
-        <Resource Include="Theme\Assets\Easy.png"/>
-        <Resource Include="Theme\Assets\Extreme.png"/>
-        <Resource Include="Theme\Assets\Hard.png"/>
-        <Resource Include="Theme\Assets\Insane.png"/>
-        <Resource Include="Theme\Assets\Normal.png"/>
+        <Resource Include="Theme\Assets\Difficult.png" />
+        <Resource Include="Theme\Assets\Easy.png" />
+        <Resource Include="Theme\Assets\Extreme.png" />
+        <Resource Include="Theme\Assets\Hard.png" />
+        <Resource Include="Theme\Assets\Insane.png" />
+        <Resource Include="Theme\Assets\Normal.png" />
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+    <ItemGroup>
+      <Content Include="Theme\Assets\Close.png" />
+      <Content Include="Theme\Assets\Save.png" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

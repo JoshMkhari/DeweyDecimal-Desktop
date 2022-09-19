@@ -109,29 +109,29 @@
                Height="60"
                Source="/Theme/Assets/Easy.png"
                Name="imgDifficulty"
+               Panel.ZIndex="20"
+               MouseLeftButtonDown="ImgDifficulty_OnMouseLeftButtonDown"
                Canvas.Left="65"
                Canvas.Top="19" />
 
         <Image Width="50"
                Height="50"
+               Panel.ZIndex="20"
                Name="btnReset"
                Source="/Theme/Assets/Restart.png"
                Canvas.Left="42" 
                Canvas.Top="24"
                MouseLeftButtonDown="BtnReset_OnMouseLeftButtonDown">
         </Image>
-        
-        
 
-        <Button Width="50"
-                Height="50"
-                Name="btnSettings"
-                BorderBrush="Transparent"
-                BorderThickness="0" Canvas.Left="622" Canvas.Top="24">
-            <Button.Background>
-                <ImageBrush ImageSource="/Theme/Assets/Settings.png" Stretch="Fill" />
-            </Button.Background>
-        </Button>
+        <Image Width="50"
+               Height="50"
+               Panel.ZIndex="20"
+               Name="btnSettings"
+               Source="/Theme/Assets/Settings.png"
+               Canvas.Left="622" Canvas.Top="24"
+               MouseLeftButtonDown="BtnSettings_OnMouseLeftButtonDown">
+        </Image>
 
         <Border x:Name="rectBlock1"
                 BorderThickness="2"

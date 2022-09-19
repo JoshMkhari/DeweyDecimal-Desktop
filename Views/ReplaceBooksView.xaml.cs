@@ -54,7 +54,7 @@ namespace JoshMkhariPROG7312Game.Views
             _rectangleSortOrder[0] = 'A';
             _rectangleSortOrder[1] = 'A';
             _movesCount = 0;
-            
+
             var blackBrush = new SolidColorBrush(Colors.Blue);
             RegisterName("MySolidColorBorderBrush", blackBrush);
             
@@ -280,11 +280,13 @@ namespace JoshMkhariPROG7312Game.Views
                 imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));;
                 imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));;
             }
+
+            double size = 5;
             
-            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / 5f)*100 + "%";
-            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / 5f)*100 + "%";
-            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / 5f)*100 + "%";
-            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / 5f)*100 + "%";
+            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / size)*100 + "%";
+            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / size)*100 + "%";
+            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / size)*100 + "%";
+            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / size)*100 + "%";
         }
 
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
@@ -788,6 +790,22 @@ namespace JoshMkhariPROG7312Game.Views
            //AssignValuesToBlocks();
            
            //Reset Block Locations
+        }
+
+        private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Change whatever you want
+            Canvas.SetLeft(imgDifficulty, 408);
+            txtMovesCount.Visibility = Visibility.Collapsed;
+            btnReset.Visibility = Visibility.Collapsed;
+            
+            btnSettings.Source = new BitmapImage(new Uri(@"/Theme/Assets/Save.png", UriKind.Relative));;
+        }
+
+        private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Change difficulty to preset
+            throw new NotImplementedException();
         }
     }
 }
