@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using JoshMkhariPROG7312Game.Logic.Replacing_Books;
+using JoshMkhariPROG7312Game.ViewModels;
 
 namespace JoshMkhariPROG7312Game.Views
 {
@@ -18,45 +19,12 @@ namespace JoshMkhariPROG7312Game.Views
     /// </summary>
     public partial class ReplaceBooksView : UserControl
     {
-        private int _activatedBlockCount;
-
-        private SolidColorBrush _blackBrush;
-        private readonly int[] _bottomRectCanvasYLocations = { 422, 396, 369, 342, 315, 288 }; //For bottom rectangle
-        private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90, 63}; //For top rectangle
-        
-        private int _currentDifficulty; //0 for easy, 5 for insane
-
-        private Stack<double> _callNumbers, _callNumbersTop, _callNumbersBottom, _callNumbersLeft, _callNumbersRight; //To store initial numbers in top rectangle
-        private Stack<String> _callNumbersStrings;
-        private int _destinationRectangleNumber; //The rectangle a block is being transferred to
-        private PreSetDifficulty _preSetDifficulty = new PreSetDifficulty();
-        private bool _onSettingsPage = false;
-        
-        private int _originalRectangleNumber; //??????????????????????????????????????
-
-        private readonly char[] _rectangleSortOrder = new char [4]; //Store whether rectangle is ascending or descending
-        private double[] _stackSizes = new double[4];
-        //https://www.tutorialsteacher.com/csharp/csharp-dictionary
-        private readonly IDictionary<double, int>
-            _rectValueNamePair = new Dictionary<double, int>(); //Stores Random value and Rectangle name
-        
-        private IDictionary<int, bool>
-            _activeAscDesc = new Dictionary<int, bool>(); //Stores Set difficulty for current game
-
-        //Store locations where blocks must rest based on amount of items within rectangle
-        
-
-        private int _movesCount;
+        //Declerations
+        private ReplaceBooksViewModel _replaceBooksViewModel = new ReplaceBooksViewModel();
         public ReplaceBooksView()
         {
             InitializeComponent();
-            _currentDifficulty = 0;
-            _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
-            _originalRectangleNumber = 4;
-            _activatedBlockCount = 0;
-            _rectangleSortOrder[0] = 'A';
-            _rectangleSortOrder[1] = 'A';
-            _movesCount = 0;
+            
 
             var blackBrush = new SolidColorBrush(Colors.Blue);
             RegisterName("MySolidColorBorderBrush", blackBrush);
