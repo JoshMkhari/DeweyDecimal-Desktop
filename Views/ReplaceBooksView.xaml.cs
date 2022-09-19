@@ -249,13 +249,11 @@ namespace JoshMkhariPROG7312Game.Views
                 {
                     _rectangleSortOrder[2] = 'D'; //Store Descending for Left Rectangle
                     imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
-                    Debug.WriteLine("Left block is descending");
                 }
                 else
                 {
                     _rectangleSortOrder[2] = 'A'; //Store Ascending for Left Rectangle
                     imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
-                    Debug.WriteLine("Left block is ascending");
                 }
             }
 
@@ -265,15 +263,18 @@ namespace JoshMkhariPROG7312Game.Views
                 {
                     _rectangleSortOrder[3] = 'D'; //Store Descending for Right Rectangle
                     imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
-                    Debug.WriteLine("Right block is descending");
                 }
                 else
                 {
                     _rectangleSortOrder[3] = 'A'; //Store Ascending for Right Rectangle
                     imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
-                    Debug.WriteLine("Right block is ascending");
                 }
             }
+            
+            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / 5f)*100 + "%";
+            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / 5f)*100 + "%";
+            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / 5f)*100 + "%";
+            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / 5f)*100 + "%";
         }
 
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,

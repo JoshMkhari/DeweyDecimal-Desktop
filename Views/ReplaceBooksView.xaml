@@ -20,25 +20,25 @@
         <Label FontSize="20"
                Name="txtTopRectStorageCapacity"
                Content="100%"
-               Canvas.Left="322"
+               Canvas.Left="332"
                Canvas.Top="218" />
 
         <Label FontSize="20"
                Name="txtBottomRectStorageCapacity"
                Content="100%"
-               Canvas.Left="322"
+               Canvas.Left="332"
                Canvas.Top="444" />
 
         <Label FontSize="20"
                Name="txtLeftRectStorageCapacity"
-               Content="100%"
-               Canvas.Left="174"
+               Content="0%"
+               Canvas.Left="184"
                Canvas.Top="340" />
 
         <Label FontSize="20"
                Name="txtRightRectStorageCapacity"
-               Content="100%"
-               Canvas.Left="477"
+               Content="0%"
+               Canvas.Left="487"
                Canvas.Top="340" />
 
         <Image Width="20"
@@ -261,7 +261,7 @@
 
         <Rectangle x:Name="selectTopRect"
                    Panel.ZIndex="20"
-                   Width="73"
+                   Width="94"
                    Height="146"
                    Fill="Transparent"
                    Canvas.Left="314"
@@ -270,7 +270,7 @@
 
         <Rectangle x:Name="selectBottomRect"
                    Panel.ZIndex="20"
-                   Width="73"
+                   Width="94"
                    Height="146"
                    Fill="Transparent"
                    Canvas.Left="314"
@@ -279,7 +279,7 @@
 
         <Rectangle x:Name="selectLeftRect"
                    Panel.ZIndex="20"
-                   Width="73"
+                   Width="94"
                    Height="146"
                    Fill="Transparent"
                    Canvas.Left="167"
@@ -289,7 +289,7 @@
 
         <Rectangle x:Name="selectRightRect"
                    Panel.ZIndex="20"
-                   Width="73"
+                   Width="94"
                    Height="146"
                    Fill="Transparent"
                    Canvas.Left="470"
