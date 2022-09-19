@@ -16,8 +16,8 @@ namespace JoshMkhariPROG7312Game.ViewModels
         public int[] RectangleNumber { get; set; }//Stores both the originalRectangleNumber rectangleNumber and destination
         
         //You only need to store 1 and + 27
-        private readonly int[] _bottomRectCanvasYLocations = { 422, 396, 369, 342, 315, 288 }; //For bottom rectangle 
-        private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90, 63}; //For top rectangle
+        public int[] BottomRectCanvasYLocations { get; set; }//For bottom rectangle 
+        public int[] TopRectCanvasYLocations { get; set; } //For top rectangle
         
         public char[] RectangleSortOrder { get; set; } //Store whether rectangle is ascending or descending
         public double[] StackSizes { get; set; }//Stores the capacity of each rectangle stack
@@ -43,7 +43,9 @@ namespace JoshMkhariPROG7312Game.ViewModels
             RectangleNumber = new[] { 4, 4 };//Origin and Destination
             //rectangleNumber 0 The rectangle that is receiving the number
             //rectangleNumber 1 The rectangle that is sending the number
-
+            BottomRectCanvasYLocations =new[] { 422, 396, 369, 342, 315, 288 }; //For bottom rectangle 
+            TopRectCanvasYLocations = new[]{ 198, 171, 144, 117, 90, 63}; //For top rectangle
+            
             CallNumbers = new List<double>();
             CallNumbersStrings = new List<string>();
             RectValueNamePair = new Dictionary<double, int>();
@@ -101,6 +103,10 @@ namespace JoshMkhariPROG7312Game.ViewModels
             CallNumberStacks.ElementAt(destinationStack).Push(CallNumberStacks.ElementAt(originStack).Pop());
             GameCounts[1] = 0;//Active Block Count
         }
-        
+
+        public void UpdateDifficulty()
+        {
+            ActiveAscDescStacks = PreSetDiff.ChangeDifficulty(CurrentDifficulty);//Determine sort order for each stack
+        }
     }
 }

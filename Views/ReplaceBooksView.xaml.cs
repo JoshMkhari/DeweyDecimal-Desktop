@@ -238,7 +238,7 @@ namespace JoshMkhariPROG7312Game.Views
                                 if (_replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] == 'A' || _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2)) //If ascending
                                 {
                                     if (_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]).Peek()>
-                                        PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
+                                        _replaceBooksViewModel.CallNumberStacks.ElementAt(currentRectangleNumber).Peek()) //If new addition is greater than top num
                                     {
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
                                         _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
@@ -252,7 +252,7 @@ namespace JoshMkhariPROG7312Game.Views
                                 else if (_replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] == 'D'||  _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2+1)) //If Descending
                                 {
                                     if (_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]).Peek()<
-                                        PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
+                                        _replaceBooksViewModel.CallNumberStacks.ElementAt(currentRectangleNumber).Peek()) //If new addition is greater than top num
                                     {
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
                                         _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
@@ -279,22 +279,22 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void selectTopRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedRectangle(selectTopRect, _callNumbersTop, 0);
+            SelectedRectangle(selectTopRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(0), 0);
         }
 
         private void selectBottomRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedRectangle(selectBottomRect, _callNumbersBottom, 1);
+            SelectedRectangle(selectBottomRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(1), 1);
         }
 
         private void selectLeftRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedRectangle(selectLeftRect, _callNumbersLeft, 2);
+            SelectedRectangle(selectLeftRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(2), 2);
         }
 
         private void selectRightRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedRectangle(selectRightRect, _callNumbersRight, 3);
+            SelectedRectangle(selectRightRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(3), 3);
         }
 
         //For both left and right rectangles
@@ -320,6 +320,19 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void MoveRectangle(int blockNumber, int originRectangle)
         {
+            switch (originRectangle)
+            {
+                case 0:
+                    originRectangle = 60;
+                    break;
+                case 1:
+                    originRectangle = 285;
+                    break;
+                case 2:
+                case 3:
+                    originRectangle = 180;
+                    break;
+            }
             switch (blockNumber)
             {
                 case 1:
@@ -374,19 +387,18 @@ namespace JoshMkhariPROG7312Game.Views
         private void StartYJourneyUp(Border border)
         {
             var destinationY = 0;
-            switch (_destinationRectangleNumber)
+            switch (_replaceBooksViewModel.RectangleNumber[1])
             {
                 case 0: //For Top Block
-                    destinationY = ReturnCurrentBlockYTopBottom(_callNumbersTop, _topRectCanvasYLocations);
+                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(0), _replaceBooksViewModel.TopRectCanvasYLocations);
+                    rrr
                     break;
                 case 1: // For Bottom block
-                    destinationY = ReturnCurrentBlockYTopBottom(_callNumbersBottom, _bottomRectCanvasYLocations);
+                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(1), _replaceBooksViewModel.BottomRectCanvasYLocations);
                     break;
                 case 2: //For left Block
-                    destinationY = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
-                    break;
-                case 3: // For right block
-                    destinationY = ReturnCurrentBlockYLeftRight(_callNumbersRight);
+                case 3:
+                    destinationY = ReturnCurrentBlockYLeftRight(_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]));
                     break;
             }
             do
@@ -404,19 +416,18 @@ namespace JoshMkhariPROG7312Game.Views
         private void StartYJourneyDown(Border border)
         {
             var destinationY = 0;
-            switch (_destinationRectangleNumber)
+            switch (_replaceBooksViewModel.RectangleNumber[1])
             {
                 case 0: //For Top Block
-                    destinationY = ReturnCurrentBlockYTopBottom(_callNumbersTop, _topRectCanvasYLocations);
+                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(0), _replaceBooksViewModel.TopRectCanvasYLocations);
+                    rrr
                     break;
                 case 1: // For Bottom block
-                    destinationY = ReturnCurrentBlockYTopBottom(_callNumbersBottom, _bottomRectCanvasYLocations);
+                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(1), _replaceBooksViewModel.BottomRectCanvasYLocations);
                     break;
                 case 2: //For left Block
-                    destinationY = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
-                    break;
-                case 3: // For right block
-                    destinationY = ReturnCurrentBlockYLeftRight(_callNumbersRight);
+                case 3:
+                    destinationY = ReturnCurrentBlockYLeftRight(_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]));
                     break;
             }
             
@@ -438,10 +449,10 @@ namespace JoshMkhariPROG7312Game.Views
 
             //Determine if need to be going left or right
             
-            switch (_destinationRectangleNumber) //0 Top, 1 Bottom, 2 Left, 3 Right
+            switch (_replaceBooksViewModel.RectangleNumber[1]) //0 Top, 1 Bottom, 2 Left, 3 Right Destination
             {
                 case 0: //Going to top
-                    switch (_originalRectangleNumber)
+                    switch (_replaceBooksViewModel.RectangleNumber[0])//Origin
                     {
                         case 1: //Starting from bottom
                             StartYJourneyUp(border); //Just go straight up
@@ -460,7 +471,7 @@ namespace JoshMkhariPROG7312Game.Views
                     }
                     break;
                 case 1: //Going to Bottom 285
-                    switch (_originalRectangleNumber)
+                    switch (_replaceBooksViewModel.RectangleNumber[0])
                     {
                         case 0: //Starting from Top
                             //Just go straight down
@@ -482,7 +493,7 @@ namespace JoshMkhariPROG7312Game.Views
 
                     break;
                 case 2: //Going to Left 180
-                    switch (_originalRectangleNumber)
+                    switch (_replaceBooksViewModel.RectangleNumber[0])
                     {
                         case 0: //Starting from top
                             //Go left until 175
@@ -504,7 +515,7 @@ namespace JoshMkhariPROG7312Game.Views
 
                     break;
                 case 3: //Going to Right one
-                    switch (_originalRectangleNumber)
+                    switch (_replaceBooksViewModel.RectangleNumber[0])
                     {
                         //478
                         case 0: //Starting from top
@@ -546,97 +557,19 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void AnimateBlockMovement()
         {
-            switch (_originalRectangleNumber) //Based on original rectangle number between 0-3 
-            {
-                case 0: //From Top
-                    for (var i = 0; i < _rectValueNamePair.Count; i++)
-                        if (_rectValueNamePair.Keys.ElementAt(i) == _callNumbersTop.Peek())
-                        {
-                            MoveRectangle(_rectValueNamePair.Values.ElementAt(i), 60);
-                            break;
-                        }
-
-                    //canvasLeft = 321; //Location on x axis where block must stop within top and bottom rectangles
+            //Based on original rectangle number between 0-3
+            for (var i = 0; i < _replaceBooksViewModel.RectValueNamePair.Count; i++)
+                if (_replaceBooksViewModel.RectValueNamePair.Keys.ElementAt(i) == _replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek())
+                {
+                    MoveRectangle(_replaceBooksViewModel.RectValueNamePair.Values.ElementAt(i), _replaceBooksViewModel.RectangleNumber[0]);
                     break;
-
-                case 1: //From bottom rectangle
-                    //canvasLeft = 321;//Location on x axis where block must stop within top and bottom rectangles
-                    for (var i = 0; i < _rectValueNamePair.Count; i++)
-                        if (_rectValueNamePair.Keys.ElementAt(i) == _callNumbersBottom.Peek())
-                        {
-                            MoveRectangle(_rectValueNamePair.Values.ElementAt(i), 285);
-                            break;
-                        }
-
-                    break;
-
-                case 2: //From Left rectangle
-                    //canvasTop = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
-                    //return _callNumbersLeft.Pop();
-                    for (var i = 0; i < _rectValueNamePair.Count; i++)
-                        if (_rectValueNamePair.Keys.ElementAt(i) == _callNumbersLeft.Peek())
-                        {
-                            MoveRectangle(_rectValueNamePair.Values.ElementAt(i), 180);
-                            break;
-                        }
-
-                    //canvasLeft = 175;//Location on x axis where block must stop within left rectangle 
-                    break;
-                default://From Right rectangle
-                    for (var i = 0; i < _rectValueNamePair.Count; i++)
-                        if (_rectValueNamePair.Keys.ElementAt(i) == _callNumbersRight.Peek())
-                        {
-                            MoveRectangle(_rectValueNamePair.Values.ElementAt(i), 180);
-                            break;
-                        }
-
-                    //For right rectangle
-                    //canvasTop = ReturnCurrentBlockYLeftRight(_callNumbersRight);
-                    //canvasLeft = 478;//Location on x axis where block must stop within right rectangle 
-                    break;
-            }
-        }
-
-        private double PeepCallBlock(int recLocation)
-        {
-            switch (recLocation)
-            {
-                case 0:
-                    return _callNumbersTop.Peek();
-                case 1:
-                    return _callNumbersBottom.Peek();
-                case 2:
-                    return _callNumbersLeft.Peek();
-                default:
-                    return _callNumbersRight.Peek();
-            }
-        }
-
-        private double PopCallBlock(int recLocation)
-        {
-            _activatedBlockCount = 0;
-            ClearAllFocus();
-            switch (recLocation)
-            {
-                case 0:
-                    return _callNumbersTop.Pop();
-                case 1:
-                    return _callNumbersBottom.Pop();
-                case 2:
-                    return _callNumbersLeft.Pop();
-                default:
-                    return _callNumbersRight.Pop();
-            }
+                }
+            
         }
 
         private void BtnReset_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _callNumbersBottom.Clear();
-            _callNumbersTop.Clear();
-            _callNumbersLeft.Clear();
-            _callNumbersRight.Clear();
-
-            InitializeStacks();
+            _replaceBooksViewModel = new ReplaceBooksViewModel();
         }
         private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -685,13 +618,13 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void UpdateDifficultyUiElements()
         {
-            if (_currentDifficulty > 5)
+            if (_replaceBooksViewModel.CurrentDifficulty > 5)
             {
-                _currentDifficulty = 0;
+                _replaceBooksViewModel.CurrentDifficulty = 0;
               
             }
-            _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
-            switch (_currentDifficulty)
+            _replaceBooksViewModel.UpdateDifficulty();
+            switch (_replaceBooksViewModel.CurrentDifficulty)
             {
                 case 1:
                     UpdateStackSizeText(5, 5, 5, 5);
@@ -724,19 +657,20 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (_onSettingsPage)
+            if (_replaceBooksViewModel.OnSettingsPage)
             {
-                _currentDifficulty++;
+                _replaceBooksViewModel.CurrentDifficulty++;
                 UpdateDifficultyUiElements();
             }
         }
         private void UpdateArrows()
         {
+            ssssss
             //Top Rectangle pointing down
             imgTopRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
             imgBottomRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
             
-            if (_activeAscDesc.Values.ElementAt(1))
+            if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(1))
             {
                 imgTopRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
             }
@@ -746,7 +680,7 @@ namespace JoshMkhariPROG7312Game.Views
             }
             
             //Bottom Rectangle pointing down
-            if (_activeAscDesc.Values.ElementAt(3))
+            if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(3))
             {
                 imgBottomRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
             }
@@ -756,7 +690,7 @@ namespace JoshMkhariPROG7312Game.Views
             }
             
             //Left Rectangle
-            if (_activeAscDesc.Values.ElementAt(4))
+            if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(4))
             {
                 imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
             }
@@ -765,7 +699,7 @@ namespace JoshMkhariPROG7312Game.Views
                 imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
             }
             
-            if (_activeAscDesc.Values.ElementAt(5))
+            if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(5))
             {
                 imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
             }
@@ -775,7 +709,7 @@ namespace JoshMkhariPROG7312Game.Views
             }
             
             //Left Rectangle
-            if (_activeAscDesc.Values.ElementAt(6))
+            if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(6))
             {
                 imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
             }
@@ -784,7 +718,7 @@ namespace JoshMkhariPROG7312Game.Views
                 imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
             }
             
-            if (_activeAscDesc.Values.ElementAt(7))
+            if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(7))
             {
                 imgRightRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
             }
@@ -801,10 +735,11 @@ namespace JoshMkhariPROG7312Game.Views
             StackSizeLeft.Value = left;
             StackSizeRight.Value = right;
 
-            _stackSizes[0] = top;
-            _stackSizes[1] = bot;
-            _stackSizes[2] = left;
-            _stackSizes[3] = right;
+            
+            _replaceBooksViewModel.StackSizes[0] = top;
+            _replaceBooksViewModel.StackSizes[1] = bot;
+            _replaceBooksViewModel.StackSizes[2] = left;
+            _replaceBooksViewModel.StackSizes[3] = right;
         }
         private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -869,7 +804,7 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void StackSizeTop_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _stackSizes[0] = StackSizeTop.Value;
+            _replaceBooksViewModel.StackSizes[0] = StackSizeTop.Value;
         }
         private void TStackSizeBottom_OnTextChanged(object sender, TextChangedEventArgs e)
         {
@@ -887,7 +822,7 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void StackSizeBottom_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _stackSizes[1] = StackSizeBottom.Value;
+            _replaceBooksViewModel.StackSizes[1] = StackSizeBottom.Value;
         }
         private void TStackSizeLeft_OnTextChanged(object sender, TextChangedEventArgs e)
         {
@@ -905,7 +840,7 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void StackSizeLeft_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _stackSizes[2] = StackSizeLeft.Value;
+            _replaceBooksViewModel.StackSizes[2] = StackSizeLeft.Value;
         }
         private void TStackSizeRight_OnTextChanged(object sender, TextChangedEventArgs e)
         {
@@ -923,41 +858,7 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void StackSizeRight_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            _stackSizes[3] = StackSizeRight.Value;
-        }
-        private void imgLeftRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-        }
-        private void imgBottomRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (_onSettingsPage)
-            {
-                
-            }
-        }
-        private void imgRightRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void imgRightRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void imgLeftRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void imgTopRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void imgTopRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-        private void imgBottomRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            throw new NotImplementedException();
+            _replaceBooksViewModel.StackSizes[3] = StackSizeRight.Value;
         }
     }
 }
