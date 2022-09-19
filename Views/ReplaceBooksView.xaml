@@ -126,8 +126,10 @@
                 Height="22"
                 Background="#818181">
             <TextBlock x:Name="txtRectBlock1"
-                       Text="303.CAT One"
-                       HorizontalAlignment="Center" />
+                       Text="005.731 JAM"
+                       FontSize="10"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
         </Border>
 
         <Border x:Name="rectBlock2"

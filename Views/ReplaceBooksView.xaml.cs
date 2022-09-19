@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -63,7 +64,7 @@ namespace JoshMkhariPROG7312Game.Views
 
             for (int i = 0; i < 10; i++)
             {
-                callNumbers.Push((rnd.Next(((99999)*10+1))+1*10)/1000.0); //add a value
+                callNumbers.Push((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
 
@@ -87,13 +88,30 @@ namespace JoshMkhariPROG7312Game.Views
             AssignValuesToBlocks();
         }
 
+        private String RandomLetters()
+        {
+            var rnd = new Random();
+            
+            //StringBuilder stringBuilder = new StringBuilder();
+            //for (int i = 0; i < 3; i++)
+            {
+            //    int num = rnd.Next(65, 90);
+            //    Debug.WriteLine("Look at me " + num.ToString());
+                //ASCII codes
+                //https://www.geeksforgeeks.org/ascii-table/#:~:text=In%20total%2C%20there%20are%20256%20ASCII%20characters%2C%20and,%28most%20commonly%20referred%29%203%20Extended%20ASCII%20characters%20%28128-255%29
+             //   stringBuilder.Append((char) num);//https://stackoverflow.com/questions/3414900/how-to-get-a-char-from-an-ascii-character-code-in-c-sharp
+            }
+            //String letters = ((char) rnd.Next(65, 90)).ToString() + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90)
+            return ((char) rnd.Next(65, 90)).ToString() + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+        }
         private void AssignValuesToBlocks()
         {
-            txtRectBlock1.Text = _callNumbersTop.ElementAt(4).ToString();
-            txtRectBlock2.Text = _callNumbersTop.ElementAt(3).ToString();
-            txtRectBlock3.Text = _callNumbersTop.ElementAt(2).ToString();
-            txtRectBlock4.Text = _callNumbersTop.ElementAt(1).ToString();
-            txtRectBlock5.Text = _callNumbersTop.ElementAt(0).ToString();
+            var rnd = new Random();
+            txtRectBlock1.Text = _callNumbersTop.ElementAt(4).ToString() + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock2.Text = _callNumbersTop.ElementAt(3).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock3.Text = _callNumbersTop.ElementAt(2).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock4.Text = _callNumbersTop.ElementAt(1).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock5.Text = _callNumbersTop.ElementAt(0).ToString()+(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
             
             //https://www.tutorialsteacher.com/csharp/csharp-dictionary
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(4), 1); //storing the value with the rectangle name
@@ -102,12 +120,12 @@ namespace JoshMkhariPROG7312Game.Views
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(1), 4); //storing the value with the rectangle name
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(0), 5); //storing the value with the rectangle name
             
-            txtRectBlock6.Text = _callNumbersBottom.ElementAt(0).ToString();
-            txtRectBlock7.Text = _callNumbersBottom.ElementAt(1).ToString();
-            txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString();
-            txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString();
-            txtRectBlock9.Text = _callNumbersBottom.ElementAt(3).ToString();
-            txtRectBlock10.Text = _callNumbersBottom.ElementAt(4).ToString();
+            txtRectBlock6.Text = _callNumbersBottom.ElementAt(0).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock7.Text = _callNumbersBottom.ElementAt(1).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock8.Text = _callNumbersBottom.ElementAt(2).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock9.Text = _callNumbersBottom.ElementAt(3).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock10.Text = _callNumbersBottom.ElementAt(4).ToString()+ (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
 
             //https://www.tutorialsteacher.com/csharp/csharp-dictionary
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(0), 6); //storing the value with the rectangle name
