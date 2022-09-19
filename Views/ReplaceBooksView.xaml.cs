@@ -855,32 +855,46 @@ namespace JoshMkhariPROG7312Game.Views
                 switch (_currentDifficulty)
                 {
                     case 1:
-                        
+                        UpdateStackSizeText(5, 5, 5, 5);
                         imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Normal.png", UriKind.Relative));
                         break;
                     case 2:
+                        UpdateStackSizeText(6, 6, 6, 5);
                         imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Difficult.png", UriKind.Relative));
                         break;
                     case 3:
+                        UpdateStackSizeText(6, 6, 5, 5);
                         imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Hard.png", UriKind.Relative));
                         break;
                     case 4:
+                        UpdateStackSizeText(6, 5, 5, 5);
                         imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Extreme.png", UriKind.Relative));
                         break;
                     case 5:
+                        UpdateStackSizeText(5, 5, 5, 5);
                         imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Insane.png", UriKind.Relative));
                         break;
                     default:
-                        //Set all stack capacity to 6
-                        for (int i = 0; i < 4; i++)
-                        {
-                            _stackSizes[i] = 6;
-                        }
-                        
+                        UpdateStackSizeText(6, 6, 6, 6);
                         imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
                         break;;
                 }
             }
+        }
+
+        
+        private void UpdateStackSizeText(int top,int bot,int left,int right)
+        {
+            StackSizeTop.Value = top;
+            StackSizeBottom.Value = bot;
+            
+            StackSizeLeft.Value = left;
+            StackSizeRight.Value = right;
+
+            _stackSizes[0] = top;
+            _stackSizes[1] = bot;
+            _stackSizes[2] = left;
+            _stackSizes[3] = right;
         }
 
         private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
