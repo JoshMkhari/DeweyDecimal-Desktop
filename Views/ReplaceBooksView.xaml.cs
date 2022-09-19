@@ -850,8 +850,9 @@ namespace JoshMkhariPROG7312Game.Views
                 if (_currentDifficulty > 5)
                 {
                     _currentDifficulty = 0;
-                    _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
+              
                 }
+                _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
                 switch (_currentDifficulty)
                 {
                     case 1:
@@ -879,15 +880,79 @@ namespace JoshMkhariPROG7312Game.Views
                         imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
                         break;;
                 }
+
+                UpdateArrows();
             }
         }
 
-        
+        private void UpdateArrows()
+        {
+            //Top Rectangle pointing down
+            imgTopRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+            imgBottomRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+            
+            if (_activeAscDesc.Values.ElementAt(1))
+            {
+                imgTopRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+            }
+            else
+            {
+                imgTopRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
+            
+            //Bottom Rectangle pointing down
+            if (_activeAscDesc.Values.ElementAt(3))
+            {
+                imgBottomRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+            }
+            else
+            {
+                imgBottomRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
+            
+            //Left Rectangle
+            if (_activeAscDesc.Values.ElementAt(4))
+            {
+                imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+            }
+            else
+            {
+                imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+            }
+            
+            if (_activeAscDesc.Values.ElementAt(5))
+            {
+                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+            }
+            else
+            {
+                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
+            
+            //Left Rectangle
+            if (_activeAscDesc.Values.ElementAt(6))
+            {
+                imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+            }
+            else
+            {
+                imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+            }
+            
+            if (_activeAscDesc.Values.ElementAt(7))
+            {
+                imgRightRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+            }
+            else
+            {
+                imgRightRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
+
+        }
         private void UpdateStackSizeText(int top,int bot,int left,int right)
         {
             StackSizeTop.Value = top;
             StackSizeBottom.Value = bot;
-            
             StackSizeLeft.Value = left;
             StackSizeRight.Value = right;
 
