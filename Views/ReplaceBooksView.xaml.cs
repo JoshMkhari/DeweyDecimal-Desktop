@@ -25,33 +25,10 @@ namespace JoshMkhariPROG7312Game.Views
         {
             InitializeComponent();
             _replaceBooksViewModel = new ReplaceBooksViewModel();
-
-            var blackBrush = new SolidColorBrush(Colors.Blue);
-            RegisterName("MySolidColorBorderBrush", blackBrush);
-            
-            _replaceBooksViewModel.CallNumbers = new List<double>(); //To store initial 10 values
-            _replaceBooksViewModel.CallNumbersStrings = new List<string>(); //To store initial chars
-            //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
-            var rnd = new Random();
-
-            for (int i = 0; i < 10; i++)
-            {
-                _replaceBooksViewModel.CallNumbers.Add((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value
-                _replaceBooksViewModel.CallNumbersStrings.Add(" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90));
-                //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
-            }
-            InitializeStacks();
             
             AssignValuesToBlocks();
         }
-
-        private void InitializeStacks()
-        {
-            for (var i = 0; i < 5; i++) _callNumbersTop.Push(_callNumbers.ElementAt(i));
-
-            for (var i = 5; i < 10; i++) _callNumbersBottom.Push(_callNumbers.ElementAt(i));
-        }
-
+        
         private String NumberFormatter(double input)
         {
             String num = input.ToString();
@@ -85,30 +62,12 @@ namespace JoshMkhariPROG7312Game.Views
             txtRectBlock3.Text =  NumberFormatter(_callNumbersTop.ElementAt(2))+ _callNumbersStrings.ElementAt(2);
             txtRectBlock4.Text =  NumberFormatter(_callNumbersTop.ElementAt(1))+ _callNumbersStrings.ElementAt(3);
             txtRectBlock5.Text =  NumberFormatter(_callNumbersTop.ElementAt(0))+_callNumbersStrings.ElementAt(4);
-            
-            //https://www.tutorialsteacher.com/csharp/csharp-dictionary
-            _rectValueNamePair.Add(_callNumbersTop.ElementAt(4), 1); //storing the value with the rectangle name
-            _rectValueNamePair.Add(_callNumbersTop.ElementAt(3), 2); //storing the value with the rectangle name
-            _rectValueNamePair.Add(_callNumbersTop.ElementAt(2), 3); //storing the value with the rectangle name
-            _rectValueNamePair.Add(_callNumbersTop.ElementAt(1), 4); //storing the value with the rectangle name
-            _rectValueNamePair.Add(_callNumbersTop.ElementAt(0), 5); //storing the value with the rectangle name
-            
             txtRectBlock6.Text =  NumberFormatter(_callNumbersBottom.ElementAt(0))+_callNumbersStrings.ElementAt(5);
             txtRectBlock7.Text =  NumberFormatter(_callNumbersBottom.ElementAt(1))+ _callNumbersStrings.ElementAt(6);
             txtRectBlock8.Text =  NumberFormatter(_callNumbersBottom.ElementAt(2))+ _callNumbersStrings.ElementAt(7);
             txtRectBlock9.Text =  NumberFormatter(_callNumbersBottom.ElementAt(3))+ _callNumbersStrings.ElementAt(8);
             txtRectBlock10.Text =  NumberFormatter(_callNumbersBottom.ElementAt(4))+_callNumbersStrings.ElementAt(9);
 
-            //https://www.tutorialsteacher.com/csharp/csharp-dictionary
-            _rectValueNamePair.Add(_callNumbersBottom.ElementAt(0), 6); //storing the value with the rectangle name
-            _rectValueNamePair.Add(_callNumbersBottom.ElementAt(1), 7); //storing the value with the rectangle name
-            _rectValueNamePair.Add(_callNumbersBottom.ElementAt(2), 8); //storing the value with the rectangle name
-            _rectValueNamePair.Add(_callNumbersBottom.ElementAt(3), 9); //storing the value with the rectangle name
-            _rectValueNamePair.Add(_callNumbersBottom.ElementAt(4), 10); //storing the value with the rectangle name
-
-            
-            //Set initial Difficulty
-            
         }
         //To colour block strokes
         private void ActivateBlockColour(Rectangle rect, int mode)

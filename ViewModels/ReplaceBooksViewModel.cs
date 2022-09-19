@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Media;
 using JoshMkhariPROG7312Game.Logic.Replacing_Books;
 
@@ -28,8 +29,8 @@ namespace JoshMkhariPROG7312Game.ViewModels
         public PreSetDifficulty PreSetDiff { get; set;}
         
         //https://www.tutorialsteacher.com/csharp/csharp-dictionary
-        private readonly IDictionary<double, int>
-            _rectValueNamePair = new Dictionary<double, int>(); //Stores Random value and Rectangle name
+        public IDictionary<double, int>
+            RectValueNamePair{ get; set;} //Stores Random value and Rectangle name
         private IDictionary<int, bool>
             ActiveAscDescStacks{ get; set;} //Stores Set difficulty for current game
 
@@ -41,6 +42,9 @@ namespace JoshMkhariPROG7312Game.ViewModels
             //rectangleNumber 0 The rectangle that is receiving the number
             //rectangleNumber 1 The rectangle that is sending the number
 
+            CallNumbers = new List<double>();
+            CallNumbersStrings = new List<string>();
+            RectValueNamePair = new Dictionary<double, int>();
             RectangleSortOrder = new char[4];
             StackSizes = new double[4];
             
@@ -64,6 +68,30 @@ namespace JoshMkhariPROG7312Game.ViewModels
             
             RectangleSortOrder[0] = 'A';
             RectangleSortOrder[1] = 'A';
+
+            InitializeStacks();
+        }
+        
+        private void InitializeStacks()
+        {
+            //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
+            var rnd = new Random();
+
+            for (int i = 0; i < 10; i++)
+            {
+                CallNumbers.Add((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value
+                CallNumbersStrings.Add(" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90));
+                //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
+            }
+            
+            for (var i = 0; i < 5; i++) CallNumberStacks.ElementAt(0).Push(CallNumbers.ElementAt(i));
+
+            for (var i = 5; i < 10; i++) CallNumberStacks.ElementAt(1).Push(CallNumbers.ElementAt(i));
+            
+            for (int i = 0; i < 10; i++)
+            {
+                RectValueNamePair.Add(CallNumbers.ElementAt(i), i+1); //storing the value with the rectangle name
+            }
         }
     }
 }
