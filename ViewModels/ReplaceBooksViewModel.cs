@@ -9,16 +9,18 @@ namespace JoshMkhariPROG7312Game.ViewModels
     internal class ReplaceBooksViewModel
     {
         public bool OnSettingsPage { get; set; }//True if current page is settings page
-        private int[] GameCounts { get; set; }//Stores both the moves made count and current amount of rectangles that are active
+        
+        public int[] GameCounts { get; set; }//Move count, BlockCount
+        //Stores both the moves made count and current amount of rectangles that are active
         public int CurrentDifficulty { get; set; } //0 for easy, 5 for insane
-        public int[] RectangleNumber { get; set; }//Stores both the destination rectangleNumber and originalRectangleNumber
+        public int[] RectangleNumber { get; set; }//Stores both the originalRectangleNumber rectangleNumber and destination
         
         //You only need to store 1 and + 27
         private readonly int[] _bottomRectCanvasYLocations = { 422, 396, 369, 342, 315, 288 }; //For bottom rectangle 
         private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90, 63}; //For top rectangle
         
-        private char[] RectangleSortOrder { get; set; } //Store whether rectangle is ascending or descending
-        private double[] StackSizes { get; set; }//Stores the capacity of each rectangle stack
+        public char[] RectangleSortOrder { get; set; } //Store whether rectangle is ascending or descending
+        public double[] StackSizes { get; set; }//Stores the capacity of each rectangle stack
         
         public SolidColorBrush BlackBrush{ get; set; }//Used to change rectangle selection colour
         public List<Stack<double>> CallNumberStacks{ get; set; }//Holds all relevant stackd
@@ -31,7 +33,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
         //https://www.tutorialsteacher.com/csharp/csharp-dictionary
         public IDictionary<double, int>
             RectValueNamePair{ get; set;} //Stores Random value and Rectangle name
-        private IDictionary<int, bool>
+        public IDictionary<int, bool>
             ActiveAscDescStacks{ get; set;} //Stores Set difficulty for current game
 
         public ReplaceBooksViewModel()
@@ -93,5 +95,12 @@ namespace JoshMkhariPROG7312Game.ViewModels
                 RectValueNamePair.Add(CallNumbers.ElementAt(i), i+1); //storing the value with the rectangle name
             }
         }
+
+        public void PushCallNumber(int destinationStack, int originStack)
+        {
+            CallNumberStacks.ElementAt(destinationStack).Push(CallNumberStacks.ElementAt(originStack).Pop());
+            GameCounts[1] = 0;//Active Block Count
+        }
+        
     }
 }

@@ -85,23 +85,23 @@ namespace JoshMkhariPROG7312Game.Views
             
             switch (mode)
             {
-                case 0:
-                    _blackBrush = new SolidColorBrush(Colors.Gold); //Sender
-                    _activatedBlockCount++; //Program now knows start, waiting for destination
+                case 0: 
+                    _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Gold); //Sender
+                    _replaceBooksViewModel.GameCounts[1]++; //Program now knows start, waiting for destination 
                     break;
                 case 1:
-                    _blackBrush = new SolidColorBrush(Colors.Blue); //Reciever
+                    _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Blue); //Reciever
                     break;
                 case 2:
-                    _blackBrush = new SolidColorBrush(Colors.Red); //Reciever
+                    _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Red); //Reciever
                     break;
                 default:
-                    _blackBrush = new SolidColorBrush(Colors.Transparent); //Error
+                    _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Transparent); //Error
                     break;
             }
 
             rect.StrokeThickness = 3;
-            rect.Stroke = _blackBrush;
+            rect.Stroke = _replaceBooksViewModel.BlackBrush;
         }
 
         private void ReplacingBooks_MouseDown(object sender, MouseButtonEventArgs e)
@@ -114,7 +114,7 @@ namespace JoshMkhariPROG7312Game.Views
             ActivateBlockColour(rect, 2); //Display Red
             MessageBox.Show("Action not allowed " + errorText);
             ClearAllFocus();
-            _activatedBlockCount = 0;
+            _replaceBooksViewModel.GameCounts[1] = 0;//Active Block Count
         }
 
         //To clear all colours surrounding blocks
@@ -124,118 +124,70 @@ namespace JoshMkhariPROG7312Game.Views
             ActivateBlockColour(selectBottomRect, 3); //Make Transparent
             ActivateBlockColour(selectLeftRect, 3); //Make Transparent
             ActivateBlockColour(selectRightRect, 3); //Make Transparent
-            _activatedBlockCount = 0;
-            _destinationRectangleNumber = 0;
+            _replaceBooksViewModel.GameCounts[1] = 0;//Active Block Count
+            _replaceBooksViewModel.RectangleNumber[1] = 0;//Destination Rectangle Number
         }
 
         //To push a block number from one stack to another
         private void UpdateStack(int rectangleNumber)
         {
             AnimateBlockMovement();
-            _movesCount++;
-            txtMovesCount.Content = "Moves: " + _movesCount;
-            switch (rectangleNumber)
-            {
-                case 0:
-                    _callNumbersTop.Push(PopCallBlock(_originalRectangleNumber)); //Push to top stack
-                    break;
-                case 1:
-                    _callNumbersBottom.Push(PopCallBlock(_originalRectangleNumber)); //Push to bottom stack
-                    break;
-                case 2:
-                    _callNumbersLeft.Push(PopCallBlock(_originalRectangleNumber)); //Push to left stack
-                    break;
-                case 3:
-                    _callNumbersRight.Push(PopCallBlock(_originalRectangleNumber)); //Push to right stack
-                    break;
-            }
-
+            _replaceBooksViewModel.GameCounts[0]++;
+            txtMovesCount.Content = "Moves: " + _replaceBooksViewModel.GameCounts[0];
+            _replaceBooksViewModel.PushCallNumber(rectangleNumber,_replaceBooksViewModel.RectangleNumber[0]);
+            ClearAllFocus();
             //RULES PLACED HERE
-            if (_callNumbersLeft.Count > 1)
+
+            for (int i = 0; i < 4; i++)
             {
-                Debug.WriteLine("This is element 4 " + _activeAscDesc.Values.ElementAt(4));
-                Debug.WriteLine("This is element 4 " + _activeAscDesc.Values.ElementAt(5));
-                if (_activeAscDesc.Values.ElementAt(4) && _activeAscDesc.Values.ElementAt(5))
+                if (_replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count > 1)
                 {
-                    if (_callNumbersLeft.ElementAt(0) < _callNumbersLeft.ElementAt(1))
+                    if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i*2) && _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i*2+1))
                     {
-                        _rectangleSortOrder[2] = 'D'; //Store Descending for Left Rectangle
-                        imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                        if (_replaceBooksViewModel.CallNumberStacks.ElementAt(i).ElementAt(0) < _replaceBooksViewModel.CallNumberStacks.ElementAt(i).ElementAt(1))
+                        {
+                            _replaceBooksViewModel.RectangleSortOrder[i] = 'D'; //Store Descending for Left Rectangle
+                            imgLefftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                        }
+                        else
+                        {
+                            _replaceBooksViewModel.RectangleSortOrder[i] = 'A'; //Store Ascending for Left Rectangle
+                            imgLeftRecftUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                        }
                     }
                     else
                     {
-                        _rectangleSortOrder[2] = 'A'; //Store Ascending for Left Rectangle
-                        imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                        if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i*2))
+                        {
+                            _replaceBooksViewModel.RectangleSortOrder[i] = 'A'; //Store Ascending for Left Rectangle
+                            imgLeftRecftUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                        }
+                        else
+                        {
+                            _replaceBooksViewModel.RectangleSortOrder[i] = 'D'; //Store Descending for Left Rectangle
+                            imgLeftRecDowfn.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                        }
                     }
                 }
                 else
                 {
-                    if (_activeAscDesc.Values.ElementAt(4) )
-                    {
-                        _rectangleSortOrder[2] = 'A'; //Store Ascending for Left Rectangle
-                        imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
-                    }
-                    else
-                    {
-                        _rectangleSortOrder[2] = 'D'; //Store Descending for Left Rectangle
-                        imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
-                    }
+                    imgLeftRecftUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+                    imgLeftfRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
                 }
             }
-            else
-            {
-                imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
-                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
-            }
-
-            if (_callNumbersRight.Count > 1)
-            {
-                Debug.WriteLine("This is element 6 " + _activeAscDesc.Values.ElementAt(6));
-                Debug.WriteLine("This is element 7 " + _activeAscDesc.Values.ElementAt(7));
-                if (_activeAscDesc.Values.ElementAt(6) && _activeAscDesc.Values.ElementAt(7))
-                {
-                    if (_callNumbersRight.ElementAt(0) < _callNumbersRight.ElementAt(1))
-                    {
-                        _rectangleSortOrder[3] = 'D'; //Store Descending for Right Rectangle
-                        imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
-                    }
-                    else
-                    {
-                        _rectangleSortOrder[3] = 'A'; //Store Ascending for Right Rectangle
-                        imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
-                    }
-                }
-                else
-                {
-                    if (_activeAscDesc.Values.ElementAt(6))
-                    {
-                        _rectangleSortOrder[3] = 'A'; //Store Ascending for Right Rectangle
-                        imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
-                    }
-                    else
-                    {
-                        _rectangleSortOrder[3] = 'D'; //Store Descending for Right Rectangle
-                        imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
-                    }
-                }
-            }
-            else
-            {
-                imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));;
-                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));;
-            }
-
-            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / _stackSizes[0])*100 + "%";
-            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / _stackSizes[1])*100 + "%";
-            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / _stackSizes[2])*100 + "%";
-            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / _stackSizes[3])*100 + "%";
+            
+            txtTopRectStorageCapfacity.Content = (_callNumbersTop.Count / _stackSizes[0])*100 + "%";
+            txtBottomRectStorageCapafcity.Content = (_callNumbersBottom.Count / _stackSizes[1])*100 + "%";
+            txtLeftRectStorageCapacifty.Content = (_callNumbersLeft.Count / _stackSizes[2])*100 + "%";
+            txtRightRectStorageCapafcity.Content = (_callNumbersRight.Count / _stackSizes[3])*100 + "%";
+            
         }
 
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
             int currentRectangleNumber)
         {
             var isEmptyRect = !currentRectangleStack.Any(); //check if the list is empty
-            if (_activatedBlockCount == 0) //This is start block
+            if (_replaceBooksViewModel.GameCounts[1] == 0) //This is start block
             {
                 //check num of blocks within rect
                 if (isEmptyRect) //No more blocks to move
@@ -244,7 +196,7 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 else
                 {
-                    _originalRectangleNumber = currentRectangleNumber; //Represents 
+                    _replaceBooksViewModel.RectangleNumber[0] = currentRectangleNumber; //Sets origin rectangle stack
                     ActivateBlockColour(currentRectangle, 0); //Display Gold as this is start block
                 }
             }
@@ -253,10 +205,10 @@ namespace JoshMkhariPROG7312Game.Views
                 //check num of blocks within rect
                 if (isEmptyRect) //can add block
                 {
-                    if (_originalRectangleNumber != currentRectangleNumber) //Make sure the source and the destination are not the same
+                    if (_replaceBooksViewModel.RectangleNumber[0] != currentRectangleNumber) //Make sure the source and the destination are not the same
                     {
                         ActivateBlockColour(currentRectangle, 1); //Make Blue
-                        _destinationRectangleNumber = currentRectangleNumber; //Set destination 
+                        _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination stack 
                         UpdateStack(currentRectangleNumber);
                     }
                     else
@@ -266,30 +218,30 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 else
                 {
-                    if (_originalRectangleNumber == currentRectangleNumber)
+                    if (_replaceBooksViewModel.RectangleNumber[0] == currentRectangleNumber)//If both source and destination are the same
                     {
                         ActivateRedError(currentRectangle, "You cannot send a call number to the same start");
                     }
                     else
                     { 
-                        if (currentRectangleStack.Count < _stackSizes[currentRectangleNumber]) //If there is still space for the block
+                        if (currentRectangleStack.Count < _replaceBooksViewModel.StackSizes[currentRectangleNumber]) //If there is still space for the block
                         {
-                            if (currentRectangleStack.Count == 1 && _activeAscDesc.Values.ElementAt(currentRectangleNumber*2) &&_activeAscDesc.Values.ElementAt(currentRectangleNumber*2+1)) //If there is only one block inside and no rules on block
+                            if (currentRectangleStack.Count == 1 && _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2) &&_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2+1)) //If there is only one block inside and no rules on block
                             {
                                 ActivateBlockColour(currentRectangle, 1); //Make Blue
-                                _destinationRectangleNumber = currentRectangleNumber; //Set destination 
+                                _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
                                 UpdateStack(currentRectangleNumber);
                             }
                             else
                             {
                                 //What is my order
-                                if (_rectangleSortOrder[currentRectangleNumber] == 'A' || _activeAscDesc.Values.ElementAt(currentRectangleNumber*2)) //If ascending
+                                if (_replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] == 'A' || _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2)) //If ascending
                                 {
-                                    if (PeepCallBlock(_originalRectangleNumber) >
+                                    if (_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]).Peek()>
                                         PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
                                     {
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
-                                        _destinationRectangleNumber = currentRectangleNumber; //Set destination 
+                                        _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
                                         UpdateStack(currentRectangleNumber);
                                     }
                                     else
@@ -297,13 +249,13 @@ namespace JoshMkhariPROG7312Game.Views
                                         ActivateRedError(currentRectangle, "This is a ascending list");
                                     }
                                 }
-                                else if (_rectangleSortOrder[currentRectangleNumber] == 'D'||  _activeAscDesc.Values.ElementAt(currentRectangleNumber*2+1)) //If Descending
+                                else if (_replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] == 'D'||  _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2+1)) //If Descending
                                 {
-                                    if (PeepCallBlock(_originalRectangleNumber) <
+                                    if (_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]).Peek()<
                                         PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
                                     {
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
-                                        _destinationRectangleNumber = currentRectangleNumber; //Set destination 
+                                        _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
                                         UpdateStack(currentRectangleNumber);
                                     }
                                     else
