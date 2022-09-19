@@ -29,7 +29,7 @@ namespace JoshMkhariPROG7312Game.Views
         //private int[][] _rectanglesArr = new int[4][]; //https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
         // Creating 2 Stacks of Integers https://www.tutorialsteacher.com/csharp/csharp-stack
 
-        private Stack<int> _callNumbersTop, _callNumbersBottom, _callNumbersLeft, _callNumbersRight; //To store initial numbers in top rectangle
+        private Stack<double> _callNumbersTop, _callNumbersBottom, _callNumbersLeft, _callNumbersRight; //To store initial numbers in top rectangle
         
         private int _destinationRectangleNumber; //The rectangle a block is being transferred to
 
@@ -38,8 +38,8 @@ namespace JoshMkhariPROG7312Game.Views
         private readonly char[] _rectangleSortOrder = new char [4]; //Store whether rectangle is ascending or descending
 
         //https://www.tutorialsteacher.com/csharp/csharp-dictionary
-        private readonly IDictionary<int, int>
-            _rectValueNamePair = new Dictionary<int, int>(); //Stores Random value and Rectangle name
+        private readonly IDictionary<double, int>
+            _rectValueNamePair = new Dictionary<double, int>(); //Stores Random value and Rectangle name
 
         //Store locations where blocks must rest based on amount of items within rectangle
         private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90 }; //For top rectangle
@@ -57,33 +57,21 @@ namespace JoshMkhariPROG7312Game.Views
             var blackBrush = new SolidColorBrush(Colors.Blue);
             RegisterName("MySolidColorBorderBrush", blackBrush);
 
-            var callNumbers = new Stack<int>(); //To store initial 10 values
+            var callNumbers = new Stack<double>(); //To store initial 10 values
             //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
             var rnd = new Random();
 
-            callNumbers.Push(rnd.Next(1000)); //add a value
-            do
+            for (int i = 0; i < 10; i++)
             {
-                bool found; //To continue generating numbers until a number that does not exist in the list is generated
-                do
-                {
-                    var randomNum = rnd.Next(1000);
-                    if (!callNumbers.Contains(randomNum)) //Check if random number exists
-                    {
-                        callNumbers.Push(randomNum); //Add the value that was not found
-                        found = false; //Stop the do while
-                    }
-                    else
-                    {
-                        found = true; //continue do while
-                    }
-                } while (found);
-            } while (callNumbers.Count < 10); //Repeat until 10 random numbers have been stored
+                callNumbers.Push((rnd.Next(((99999)*10+1))+1*10)/1000.0); //add a value
+                //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
+            }
+
             
-            _callNumbersTop = new Stack<int>();
-            _callNumbersBottom = new Stack<int>();
-            _callNumbersLeft = new Stack<int>();
-            _callNumbersRight = new Stack<int>();
+            _callNumbersTop = new Stack<double>();
+            _callNumbersBottom = new Stack<double>();
+            _callNumbersLeft = new Stack<double>();
+            _callNumbersRight = new Stack<double>();
             
             for (var i = 0; i < 5; i++) _callNumbersTop.Push(callNumbers.ElementAt(i));
 
@@ -261,7 +249,7 @@ namespace JoshMkhariPROG7312Game.Views
             }
         }
 
-        private void SelectedRectangle(Rectangle currentRectangle, Stack<int> currentRectangleStack,
+        private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
             int currentRectangleNumber)
         {
             var isEmptyRect = !currentRectangleStack.Any(); //check if the list is empty
@@ -394,7 +382,7 @@ namespace JoshMkhariPROG7312Game.Views
         }
 
         //For both left and right rectangles
-        private int ReturnCurrentBlockYLeftRight(Stack<int> rectStack)
+        private int ReturnCurrentBlockYLeftRight(Stack<double> rectStack)
         {
             switch (rectStack.Count + 1)
             {
@@ -647,7 +635,7 @@ namespace JoshMkhariPROG7312Game.Views
             }
         }
 
-        private int ReturnCurrentBlockYTopBottom(Stack<int> rectStack, int[] locations)
+        private int ReturnCurrentBlockYTopBottom(Stack<double> rectStack, int[] locations)
         {
             Debug.WriteLine("");
             
@@ -718,7 +706,7 @@ namespace JoshMkhariPROG7312Game.Views
             }
         }
 
-        private int PeepCallBlock(int recLocation)
+        private double PeepCallBlock(int recLocation)
         {
             switch (recLocation)
             {
@@ -733,7 +721,7 @@ namespace JoshMkhariPROG7312Game.Views
             }
         }
 
-        private int PopCallBlock(int recLocation)
+        private double PopCallBlock(int recLocation)
         {
             _activatedBlockCount = 0;
             ClearAllFocus();
