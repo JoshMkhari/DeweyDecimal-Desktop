@@ -45,14 +45,21 @@
                Height="20"
                Source="/Theme/Assets/UpBlack.png"
                Name="imgTopRectUp"
-               Canvas.Left="387"
+               Canvas.Left="407"
                Canvas.Top="139" />
+
+        <Image Width="20"
+               Height="20"
+               Source="/Theme/Assets/DownBlack.png"
+               Name="imgTopRecDown"
+               Canvas.Left="407"
+               Canvas.Top="169" />
 
         <Image Width="20"
                Height="20"
                Source="/Theme/Assets/UpBlack.png"
                Name="imgLeftRectUp"
-               Canvas.Left="240"
+               Canvas.Left="260"
                Canvas.Top="245" />
 
         <Image Width="20"
@@ -68,20 +75,29 @@
                Name="imgRightRecDown"
                Canvas.Left="450"
                Canvas.Top="290" />
+        
+        
 
         <Image Width="20"
                Height="20"
                Source="/Theme/Assets/DownBlack.png"
                Name="imgLeftRecDown"
-               Canvas.Left="240"
+               Canvas.Left="260"
                Canvas.Top="290" />
 
         <Image Width="20"
                Height="20"
                Source="/Theme/Assets/UpBlack.png"
                Name="imgBottomRectUp"
-               Canvas.Left="387"
-               Canvas.Top="369" />
+               Canvas.Left="407"
+               Canvas.Top="359" />
+
+        <Image Width="20"
+               Height="20"
+               Source="/Theme/Assets/DownBlack.png"
+               Name="imgBottomRecDown"
+               Canvas.Left="407"
+               Canvas.Top="389" />
 
         <Image Width="800"
                Height="460"

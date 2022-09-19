@@ -107,7 +107,7 @@ namespace JoshMkhariPROG7312Game.Views
             stringBuilder.Append(num);
             while (commaLocation!=3)
             {
-                stringBuilder.Insert(0, "0");
+                stringBuilder.Insert(0, "0");//https://www.softwaretestinghelp.com/csharp-stringbuilder/#:~:text=C%23%20StringBuilder%20Methods%201%20%231%29%20Append%20Method%20As,Replace%20Method%20...%206%20%236%29%20Equals%20Method%20
                 commaLocation++;
             }
             
@@ -256,6 +256,11 @@ namespace JoshMkhariPROG7312Game.Views
                     imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
                 }
             }
+            else
+            {
+                imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
 
             if (_callNumbersRight.Count > 1)
             {
@@ -269,6 +274,11 @@ namespace JoshMkhariPROG7312Game.Views
                     _rectangleSortOrder[3] = 'A'; //Store Ascending for Right Rectangle
                     imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
                 }
+            }
+            else
+            {
+                imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));;
+                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));;
             }
             
             txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / 5f)*100 + "%";
