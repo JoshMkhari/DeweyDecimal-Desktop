@@ -112,15 +112,16 @@
                Canvas.Left="65"
                Canvas.Top="19" />
 
-        <Button Width="50"
-                Height="50"
-                Name="btnReset"
-                BorderBrush="Transparent"
-                BorderThickness="0" Canvas.Left="42" Canvas.Top="24">
-            <Button.Background>
-                <ImageBrush ImageSource="/Theme/Assets/Restart.png" Stretch="Fill" />
-            </Button.Background>
-        </Button>
+        <Image Width="50"
+               Height="50"
+               Name="btnReset"
+               Source="/Theme/Assets/Restart.png"
+               Canvas.Left="42" 
+               Canvas.Top="24"
+               MouseLeftButtonDown="BtnReset_OnMouseLeftButtonDown">
+        </Image>
+        
+        
 
         <Button Width="50"
                 Height="50"

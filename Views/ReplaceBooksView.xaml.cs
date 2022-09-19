@@ -30,8 +30,8 @@ namespace JoshMkhariPROG7312Game.Views
         //private int[][] _rectanglesArr = new int[4][]; //https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
         // Creating 2 Stacks of Integers https://www.tutorialsteacher.com/csharp/csharp-stack
 
-        private Stack<double> _callNumbersTop, _callNumbersBottom, _callNumbersLeft, _callNumbersRight; //To store initial numbers in top rectangle
-        
+        private Stack<double> _callNumbers, _callNumbersTop, _callNumbersBottom, _callNumbersLeft, _callNumbersRight; //To store initial numbers in top rectangle
+        private Stack<String> _callNumbersStrings;
         private int _destinationRectangleNumber; //The rectangle a block is being transferred to
 
         private int _originalRectangleNumber; //??????????????????????????????????????
@@ -57,14 +57,16 @@ namespace JoshMkhariPROG7312Game.Views
             
             var blackBrush = new SolidColorBrush(Colors.Blue);
             RegisterName("MySolidColorBorderBrush", blackBrush);
-
-            var callNumbers = new Stack<double>(); //To store initial 10 values
+            
+            _callNumbers = new Stack<double>(); //To store initial 10 values
+            _callNumbersStrings = new Stack<string>(); //To store initial chars
             //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
             var rnd = new Random();
 
             for (int i = 0; i < 10; i++)
             {
-                callNumbers.Push((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value
+                _callNumbers.Push((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value
+                _callNumbersStrings.Push(" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90));
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
 
@@ -73,19 +75,17 @@ namespace JoshMkhariPROG7312Game.Views
             _callNumbersBottom = new Stack<double>();
             _callNumbersLeft = new Stack<double>();
             _callNumbersRight = new Stack<double>();
+
+            InitializeStacks();
             
-            for (var i = 0; i < 5; i++) _callNumbersTop.Push(callNumbers.ElementAt(i));
-
-            for (var i = 5; i < 10; i++) _callNumbersBottom.Push(callNumbers.ElementAt(i));
-            
-
-            //https://www.geeksforgeeks.org/stack-toarray-method-in-java-with-example/
-            //_rectanglesArr[0] = _callNumbersTop.ToArray();
-            // _rectanglesArr[1] = _callNumbersBottom.ToArray();
-            // _rectanglesArr[2] = new int[5];
-            //_rectanglesArr[3] = new int[5];
-
             AssignValuesToBlocks();
+        }
+
+        private void InitializeStacks()
+        {
+            for (var i = 0; i < 5; i++) _callNumbersTop.Push(_callNumbers.ElementAt(i));
+
+            for (var i = 5; i < 10; i++) _callNumbersBottom.Push(_callNumbers.ElementAt(i));
         }
 
         private String NumberFormatter(double input)
@@ -113,14 +113,15 @@ namespace JoshMkhariPROG7312Game.Views
             
             return stringBuilder.ToString();
         }
+        
         private void AssignValuesToBlocks()
         {
             var rnd = new Random();
-            txtRectBlock1.Text = NumberFormatter(_callNumbersTop.ElementAt(4)) +" " + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock2.Text = NumberFormatter(_callNumbersTop.ElementAt(3))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock3.Text =  NumberFormatter(_callNumbersTop.ElementAt(2))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock4.Text =  NumberFormatter(_callNumbersTop.ElementAt(1))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock5.Text =  NumberFormatter(_callNumbersTop.ElementAt(0))+" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock1.Text = NumberFormatter(_callNumbersTop.ElementAt(4)) +_callNumbersStrings.ElementAt(0);
+            txtRectBlock2.Text = NumberFormatter(_callNumbersTop.ElementAt(3))+ _callNumbersStrings.ElementAt(1);
+            txtRectBlock3.Text =  NumberFormatter(_callNumbersTop.ElementAt(2))+ _callNumbersStrings.ElementAt(2);
+            txtRectBlock4.Text =  NumberFormatter(_callNumbersTop.ElementAt(1))+ _callNumbersStrings.ElementAt(3);
+            txtRectBlock5.Text =  NumberFormatter(_callNumbersTop.ElementAt(0))+_callNumbersStrings.ElementAt(4);
             
             //https://www.tutorialsteacher.com/csharp/csharp-dictionary
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(4), 1); //storing the value with the rectangle name
@@ -129,12 +130,11 @@ namespace JoshMkhariPROG7312Game.Views
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(1), 4); //storing the value with the rectangle name
             _rectValueNamePair.Add(_callNumbersTop.ElementAt(0), 5); //storing the value with the rectangle name
             
-            txtRectBlock6.Text =  NumberFormatter(_callNumbersBottom.ElementAt(0))+" " + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock7.Text =  NumberFormatter(_callNumbersBottom.ElementAt(1))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock8.Text =  NumberFormatter(_callNumbersBottom.ElementAt(2))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock8.Text =  NumberFormatter(_callNumbersBottom.ElementAt(2))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock9.Text =  NumberFormatter(_callNumbersBottom.ElementAt(3))+ " " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
-            txtRectBlock10.Text =  NumberFormatter(_callNumbersBottom.ElementAt(4))+" " + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90);
+            txtRectBlock6.Text =  NumberFormatter(_callNumbersBottom.ElementAt(0))+_callNumbersStrings.ElementAt(5);
+            txtRectBlock7.Text =  NumberFormatter(_callNumbersBottom.ElementAt(1))+ _callNumbersStrings.ElementAt(6);
+            txtRectBlock8.Text =  NumberFormatter(_callNumbersBottom.ElementAt(2))+ _callNumbersStrings.ElementAt(7);
+            txtRectBlock9.Text =  NumberFormatter(_callNumbersBottom.ElementAt(3))+ _callNumbersStrings.ElementAt(8);
+            txtRectBlock10.Text =  NumberFormatter(_callNumbersBottom.ElementAt(4))+_callNumbersStrings.ElementAt(9);
 
             //https://www.tutorialsteacher.com/csharp/csharp-dictionary
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(0), 6); //storing the value with the rectangle name
@@ -774,6 +774,20 @@ namespace JoshMkhariPROG7312Game.Views
                 default:
                     return _callNumbersRight.Pop();
             }
+        }
+
+        private void BtnReset_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _callNumbersBottom.Clear();
+            _callNumbersTop.Clear();
+            _callNumbersLeft.Clear();
+            _callNumbersRight.Clear();
+
+            InitializeStacks();
+           
+           //AssignValuesToBlocks();
+           
+           //Reset Block Locations
         }
     }
 }
