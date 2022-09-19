@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using JoshMkhariPROG7312Game.Logic.Replacing_Books;
 
 namespace JoshMkhariPROG7312Game.Views
 {
@@ -22,18 +23,14 @@ namespace JoshMkhariPROG7312Game.Views
         private SolidColorBrush _blackBrush;
         private readonly int[] _bottomRectCanvasYLocations = { 422, 396, 369, 342, 315 }; //For bottom rectangle
 
-            //private Stack<int> _callNumbersBottom = new Stack<int>(); //To store initial numbers in bottom rectangle
-
-        //private Stack<int> _callNumbersLeft = new Stack<int>(); //To store initial numbers in left rectangle
-
-        //private Stack<int> _callNumbersRight = new Stack<int>(); //To store initial numbers in right rectangle
-        //private int[][] _rectanglesArr = new int[4][]; //https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        // Creating 2 Stacks of Integers https://www.tutorialsteacher.com/csharp/csharp-stack
+        private int _currentDifficulty; //0 for easy, 5 for insane
 
         private Stack<double> _callNumbers, _callNumbersTop, _callNumbersBottom, _callNumbersLeft, _callNumbersRight; //To store initial numbers in top rectangle
         private Stack<String> _callNumbersStrings;
         private int _destinationRectangleNumber; //The rectangle a block is being transferred to
-
+        private PreSetDifficulty _preSetDifficulty = new PreSetDifficulty();
+        private bool _onSettingsPage = false;
+        
         private int _originalRectangleNumber; //??????????????????????????????????????
 
         private readonly char[] _rectangleSortOrder = new char [4]; //Store whether rectangle is ascending or descending
@@ -41,6 +38,9 @@ namespace JoshMkhariPROG7312Game.Views
         //https://www.tutorialsteacher.com/csharp/csharp-dictionary
         private readonly IDictionary<double, int>
             _rectValueNamePair = new Dictionary<double, int>(); //Stores Random value and Rectangle name
+        
+        private IDictionary<int, bool>
+            _activeAscDesc = new Dictionary<int, bool>(); //Stores Set difficulty for current game
 
         //Store locations where blocks must rest based on amount of items within rectangle
         private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90 }; //For top rectangle
@@ -49,6 +49,7 @@ namespace JoshMkhariPROG7312Game.Views
         public ReplaceBooksView()
         {
             InitializeComponent();
+            _currentDifficulty = 0;
             _originalRectangleNumber = 4;
             _activatedBlockCount = 0;
             _rectangleSortOrder[0] = 'A';
@@ -143,6 +144,9 @@ namespace JoshMkhariPROG7312Game.Views
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(3), 9); //storing the value with the rectangle name
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(4), 10); //storing the value with the rectangle name
 
+            
+            //Set initial Difficulty
+            
             DisplayValuesInRectangles();
         }
 
@@ -791,6 +795,7 @@ namespace JoshMkhariPROG7312Game.Views
            
            //Reset Block Locations
         }
+
         
         private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -817,11 +822,65 @@ namespace JoshMkhariPROG7312Game.Views
             DockPanelBottom.Visibility = Visibility.Visible;
             DockPanelLeft.Visibility = Visibility.Visible;
             DockPanelRight.Visibility = Visibility.Visible;
+
+            selectTopRect.Visibility = Visibility.Collapsed;
+            selectBottomRect.Visibility = Visibility.Collapsed;
+            selectLeftRect.Visibility = Visibility.Collapsed;
+            selectRightRect.Visibility = Visibility.Collapsed;
+
+            rectBlock1.Visibility = Visibility.Collapsed;
+            rectBlock2.Visibility = Visibility.Collapsed;
+            rectBlock3.Visibility = Visibility.Collapsed;
+            rectBlock4.Visibility = Visibility.Collapsed;
+            rectBlock5.Visibility = Visibility.Collapsed;
+            rectBlock6.Visibility = Visibility.Collapsed;
+            rectBlock7.Visibility = Visibility.Collapsed;
+            rectBlock8.Visibility = Visibility.Collapsed;
+            rectBlock9.Visibility = Visibility.Collapsed;
+            rectBlock10.Visibility = Visibility.Collapsed;
+
+            _onSettingsPage = true;
         }
 
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-
+            if (_onSettingsPage)
+            {
+                _currentDifficulty++;
+                if (_currentDifficulty > 5)
+                {
+                    _currentDifficulty = 0;
+                    _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
+                }
+                switch (_currentDifficulty)
+                {
+                    case 1:
+                        
+                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Normal.png", UriKind.Relative));
+                        break;
+                    case 2:
+                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Difficult.png", UriKind.Relative));
+                        break;
+                    case 3:
+                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Hard.png", UriKind.Relative));
+                        break;
+                    case 4:
+                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Extreme.png", UriKind.Relative));
+                        break;
+                    case 5:
+                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Insane.png", UriKind.Relative));
+                        break;
+                    default:
+                        //Set all stack capacity to 6
+                        for (int i = 0; i < 4; i++)
+                        {
+                            _stackSizes[i] = 6;
+                        }
+                        
+                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
+                        break;;
+                }
+            }
         }
 
         private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -854,6 +913,23 @@ namespace JoshMkhariPROG7312Game.Views
             DockPanelLeft.Visibility = Visibility.Collapsed;
             DockPanelRight.Visibility = Visibility.Collapsed;
             
+            selectTopRect.Visibility = Visibility.Visible;
+            selectBottomRect.Visibility = Visibility.Visible;
+            selectLeftRect.Visibility = Visibility.Visible;
+            selectRightRect.Visibility = Visibility.Visible;
+
+            rectBlock1.Visibility = Visibility.Visible;
+            rectBlock2.Visibility = Visibility.Visible;
+            rectBlock3.Visibility = Visibility.Visible;
+            rectBlock4.Visibility = Visibility.Visible;
+            rectBlock5.Visibility = Visibility.Visible;
+            rectBlock6.Visibility = Visibility.Visible;
+            rectBlock7.Visibility = Visibility.Visible;
+            rectBlock8.Visibility = Visibility.Visible;
+            rectBlock9.Visibility = Visibility.Visible;
+            rectBlock10.Visibility = Visibility.Visible;
+
+            _onSettingsPage = false;
         }
 
         private void TStackSizeTop_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -939,6 +1015,58 @@ namespace JoshMkhariPROG7312Game.Views
         private void StackSizeRight_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _stackSizes[3] = StackSizeRight.Value;
+        }
+
+        
+        private void imgLeftRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_onSettingsPage)
+            {
+                _currentDifficulty++;
+                if (_currentDifficulty > 5)
+                {
+                    _currentDifficulty = 0;
+                    _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
+                }
+            }
+        }
+
+        private void imgBottomRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_onSettingsPage)
+            {
+                
+            }
+        }
+
+        private void imgRightRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void imgRightRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void imgLeftRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void imgTopRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void imgTopRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void imgBottomRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

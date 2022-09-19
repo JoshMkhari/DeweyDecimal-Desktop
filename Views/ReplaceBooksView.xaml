@@ -45,12 +45,14 @@
                Height="20"
                Source="/Theme/Assets/UpBlack.png"
                Name="imgTopRectUp"
+               MouseLeftButtonDown="imgTopRectUp_MouseLeftButtonDown"
                Canvas.Left="407"
                Canvas.Top="139" />
 
         <Image Width="20"
                Height="20"
                Source="/Theme/Assets/DownBlack.png"
+               MouseLeftButtonDown="imgTopRecDown_MouseLeftButtonDown"
                Name="imgTopRecDown"
                Canvas.Left="407"
                Canvas.Top="169" />
@@ -58,12 +60,14 @@
         <Image Width="20"
                Height="20"
                Source="/Theme/Assets/UpBlack.png"
+               MouseLeftButtonDown="imgLeftRectUp_MouseLeftButtonDown"
                Name="imgLeftRectUp"
                Canvas.Left="260"
                Canvas.Top="245" />
 
         <Image Width="20"
                Height="20"
+               MouseLeftButtonDown="imgRightRectUp_MouseLeftButtonDown"
                Source="/Theme/Assets/UpBlack.png"
                Name="imgRightRectUp"
                Canvas.Left="450"
@@ -71,6 +75,7 @@
 
         <Image Width="20"
                Height="20"
+               MouseLeftButtonDown="imgRightRecDown_MouseLeftButtonDown"
                Source="/Theme/Assets/DownBlack.png"
                Name="imgRightRecDown"
                Canvas.Left="450"
@@ -80,6 +85,7 @@
 
         <Image Width="20"
                Height="20"
+               MouseLeftButtonDown="imgLeftRecDown_MouseLeftButtonDown"
                Source="/Theme/Assets/DownBlack.png"
                Name="imgLeftRecDown"
                Canvas.Left="260"
@@ -87,6 +93,7 @@
 
         <Image Width="20"
                Height="20"
+               MouseLeftButtonDown="imgBottomRectUp_MouseLeftButtonDown"
                Source="/Theme/Assets/UpBlack.png"
                Name="imgBottomRectUp"
                Canvas.Left="407"
@@ -95,6 +102,7 @@
         <Image Width="20"
                Height="20"
                Source="/Theme/Assets/DownBlack.png"
+               MouseLeftButtonDown="imgBottomRecDown_MouseLeftButtonDown"
                Name="imgBottomRecDown"
                Canvas.Left="407"
                Canvas.Top="389" />
