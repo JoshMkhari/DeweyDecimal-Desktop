@@ -795,17 +795,34 @@ namespace JoshMkhariPROG7312Game.Views
         private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Change whatever you want
-            Canvas.SetLeft(imgDifficulty, 408);
             txtMovesCount.Visibility = Visibility.Collapsed;
             btnReset.Visibility = Visibility.Collapsed;
-            
-            btnSettings.Source = new BitmapImage(new Uri(@"/Theme/Assets/Save.png", UriKind.Relative));;
+            btnSettings.Visibility = Visibility.Collapsed;
+
+            btnSaveSettings.Visibility = Visibility.Visible;
+            btnCloseSettings.Visibility = Visibility.Visible;
+            //btnSettings.Source = new BitmapImage(new Uri(@"/Theme/Assets/Save.png", UriKind.Relative));;
         }
 
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Change difficulty to preset
             throw new NotImplementedException();
+        }
+
+        private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BtnCloseSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            txtMovesCount.Visibility = Visibility.Visible;
+            btnReset.Visibility = Visibility.Visible;
+            btnSettings.Visibility = Visibility.Visible;
+
+            btnSaveSettings.Visibility = Visibility.Collapsed;
+            btnCloseSettings.Visibility = Visibility.Collapsed;
         }
     }
 }

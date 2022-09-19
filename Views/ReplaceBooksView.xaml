@@ -123,6 +123,17 @@
                Canvas.Top="24"
                MouseLeftButtonDown="BtnReset_OnMouseLeftButtonDown">
         </Image>
+        
+        <Image Width="50"
+               Height="50"
+               Panel.ZIndex="20"
+               Name="btnCloseSettings"
+               Source="/Theme/Assets/Close.png"
+               Visibility="Collapsed"
+               Canvas.Left="42" 
+               Canvas.Top="24"
+               MouseLeftButtonDown="BtnCloseSettings_OnMouseLeftButtonDown">
+        </Image>
 
         <Image Width="50"
                Height="50"
@@ -131,6 +142,16 @@
                Source="/Theme/Assets/Settings.png"
                Canvas.Left="622" Canvas.Top="24"
                MouseLeftButtonDown="BtnSettings_OnMouseLeftButtonDown">
+        </Image>
+        
+        <Image Width="50"
+               Height="50"
+               Panel.ZIndex="20"
+               Name="btnSaveSettings"
+               Visibility="Collapsed"
+               Source="/Theme/Assets/Save.png"
+               Canvas.Left="622" Canvas.Top="24"
+               MouseLeftButtonDown="BtnSaveSettings_OnMouseLeftButtonDown">
         </Image>
 
         <Border x:Name="rectBlock1"
