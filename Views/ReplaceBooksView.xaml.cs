@@ -840,48 +840,54 @@ namespace JoshMkhariPROG7312Game.Views
             rectBlock10.Visibility = Visibility.Collapsed;
 
             _onSettingsPage = true;
+            UpdateDifficultyUiElements();
         }
 
+        private void UpdateDifficultyUiElements()
+        {
+            if (_currentDifficulty > 5)
+            {
+                _currentDifficulty = 0;
+              
+            }
+            _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
+            switch (_currentDifficulty)
+            {
+                case 1:
+                    UpdateStackSizeText(5, 5, 5, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Normal.png", UriKind.Relative));
+                    break;
+                case 2:
+                    UpdateStackSizeText(6, 6, 6, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Difficult.png", UriKind.Relative));
+                    break;
+                case 3:
+                    UpdateStackSizeText(6, 6, 5, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Hard.png", UriKind.Relative));
+                    break;
+                case 4:
+                    UpdateStackSizeText(6, 5, 5, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Extreme.png", UriKind.Relative));
+                    break;
+                case 5:
+                    UpdateStackSizeText(5, 5, 5, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Insane.png", UriKind.Relative));
+                    break;
+                default:
+                    UpdateStackSizeText(6, 6, 6, 6);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
+                    break;;
+            }
+
+            UpdateArrows();
+            
+        }
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (_onSettingsPage)
             {
                 _currentDifficulty++;
-                if (_currentDifficulty > 5)
-                {
-                    _currentDifficulty = 0;
-              
-                }
-                _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
-                switch (_currentDifficulty)
-                {
-                    case 1:
-                        UpdateStackSizeText(5, 5, 5, 5);
-                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Normal.png", UriKind.Relative));
-                        break;
-                    case 2:
-                        UpdateStackSizeText(6, 6, 6, 5);
-                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Difficult.png", UriKind.Relative));
-                        break;
-                    case 3:
-                        UpdateStackSizeText(6, 6, 5, 5);
-                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Hard.png", UriKind.Relative));
-                        break;
-                    case 4:
-                        UpdateStackSizeText(6, 5, 5, 5);
-                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Extreme.png", UriKind.Relative));
-                        break;
-                    case 5:
-                        UpdateStackSizeText(5, 5, 5, 5);
-                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Insane.png", UriKind.Relative));
-                        break;
-                    default:
-                        UpdateStackSizeText(6, 6, 6, 6);
-                        imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
-                        break;;
-                }
-
-                UpdateArrows();
+                UpdateDifficultyUiElements();
             }
         }
 
