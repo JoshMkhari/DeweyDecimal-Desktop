@@ -490,11 +490,7 @@ namespace JoshMkhariPROG7312Game.Views
                 _labelModel._currentStorageLevelList.ElementAt(i).Content = "Size:";
                 
             }
-
-            DockPanelTop.Visibility = Visibility.Visible;
-            DockPanelBottom.Visibility = Visibility.Visible;
-            DockPanelLeft.Visibility = Visibility.Visible;
-            DockPanelRight.Visibility = Visibility.Visible;
+            
 
             selectTopRect.Visibility = Visibility.Collapsed;
             selectBottomRect.Visibility = Visibility.Collapsed;
@@ -559,12 +555,7 @@ namespace JoshMkhariPROG7312Game.Views
        
         private void UpdateStackSizeText(int top,int bot,int left,int right)
         {
-            StackSizeTop.Value = top;
-            StackSizeBottom.Value = bot;
-            StackSizeLeft.Value = left;
-            StackSizeRight.Value = right;
 
-            
             _replaceBooksViewModel.StackSizes[0] = top;
             _replaceBooksViewModel.StackSizes[1] = bot;
             _replaceBooksViewModel.StackSizes[2] = left;
@@ -591,13 +582,7 @@ namespace JoshMkhariPROG7312Game.Views
                 _labelModel._currentStorageLevelList.ElementAt(i).Content = 
                 (_replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count / _replaceBooksViewModel.StackSizes[i])*100 + "%";
             }
-            
-            
-            DockPanelTop.Visibility = Visibility.Collapsed;
-            DockPanelBottom.Visibility = Visibility.Collapsed;
-            DockPanelLeft.Visibility = Visibility.Collapsed;
-            DockPanelRight.Visibility = Visibility.Collapsed;
-            
+
             selectTopRect.Visibility = Visibility.Visible;
             selectBottomRect.Visibility = Visibility.Visible;
             selectLeftRect.Visibility = Visibility.Visible;
@@ -610,77 +595,6 @@ namespace JoshMkhariPROG7312Game.Views
 
             _onSettingsPage = false;
         }
-        private void TStackSizeTop_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TStackSizeTop.Text == "")
-            {
-                TStackSizeTop.Text = "5";
-            }
-        }
-        private void TStackSizeTop_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (int.TryParse(TStackSizeTop.Text, out int value)) return;
-            StackSizeTop.Value = 5;
-            TStackSizeTop.Text = "5";
-            e.Handled = true;
-        }
-        private void StackSizeTop_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _replaceBooksViewModel.StackSizes[0] = StackSizeTop.Value;
-        }
-        private void TStackSizeBottom_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TStackSizeBottom.Text == "")
-            {
-                TStackSizeBottom.Text = "5";
-            }
-        }
-        private void TStackSizeBottom_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (int.TryParse(TStackSizeBottom.Text, out int value)) return;
-            StackSizeBottom.Value = 5;
-            TStackSizeBottom.Text = "5";
-            e.Handled = true;
-        }
-        private void StackSizeBottom_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _replaceBooksViewModel.StackSizes[1] = StackSizeBottom.Value;
-        }
-        private void TStackSizeLeft_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TStackSizeLeft.Text == "")
-            {
-                TStackSizeLeft.Text = "5";
-            }
-        }
-        private void TStackSizeLeft_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (int.TryParse(TStackSizeLeft.Text, out int value)) return;
-            StackSizeLeft.Value = 5;
-            TStackSizeLeft.Text = "5";
-            e.Handled = true;
-        }
-        private void StackSizeLeft_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _replaceBooksViewModel.StackSizes[2] = StackSizeLeft.Value;
-        }
-        private void TStackSizeRight_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (TStackSizeRight.Text == "")
-            {
-                TStackSizeRight.Text = "5";
-            }
-        }
-        private void TStackSizeRight_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (int.TryParse(TStackSizeRight.Text, out int value)) return;
-            StackSizeRight.Value = 5;
-            TStackSizeRight.Text = "5";
-            e.Handled = true;
-        }
-        private void StackSizeRight_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            _replaceBooksViewModel.StackSizes[3] = StackSizeRight.Value;
-        }
+
     }
 }
