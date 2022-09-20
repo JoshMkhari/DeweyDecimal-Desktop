@@ -29,11 +29,11 @@
                 </Border.Clip>
                 <Grid>
                     <StackPanel>
-                        <TextBlock Text="World Leader &#x0a; in global finance"
+                        <TextBlock Text="Watch guide &#x0a; on Youtube"
                                    Foreground="White"
                                    FontSize="20"
                                    Margin="20,10,10,0" />
-                        <TextBlock Text="Get started today!"
+                        <TextBlock Text="Full app run through"
                                    Foreground="White"
                                    FontSize="20"
                                    Margin="20,10,10,0" />
@@ -46,7 +46,8 @@
                 </Grid>
             </Border>
 
-            <Border Width="200"
+            <Border Name="WinHistoryBorder"
+                Width="200"
                     Height="200"
                     CornerRadius="10"
                     Margin="45,0,0,0">
@@ -57,6 +58,13 @@
                         <GradientStop Color="#ffb73a" Offset="1" />
                     </LinearGradientBrush>
                 </Border.Background>
+                <StackPanel Name="WinHistoryStackPanel">
+                    <TextBlock Text="Win History RepBooks"
+                               Foreground="White"
+                               FontSize="18"
+                               Margin="10,5,0,0"/>
+                </StackPanel>
+                
             </Border>
         </StackPanel>
 

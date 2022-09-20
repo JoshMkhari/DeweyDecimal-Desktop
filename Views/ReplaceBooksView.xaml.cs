@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using JoshMkhariPROG7312Game.Logic.Home;
 using JoshMkhariPROG7312Game.Logic.Replacing_Books;
 using JoshMkhariPROG7312Game.ViewModels;
 using Border = System.Windows.Controls.Border;
@@ -145,14 +146,24 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 if (finalCheck)
                 {
-                    MessageBox.Show(CheckIfWon(0) == 5
-                        ? "You win"
-                        : "The call blocks are not correctly sorted, try again");
+                    if (CheckIfWon(0) == 5)
+                    {
+                        TextBlockModel.WinData[1][_replaceBooksViewModel.CurrentDifficulty]++;
+
+                        if (TextBlockModel.WinData[2][_replaceBooksViewModel.CurrentDifficulty] == 0|| TextBlockModel.WinData[2][_replaceBooksViewModel.CurrentDifficulty] > _replaceBooksViewModel.GameCounts[0])
+                        {
+                            TextBlockModel.WinData[2][_replaceBooksViewModel.CurrentDifficulty] =
+                                _replaceBooksViewModel.GameCounts[0];
+                        }
+                        TextBlockModel.TextBlocksList.ElementAt(_replaceBooksViewModel.CurrentDifficulty).Text
+                            = TextBlockModel.difficulty[_replaceBooksViewModel.CurrentDifficulty] + ": " + "Wins: " +
+                              TextBlockModel.WinData[1][_replaceBooksViewModel.CurrentDifficulty] + " Best: " +
+                              TextBlockModel.WinData[2][_replaceBooksViewModel.CurrentDifficulty];
+                        MessageBox.Show("You win");
+                        return;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("The call blocks are not correctly sorted, try again");
-                }
+                MessageBox.Show("The call blocks are not correctly sorted, try again");
             }
         }
 
