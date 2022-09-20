@@ -19,43 +19,48 @@ namespace JoshMkhariPROG7312Game.Views
     public partial class ReplaceBooksView
     {
         //Declarations
-        private ReplaceBooksViewModel _replaceBooksViewModel;//Used to access all variables and methods within model
-        
+        private ReplaceBooksViewModel _replaceBooksViewModel; //Used to access all variables and methods within model
+
         private readonly BorderModel _borderModel;
         private readonly LabelsModel _labelModel;
-        private readonly ArrowModel _arrowModel;
-       // private RectangleModel _rectangleModel;
 
-       private bool _onSettingsPage;
-        
+        private readonly ArrowModel _arrowModel;
+        // private RectangleModel _rectangleModel;
+
+        private bool _onSettingsPage;
+
         public ReplaceBooksView()
         {
             InitializeComponent();
             _replaceBooksViewModel = new ReplaceBooksViewModel();
             _borderModel = new BorderModel();
             _borderModel.AssignValuesToBlocks(_replaceBooksViewModel);
-            
+
             _labelModel = new LabelsModel();
 
             _arrowModel = new ArrowModel();
-            
+
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Image arrow in _arrowModel.DirectionArrowsList)
             {
                 ReplacingBooks.Children.Add(arrow);
             }
+
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Border border in _borderModel.CallBlockBordersList)
             {
                 ReplacingBooks.Children.Add(border);
             }
+
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Label label in _labelModel.CurrentStorageLevelList)
             {
                 ReplacingBooks.Children.Add(label);
             }
+
             _onSettingsPage = false;
         }
+
         //To colour block strokes
         private void ActivateBlockColour(Rectangle rect, int mode)
         {
@@ -63,16 +68,17 @@ namespace JoshMkhariPROG7312Game.Views
             if (_replaceBooksViewModel.CallNumberStacks.ElementAt(2).Count < 1)
             {
                 _arrowModel.DisableArrows(2);
-            }            
+            }
+
             //if right stack size is 0
             if (_replaceBooksViewModel.CallNumberStacks.ElementAt(3).Count < 1)
             {
                 _arrowModel.DisableArrows(3);
             }
-            
+
             switch (mode)
             {
-                case 0: 
+                case 0:
                     _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Gold); //Sender
                     _replaceBooksViewModel.GameCounts[1]++; //Program now knows start, waiting for destination 
                     break;
@@ -86,6 +92,7 @@ namespace JoshMkhariPROG7312Game.Views
                     _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Transparent); //Error
                     break;
             }
+
             rect.StrokeThickness = 3;
             rect.Stroke = _replaceBooksViewModel.BlackBrush;
         }
@@ -93,14 +100,16 @@ namespace JoshMkhariPROG7312Game.Views
         private void ReplacingBooks_MouseDown(object sender, MouseButtonEventArgs e)
         {
         }
+
         //To make a block show red when an error occurs
         private void ActivateRedError(Rectangle rect, string errorText)
         {
             ActivateBlockColour(rect, 2); //Display Red
             MessageBox.Show("Action not allowed " + errorText);
             ClearAllFocus();
-            _replaceBooksViewModel.GameCounts[1] = 0;//Active Block Count
+            _replaceBooksViewModel.GameCounts[1] = 0; //Active Block Count
         }
+
         //To clear all colours surrounding blocks
         private void ClearAllFocus()
         {
@@ -108,46 +117,74 @@ namespace JoshMkhariPROG7312Game.Views
             ActivateBlockColour(SelectBottomRect, 3); //Make Transparent
             ActivateBlockColour(SelectLeftRect, 3); //Make Transparent
             ActivateBlockColour(SelectRightRect, 3); //Make Transparent
-            _replaceBooksViewModel.GameCounts[1] = 0;//Active Block Count
-            _replaceBooksViewModel.RectangleNumber[1] = 0;//Destination Rectangle Number
+            _replaceBooksViewModel.GameCounts[1] = 0; //Active Block Count
+            _replaceBooksViewModel.RectangleNumber[1] = 0; //Destination Rectangle Number
         }
+
         //To push a block number from one stack to another
         private void UpdateStack(int rectangleNumber)
         {
             AnimateBlockMovement();
             _replaceBooksViewModel.GameCounts[0]++;
             TxtMovesCount.Content = "Moves: " + _replaceBooksViewModel.GameCounts[0];
-            _replaceBooksViewModel.PushCallNumber(rectangleNumber,_replaceBooksViewModel.RectangleNumber[0]);
+            _replaceBooksViewModel.PushCallNumber(rectangleNumber, _replaceBooksViewModel.RectangleNumber[0]);
             ClearAllFocus();
 
             _arrowModel.UpdateArrowsEasyMode(_replaceBooksViewModel);
             _labelModel.UpdateCapacityLabels(_replaceBooksViewModel);
 
-            if (_replaceBooksViewModel.CallNumberStacks.ElementAt(0).Count == 5 &&
-                _replaceBooksViewModel.CallNumberStacks.ElementAt(1).Count == 5)
+            if (_replaceBooksViewModel.CallNumberStacks.ElementAt(0).Count == 5 && //Top Stack must have 5 elements
+                _replaceBooksViewModel.CallNumberStacks.ElementAt(1).Count == 5 && //Bottom Stack must have 5 elements
+                _replaceBooksViewModel.RectangleSortOrder[0] == 'A' && //Top Stack must be storing in Ascending order
+                _replaceBooksViewModel.RectangleSortOrder[1] == 'A') //Bottom Stack must be storing in Ascending order
             {
-                MessageBox.Show(CheckIfWon() == 5 ? "You win" : "The call blocks are not correctly sorted, try again");
-            }
-        }
-
-        private int CheckIfWon()
-        {
-            int passed =0;
-            do
-            {
-                if (_replaceBooksViewModel.CallNumberStacks.ElementAt(0).ElementAt(passed) >
-                    _replaceBooksViewModel.CallNumberStacks.ElementAt(1).ElementAt(passed))
+                bool finalCheck = true;
+                for (int i = 0; i < 2; i++)
                 {
-                    passed++; 
+                    if (CheckIfAscending(_replaceBooksViewModel.CallNumberStacks.ElementAt(i))) continue;
+                    finalCheck = false;
+                    break;
+                }
+
+                if (finalCheck)
+                {
+                    MessageBox.Show(CheckIfWon(0) == 5
+                        ? "You win"
+                        : "The call blocks are not correctly sorted, try again");
                 }
                 else
                 {
-                    break;
+                    MessageBox.Show("The call blocks are not correctly sorted, try again");
                 }
-            } while (passed<5);
-
-            return passed;
+            }
         }
+
+        //Recursive method to determine if game is won
+        private int CheckIfWon(int current)
+        {
+            if (current == 5) return current;
+            return _replaceBooksViewModel.CallNumberStacks.ElementAt(0).ElementAt(current) >
+                   _replaceBooksViewModel.CallNumberStacks.ElementAt(1).ElementAt(current)
+                ? CheckIfWon(current + 1)
+                : current;
+        }
+
+        private bool CheckIfAscending(Stack<double> currentStack)
+        {
+            int index = 0;
+            while (index < 5)
+            {
+                if (currentStack.ElementAt(index) < currentStack.ElementAt(index + 1))
+                {
+                    index++;
+                }
+                else
+                    return false;
+            }
+
+            return true;
+        }
+
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
             int currentRectangleNumber)
         {
@@ -170,7 +207,8 @@ namespace JoshMkhariPROG7312Game.Views
                 //check num of blocks within rect
                 if (isEmptyRect) //can add block
                 {
-                    if (_replaceBooksViewModel.RectangleNumber[0] != currentRectangleNumber) //Make sure the source and the destination are not the same
+                    if (_replaceBooksViewModel.RectangleNumber[0] !=
+                        currentRectangleNumber) //Make sure the source and the destination are not the same
                     {
                         ActivateBlockColour(currentRectangle, 1); //Make Blue
                         _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination stack 
@@ -183,15 +221,22 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 else
                 {
-                    if (_replaceBooksViewModel.RectangleNumber[0] == currentRectangleNumber)//If both source and destination are the same
+                    if (_replaceBooksViewModel.RectangleNumber[0] ==
+                        currentRectangleNumber) //If both source and destination are the same
                     {
                         ActivateRedError(currentRectangle, "You cannot send a call number to the same start");
                     }
                     else
-                    { 
-                        if (currentRectangleStack.Count < _replaceBooksViewModel.StackSizes[currentRectangleNumber]) //If there is still space for the block
+                    {
+                        if (currentRectangleStack.Count <
+                            _replaceBooksViewModel.StackSizes
+                                [currentRectangleNumber]) //If there is still space for the block
                         {
-                            if (currentRectangleStack.Count == 1 && _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2) &&_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2+1)) //If there is only one block inside and no rules on block
+                            if (currentRectangleStack.Count == 1 &&
+                                _replaceBooksViewModel.ActiveAscDescStacks.Values
+                                    .ElementAt(currentRectangleNumber * 2) &&
+                                _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber * 2 +
+                                    1)) //If there is only one block inside and no rules on block
                             {
                                 ActivateBlockColour(currentRectangle, 1); //Make Blue
                                 _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
@@ -200,24 +245,32 @@ namespace JoshMkhariPROG7312Game.Views
                             else
                             {
                                 //What is my order
-                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber) 
-                                    && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber+4))
+                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber)
+                                    && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(
+                                        currentRectangleNumber + 4))
                                 {
                                     _replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] = 'A';
                                 }
-                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber+4) 
-                                    && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber))
+
+                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber +
+                                        4)
+                                    && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(
+                                        currentRectangleNumber))
                                 {
                                     _replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] = 'D';
                                 }
+
                                 switch (_replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber])
                                 {
                                     //If ascending
                                     //If new addition is greater than top num
-                                    case 'A' when _replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek()>
-                                                  _replaceBooksViewModel.CallNumberStacks.ElementAt(currentRectangleNumber).Peek():
+                                    case 'A' when _replaceBooksViewModel.CallNumberStacks
+                                                      .ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek() >
+                                                  _replaceBooksViewModel.CallNumberStacks
+                                                      .ElementAt(currentRectangleNumber).Peek():
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
-                                        _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
+                                        _replaceBooksViewModel.RectangleNumber[1] =
+                                            currentRectangleNumber; //Set destination 
                                         UpdateStack(currentRectangleNumber);
                                         break;
                                     case 'A':
@@ -225,10 +278,13 @@ namespace JoshMkhariPROG7312Game.Views
                                         break;
                                     //If Descending
                                     //If new addition is greater than top num
-                                    case 'D' when _replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek()<
-                                                  _replaceBooksViewModel.CallNumberStacks.ElementAt(currentRectangleNumber).Peek():
+                                    case 'D' when _replaceBooksViewModel.CallNumberStacks
+                                                      .ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek() <
+                                                  _replaceBooksViewModel.CallNumberStacks
+                                                      .ElementAt(currentRectangleNumber).Peek():
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
-                                        _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
+                                        _replaceBooksViewModel.RectangleNumber[1] =
+                                            currentRectangleNumber; //Set destination 
                                         UpdateStack(currentRectangleNumber);
                                         break;
                                     case 'D':
@@ -242,9 +298,8 @@ namespace JoshMkhariPROG7312Game.Views
                         else
                         {
                             ActivateRedError(currentRectangle, "Full");
-                        }   
+                        }
                     }
-
                 }
             }
         }
@@ -304,7 +359,8 @@ namespace JoshMkhariPROG7312Game.Views
                     originRectangle = 180;
                     break;
             }
-            StartYJourney(_borderModel.CallBlockBordersList.ElementAt(blockNumber-1), originRectangle);
+
+            StartYJourney(_borderModel.CallBlockBordersList.ElementAt(blockNumber - 1), originRectangle);
         }
 
         private void StartXJourneyRight(Border border, int stop)
@@ -329,20 +385,25 @@ namespace JoshMkhariPROG7312Game.Views
             switch (_replaceBooksViewModel.RectangleNumber[1])
             {
                 case 0: //For Top Block
-                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(0), _replaceBooksViewModel.TopRectCanvasYLocations);
+                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(0),
+                        _replaceBooksViewModel.TopRectCanvasYLocations);
                     break;
                 case 1: // For Bottom block
-                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(1), _replaceBooksViewModel.BottomRectCanvasYLocations);
+                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(1),
+                        _replaceBooksViewModel.BottomRectCanvasYLocations);
                     break;
                 case 2: //For left Block
                 case 3:
-                    destinationY = ReturnCurrentBlockYLeftRight(_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]));
+                    destinationY = ReturnCurrentBlockYLeftRight(
+                        _replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]));
                     break;
             }
+
             do
             {
                 Canvas.SetTop(border, Canvas.GetTop(border) + 1);
             } while (Canvas.GetTop(border) < destinationY); //285<320
+
             while (Canvas.GetTop(border) > destinationY)
             {
                 Canvas.SetTop(border, Canvas.GetTop(border) - 1);
@@ -356,17 +417,20 @@ namespace JoshMkhariPROG7312Game.Views
             switch (_replaceBooksViewModel.RectangleNumber[1])
             {
                 case 0: //For Top Block
-                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(0), _replaceBooksViewModel.TopRectCanvasYLocations);
+                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(0),
+                        _replaceBooksViewModel.TopRectCanvasYLocations);
                     break;
                 case 1: // For Bottom block
-                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(1), _replaceBooksViewModel.BottomRectCanvasYLocations);
+                    destinationY = ReturnCurrentBlockYTopBottom(_replaceBooksViewModel.CallNumberStacks.ElementAt(1),
+                        _replaceBooksViewModel.BottomRectCanvasYLocations);
                     break;
                 case 2: //For left Block
                 case 3:
-                    destinationY = ReturnCurrentBlockYLeftRight(_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]));
+                    destinationY = ReturnCurrentBlockYLeftRight(
+                        _replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]));
                     break;
             }
-            
+
             do
             {
                 Canvas.SetTop(border, Canvas.GetTop(border) + 1);
@@ -384,17 +448,17 @@ namespace JoshMkhariPROG7312Game.Views
             } while (Canvas.GetTop(border) > top);
 
             //Determine if need to be going left or right
-            
+
             switch (_replaceBooksViewModel.RectangleNumber[1]) //0 Top, 1 Bottom, 2 Left, 3 Right Destination
             {
                 case 0: //Going to top
-                    switch (_replaceBooksViewModel.RectangleNumber[0])//Origin
+                    switch (_replaceBooksViewModel.RectangleNumber[0]) //Origin
                     {
                         case 1: //Starting from bottom
                             StartYJourneyUp(border); //Just go straight up
                             break;
                         case 2: //Starting from left
-                            
+
                             StartXJourneyRight(border, 321);
                             //Then go right until reach 321
                             StartYJourneyUp(border); //Just go straight up
@@ -405,6 +469,7 @@ namespace JoshMkhariPROG7312Game.Views
                             StartYJourneyUp(border); //Just go straight up
                             break;
                     }
+
                     break;
                 case 1: //Going to Bottom 285
                     switch (_replaceBooksViewModel.RectangleNumber[0])
@@ -490,18 +555,20 @@ namespace JoshMkhariPROG7312Game.Views
         {
             //Based on original rectangle number between 0-3
             for (var i = 0; i < _replaceBooksViewModel.RectValueNamePair.Count; i++)
-                if (_replaceBooksViewModel.RectValueNamePair.Keys.ElementAt(i) == _replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek())
+                if (_replaceBooksViewModel.RectValueNamePair.Keys.ElementAt(i) == _replaceBooksViewModel
+                        .CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek())
                 {
-                    MoveRectangle(_replaceBooksViewModel.RectValueNamePair.Values.ElementAt(i), _replaceBooksViewModel.RectangleNumber[0]);
+                    MoveRectangle(_replaceBooksViewModel.RectValueNamePair.Values.ElementAt(i),
+                        _replaceBooksViewModel.RectangleNumber[0]);
                     break;
                 }
-            
         }
 
         private void BtnReset_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _replaceBooksViewModel = new ReplaceBooksViewModel();
         }
+
         private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Change whatever you want
@@ -515,10 +582,10 @@ namespace JoshMkhariPROG7312Game.Views
             for (int i = 0; i < 4; i++)
             {
                 Canvas.SetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i),
-                    Canvas.GetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i))-10);
+                    Canvas.GetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i)) - 10);
                 _labelModel.CurrentStorageLevelList.ElementAt(i).Content = "Size:";
             }
-            
+
 
             SelectTopRect.Visibility = Visibility.Collapsed;
             SelectBottomRect.Visibility = Visibility.Collapsed;
@@ -533,13 +600,14 @@ namespace JoshMkhariPROG7312Game.Views
             _onSettingsPage = true;
             UpdateDifficultyUiElements();
         }
+
         private void UpdateDifficultyUiElements()
         {
             if (_replaceBooksViewModel.CurrentDifficulty > 5)
             {
                 _replaceBooksViewModel.CurrentDifficulty = 0;
-              
             }
+
             _replaceBooksViewModel.UpdateDifficulty();
             switch (_replaceBooksViewModel.CurrentDifficulty)
             {
@@ -568,8 +636,10 @@ namespace JoshMkhariPROG7312Game.Views
                     ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
                     break;
             }
+
             _arrowModel.UpdateArrows(_replaceBooksViewModel);
         }
+
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (_onSettingsPage)
@@ -578,18 +648,18 @@ namespace JoshMkhariPROG7312Game.Views
                 UpdateDifficultyUiElements();
             }
         }
-       
-        private void UpdateStackSizeText(int top,int bot,int left,int right)
-        {
 
+        private void UpdateStackSizeText(int top, int bot, int left, int right)
+        {
             _replaceBooksViewModel.StackSizes[0] = top;
             _replaceBooksViewModel.StackSizes[1] = bot;
             _replaceBooksViewModel.StackSizes[2] = left;
             _replaceBooksViewModel.StackSizes[3] = right;
         }
+
         private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-           // throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
         private void BtnCloseSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -600,13 +670,14 @@ namespace JoshMkhariPROG7312Game.Views
 
             BtnSaveSettings.Visibility = Visibility.Collapsed;
             BtnCloseSettings.Visibility = Visibility.Collapsed;
-            
+
             for (int i = 0; i < 4; i++)
             {
                 Canvas.SetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i),
-                    Canvas.GetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i))+10);
-                _labelModel.CurrentStorageLevelList.ElementAt(i).Content = 
-                Math.Round(_replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count / _replaceBooksViewModel.StackSizes[i]*100) + "%";
+                    Canvas.GetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i)) + 10);
+                _labelModel.CurrentStorageLevelList.ElementAt(i).Content =
+                    Math.Round(_replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count /
+                        _replaceBooksViewModel.StackSizes[i] * 100) + "%";
             }
 
             SelectTopRect.Visibility = Visibility.Visible;
@@ -621,6 +692,5 @@ namespace JoshMkhariPROG7312Game.Views
 
             _onSettingsPage = false;
         }
-
     }
 }
