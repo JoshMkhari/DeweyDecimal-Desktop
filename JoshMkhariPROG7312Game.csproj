@@ -57,7 +57,12 @@
     </ApplicationDefinition>
     <Compile Include="Core\ObservableObjects.cs" />
     <Compile Include="Core\RelayCOmmand.cs" />
+    <Compile Include="Logic\Home\TextBlockModel.cs" />
+    <Compile Include="Logic\Replacing Books\ArrowModel.cs" />
+    <Compile Include="Logic\Replacing Books\BorderModel.cs" />
+    <Compile Include="Logic\Replacing Books\LabelsModel.cs" />
     <Compile Include="Logic\Replacing Books\PreSetDifficulty.cs" />
+    <Compile Include="Logic\Replacing Books\RectangleModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ReplaceBooksViewModel.cs" />

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:JoshMkhariPROG7312Game"
+        xmlns:viewModels="clr-namespace:JoshMkhariPROG7312Game.ViewModels"
         mc:Ignorable="d"
         Height="600" Width="920"
         WindowStyle="None"
@@ -12,7 +12,7 @@
         AllowsTransparency="True">
 
     <Window.DataContext>
-        <local:MainViewModel />
+        <viewModels:MainViewModel />
     </Window.DataContext>
 
     <Border Background="#272537"
@@ -35,7 +35,7 @@
                        Foreground="White"
                        FontSize="22" />
 
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Grid.Column="0">
                 <RadioButton Content="Home"
                              Height="50"
                              Foreground="White"
@@ -51,14 +51,16 @@
                              Command="{Binding ReplaceViewCommand}" />
                 <RadioButton Content="Identifying areas"
                              Height="50"
-                             Foreground="White"
+                             Foreground="DimGray"
                              FontSize="14"
+                             IsEnabled="False"
                              Style="{StaticResource MenuButtonTheme}" />
                 <RadioButton Content="Finding call numbers"
                              Height="50"
-                             Foreground="White"
+                             Foreground="DimGray"
                              FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}" />
+                             IsEnabled="False"
+                             Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
 
             <ContentControl Grid.Row="1"
