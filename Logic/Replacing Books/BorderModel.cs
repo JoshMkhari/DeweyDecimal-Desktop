@@ -51,8 +51,8 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 TextBlock textForBlock = new TextBlock
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Text = NumberFormatter(replaceBooksViewModel.CallNumbers.ElementAt(0)) + 
-                           replaceBooksViewModel.CallNumbersStrings.ElementAt(0)
+                    Text = NumberFormatter(replaceBooksViewModel.CallNumbers.ElementAt(i)) + 
+                           replaceBooksViewModel.CallNumbersStrings.ElementAt(i)
                 };
                 rectBlock.Child = textForBlock; 
                 

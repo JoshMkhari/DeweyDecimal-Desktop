@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,7 +17,7 @@ namespace JoshMkhariPROG7312Game.Views
     /// <summary>
     ///     Interaction logic for ReplaceBooksView.xaml
     /// </summary>
-    public partial class ReplaceBooksView : UserControl
+    public partial class ReplaceBooksView
     {
         //Declarations
         private ReplaceBooksViewModel _replaceBooksViewModel;//Used to access all variables and methods within model
@@ -26,7 +27,7 @@ namespace JoshMkhariPROG7312Game.Views
         private readonly ArrowModel _arrowModel;
        // private RectangleModel _rectangleModel;
 
-        private bool _onSettingsPage;
+       // private bool _onSettingsPage;
         
         public ReplaceBooksView()
         {
@@ -54,7 +55,7 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 ReplacingBooks.Children.Add(label);
             }
-            _onSettingsPage = false;
+            //_onSettingsPage = false;
         }
         
         //To colour block strokes
@@ -132,6 +133,11 @@ namespace JoshMkhariPROG7312Game.Views
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
             int currentRectangleNumber)
         {
+            Debug.WriteLine("Current rectangle is " + currentRectangleNumber);
+            for (int i = 0; i < currentRectangleStack.Count; i++)
+            {
+                Debug.WriteLine(currentRectangleStack.ElementAt(i));
+            }
             var isEmptyRect = !currentRectangleStack.Any(); //check if the list is empty
             if (_replaceBooksViewModel.GameCounts[1] == 0) //This is start block
             {
@@ -317,11 +323,10 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 Canvas.SetTop(border, Canvas.GetTop(border) + 1);
             } while (Canvas.GetTop(border) < destinationY); //285<320
-            if (Canvas.GetTop(border) > destinationY) //320 <320  285< 218
-                do
-                {
-                    Canvas.SetTop(border, Canvas.GetTop(border) - 1);
-                } while (Canvas.GetTop(border) > destinationY); //285>320  285>218
+            while (Canvas.GetTop(border) > destinationY)
+            {
+                Canvas.SetTop(border, Canvas.GetTop(border) - 1);
+            }
             //Check destination amount of elements
         }
 
@@ -507,7 +512,7 @@ namespace JoshMkhariPROG7312Game.Views
                 _borderModel.CallBlockBordersList.ElementAt(i).Visibility = Visibility.Collapsed;
             }
 
-            _onSettingsPage = true;
+            //_onSettingsPage = true;
             UpdateDifficultyUiElements();
         }
         private void UpdateDifficultyUiElements()
@@ -598,7 +603,7 @@ namespace JoshMkhariPROG7312Game.Views
                 _borderModel.CallBlockBordersList.ElementAt(i).Visibility = Visibility.Visible;
             }
 
-            _onSettingsPage = false;
+            //_onSettingsPage = false;
         }
 
     }
