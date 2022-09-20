@@ -57,7 +57,6 @@ namespace JoshMkhariPROG7312Game.Views
             }
             //_onSettingsPage = false;
         }
-        
         //To colour block strokes
         private void ActivateBlockColour(Rectangle rect, int mode)
         {
@@ -95,7 +94,6 @@ namespace JoshMkhariPROG7312Game.Views
         private void ReplacingBooks_MouseDown(object sender, MouseButtonEventArgs e)
         {
         }
-
         //To make a block show red when an error occurs
         private void ActivateRedError(Rectangle rect, string errorText)
         {
@@ -104,7 +102,6 @@ namespace JoshMkhariPROG7312Game.Views
             ClearAllFocus();
             _replaceBooksViewModel.GameCounts[1] = 0;//Active Block Count
         }
-
         //To clear all colours surrounding blocks
         private void ClearAllFocus()
         {
@@ -115,7 +112,6 @@ namespace JoshMkhariPROG7312Game.Views
             _replaceBooksViewModel.GameCounts[1] = 0;//Active Block Count
             _replaceBooksViewModel.RectangleNumber[1] = 0;//Destination Rectangle Number
         }
-
         //To push a block number from one stack to another
         private void UpdateStack(int rectangleNumber)
         {

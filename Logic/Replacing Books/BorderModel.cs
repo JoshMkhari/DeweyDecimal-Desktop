@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -34,10 +35,8 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
         
         public void AssignValuesToBlocks(ReplaceBooksViewModel replaceBooksViewModel)
         {
-            
             for (int i = 0; i < 10; i++)
             {
-                
                 Border rectBlock = new Border
                 {
                     //rectBlock.Name = "border" + i;
@@ -55,7 +54,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                            replaceBooksViewModel.CallNumbersStrings.ElementAt(i)
                 };
                 rectBlock.Child = textForBlock; 
-                
+                Debug.WriteLine(textForBlock.Text);
                 Canvas.SetLeft(rectBlock,BorderInitialLeft);
                 if (i < 5)
                 {
@@ -68,7 +67,6 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 }
                 CallBlockBordersList.Add(rectBlock);
             }
-            
 
         }
         

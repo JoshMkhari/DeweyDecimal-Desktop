@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Media;
 using JoshMkhariPROG7312Game.Logic.Replacing_Books;
@@ -88,9 +89,9 @@ namespace JoshMkhariPROG7312Game.ViewModels
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
             
-            for (var i = 0; i < 5; i++) CallNumberStacks.ElementAt(0).Push(CallNumbers.ElementAt(i));
-
-            for (var i = 5; i < 10; i++) CallNumberStacks.ElementAt(1).Push(CallNumbers.ElementAt(i));
+            for (var i = 0; i < 5; i++) CallNumberStacks.ElementAt(1).Push(CallNumbers.ElementAt(i));
+            
+            for (var i = 5; i < 10; i++) CallNumberStacks.ElementAt(0).Push(CallNumbers.ElementAt(i));
             
             for (int i = 0; i < 10; i++)
             {
