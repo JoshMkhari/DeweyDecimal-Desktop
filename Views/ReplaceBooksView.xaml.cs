@@ -129,11 +129,6 @@ namespace JoshMkhariPROG7312Game.Views
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
             int currentRectangleNumber)
         {
-            Debug.WriteLine("Current rectangle is " + currentRectangleNumber);
-            for (int i = 0; i < currentRectangleStack.Count; i++)
-            {
-                Debug.WriteLine(currentRectangleStack.ElementAt(i));
-            }
             var isEmptyRect = !currentRectangleStack.Any(); //check if the list is empty
             if (_replaceBooksViewModel.GameCounts[1] == 0) //This is start block
             {
@@ -183,33 +178,40 @@ namespace JoshMkhariPROG7312Game.Views
                             else
                             {
                                 //What is my order
-                                if (_replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] == 'A' || _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2)) //If ascending
+                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber *
+                                        2) && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2+1))
                                 {
-                                    if (_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]).Peek()>
-                                        _replaceBooksViewModel.CallNumberStacks.ElementAt(currentRectangleNumber).Peek()) //If new addition is greater than top num
-                                    {
-                                        ActivateBlockColour(currentRectangle, 1); //Make Blue
-                                        _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
-                                        UpdateStack(currentRectangleNumber);
-                                    }
-                                    else
-                                    {
-                                        ActivateRedError(currentRectangle, "This is a ascending list");
-                                    }
+                                    _replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] = 'A';
                                 }
-                                else if (_replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] == 'D'||  _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2+1)) //If Descending
+                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber *
+                                        2+1) && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2))
                                 {
-                                    if (_replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[1]).Peek()<
-                                        _replaceBooksViewModel.CallNumberStacks.ElementAt(currentRectangleNumber).Peek()) //If new addition is greater than top num
-                                    {
+                                    _replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] = 'D';
+                                }
+                                switch (_replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber])
+                                {
+                                    //If ascending
+                                    //If new addition is greater than top num
+                                    case 'A' when _replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek()>
+                                                  _replaceBooksViewModel.CallNumberStacks.ElementAt(currentRectangleNumber).Peek():
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
                                         _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
                                         UpdateStack(currentRectangleNumber);
-                                    }
-                                    else
-                                    {
+                                        break;
+                                    case 'A':
+                                        ActivateRedError(currentRectangle, "This is a ascending list");
+                                        break;
+                                    //If Descending
+                                    //If new addition is greater than top num
+                                    case 'D' when _replaceBooksViewModel.CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek()<
+                                                  _replaceBooksViewModel.CallNumberStacks.ElementAt(currentRectangleNumber).Peek():
+                                        ActivateBlockColour(currentRectangle, 1); //Make Blue
+                                        _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
+                                        UpdateStack(currentRectangleNumber);
+                                        break;
+                                    case 'D':
                                         ActivateRedError(currentRectangle, "This is a descending list");
-                                    }
+                                        break;
                                 }
 
                                 //Does it match my order?

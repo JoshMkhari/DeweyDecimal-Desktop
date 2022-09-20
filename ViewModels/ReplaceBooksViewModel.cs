@@ -51,7 +51,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
             CallNumbersStrings = new List<string>();
             RectValueNamePair = new Dictionary<double, int>();
             RectangleSortOrder = new char[4];
-            StackSizes = new[] { 0.0, 0.0, 0.0, 0.0 };
+            StackSizes = new[] { 6.0, 6.0, 6.0, 6.0 };
             
             GameCounts = new []{0,0};//movesCount, activatedCount
             //_movesCount keeps track of amount of total moves
