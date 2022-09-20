@@ -39,7 +39,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             {
                 if (replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count > 1)
                 {
-                    if (replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i*2) && replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i*2+1))
+                    if (replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i) && replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i+4))
                     {
                         if (replaceBooksViewModel.CallNumberStacks.ElementAt(i).ElementAt(0) < replaceBooksViewModel.CallNumberStacks.ElementAt(i).ElementAt(1))
                         {
@@ -54,7 +54,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     }
                     else
                     {
-                        if (replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i*2))
+                        if (replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i))
                         {
                             replaceBooksViewModel.RectangleSortOrder[i] = 'A'; //Store Ascending for Left Rectangle
                             DirectionArrowsList.ElementAt(i).Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));

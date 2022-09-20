@@ -231,7 +231,7 @@ namespace JoshMkhariPROG7312Game.Views
                                 _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber  +
                                     4)) //If there is only one block inside and no rules on block
                             {
-                                Debug.WriteLine("The thunbg just ran");
+                                //Debug.WriteLine("The thunbg just ran");
                                 ActivateBlockColour(currentRectangle, 1); //Make Blue
                                 _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
                                 UpdateStack(currentRectangleNumber);
