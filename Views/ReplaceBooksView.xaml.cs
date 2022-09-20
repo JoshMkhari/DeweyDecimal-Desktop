@@ -591,7 +591,7 @@ namespace JoshMkhariPROG7312Game.Views
                 Canvas.SetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i),
                     Canvas.GetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i))+10);
                 _labelModel.CurrentStorageLevelList.ElementAt(i).Content = 
-                (_replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count / _replaceBooksViewModel.StackSizes[i])*100 + "%";
+                Math.Round(_replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count / _replaceBooksViewModel.StackSizes[i]*100) + "%";
             }
 
             SelectTopRect.Visibility = Visibility.Visible;

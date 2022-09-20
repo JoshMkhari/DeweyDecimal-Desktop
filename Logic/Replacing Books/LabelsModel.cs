@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using JoshMkhariPROG7312Game.ViewModels;
@@ -26,7 +27,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
         {
             for (int i = 0; i < 4; i++)
             {
-                CurrentStorageLevelList.ElementAt(i).Content = (replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count / replaceBooksViewModel.StackSizes[0])*100 + "%";
+                CurrentStorageLevelList.ElementAt(i).Content = Math.Round(replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count / replaceBooksViewModel.StackSizes[0]*100) + "%";
             }
         }
         private void CreateStorageCapacityLabels()
