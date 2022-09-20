@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,19 +46,16 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 ReplacingBooks.Children.Add(arrow);
             }
-
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Border border in _borderModel.CallBlockBordersList)
             {
                 ReplacingBooks.Children.Add(border);
             }
-
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Label label in _labelModel.CurrentStorageLevelList)
             {
                 ReplacingBooks.Children.Add(label);
             }
-
             _onSettingsPage = false;
         }
 
@@ -145,7 +143,6 @@ namespace JoshMkhariPROG7312Game.Views
                     finalCheck = false;
                     break;
                 }
-
                 if (finalCheck)
                 {
                     MessageBox.Show(CheckIfWon(0) == 5
@@ -169,7 +166,7 @@ namespace JoshMkhariPROG7312Game.Views
                 : current;
         }
 
-        private bool CheckIfAscending(Stack<double> currentStack)
+        private static bool CheckIfAscending(Stack<double> currentStack)
         {
             int index = 0;
             while (index < 5)
@@ -221,23 +218,20 @@ namespace JoshMkhariPROG7312Game.Views
                 }
                 else
                 {
-                    if (_replaceBooksViewModel.RectangleNumber[0] ==
-                        currentRectangleNumber) //If both source and destination are the same
+                    if (_replaceBooksViewModel.RectangleNumber[0] == currentRectangleNumber) //If both source and destination are the same
                     {
                         ActivateRedError(currentRectangle, "You cannot send a call number to the same start");
                     }
                     else
                     {
-                        if (currentRectangleStack.Count <
-                            _replaceBooksViewModel.StackSizes
-                                [currentRectangleNumber]) //If there is still space for the block
+                        if (currentRectangleStack.Count < _replaceBooksViewModel.StackSizes[currentRectangleNumber]) //If there is still space for the block
                         {
-                            if (currentRectangleStack.Count == 1 &&
-                                _replaceBooksViewModel.ActiveAscDescStacks.Values
-                                    .ElementAt(currentRectangleNumber * 2) &&
-                                _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber * 2 +
-                                    1)) //If there is only one block inside and no rules on block
+                            if (currentRectangleStack.Count == 1 && _replaceBooksViewModel.ActiveAscDescStacks.Values
+                                    .ElementAt(currentRectangleNumber) &&
+                                _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber  +
+                                    4)) //If there is only one block inside and no rules on block
                             {
+                                Debug.WriteLine("The thunbg just ran");
                                 ActivateBlockColour(currentRectangle, 1); //Make Blue
                                 _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
                                 UpdateStack(currentRectangleNumber);
@@ -616,7 +610,7 @@ namespace JoshMkhariPROG7312Game.Views
                     ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Normal.png", UriKind.Relative));
                     break;
                 case 2:
-                    UpdateStackSizeText(6, 6, 6, 5);
+                    UpdateStackSizeText(6, 6, 5, 5);
                     ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Difficult.png", UriKind.Relative));
                     break;
                 case 3:
