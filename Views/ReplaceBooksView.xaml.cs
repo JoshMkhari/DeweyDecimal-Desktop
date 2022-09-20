@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using JoshMkhariPROG7312Game.Logic.Replacing_Books;
 
 namespace JoshMkhariPROG7312Game.Views
 {
@@ -20,20 +21,17 @@ namespace JoshMkhariPROG7312Game.Views
         private int _activatedBlockCount;
 
         private SolidColorBrush _blackBrush;
-        private readonly int[] _bottomRectCanvasYLocations = { 422, 396, 369, 342, 315 }; //For bottom rectangle
-
-            //private Stack<int> _callNumbersBottom = new Stack<int>(); //To store initial numbers in bottom rectangle
-
-        //private Stack<int> _callNumbersLeft = new Stack<int>(); //To store initial numbers in left rectangle
-
-        //private Stack<int> _callNumbersRight = new Stack<int>(); //To store initial numbers in right rectangle
-        //private int[][] _rectanglesArr = new int[4][]; //https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        // Creating 2 Stacks of Integers https://www.tutorialsteacher.com/csharp/csharp-stack
+        private readonly int[] _bottomRectCanvasYLocations = { 422, 396, 369, 342, 315, 288 }; //For bottom rectangle
+        private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90, 63}; //For top rectangle
+        
+        private int _currentDifficulty; //0 for easy, 5 for insane
 
         private Stack<double> _callNumbers, _callNumbersTop, _callNumbersBottom, _callNumbersLeft, _callNumbersRight; //To store initial numbers in top rectangle
         private Stack<String> _callNumbersStrings;
         private int _destinationRectangleNumber; //The rectangle a block is being transferred to
-
+        private PreSetDifficulty _preSetDifficulty = new PreSetDifficulty();
+        private bool _onSettingsPage = false;
+        
         private int _originalRectangleNumber; //??????????????????????????????????????
 
         private readonly char[] _rectangleSortOrder = new char [4]; //Store whether rectangle is ascending or descending
@@ -41,14 +39,19 @@ namespace JoshMkhariPROG7312Game.Views
         //https://www.tutorialsteacher.com/csharp/csharp-dictionary
         private readonly IDictionary<double, int>
             _rectValueNamePair = new Dictionary<double, int>(); //Stores Random value and Rectangle name
+        
+        private IDictionary<int, bool>
+            _activeAscDesc = new Dictionary<int, bool>(); //Stores Set difficulty for current game
 
         //Store locations where blocks must rest based on amount of items within rectangle
-        private readonly int[] _topRectCanvasYLocations = { 198, 171, 144, 117, 90 }; //For top rectangle
+        
 
         private int _movesCount;
         public ReplaceBooksView()
         {
             InitializeComponent();
+            _currentDifficulty = 0;
+            _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
             _originalRectangleNumber = 4;
             _activatedBlockCount = 0;
             _rectangleSortOrder[0] = 'A';
@@ -69,8 +72,6 @@ namespace JoshMkhariPROG7312Game.Views
                 _callNumbersStrings.Push(" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90));
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
-
-            
             _callNumbersTop = new Stack<double>();
             _callNumbersBottom = new Stack<double>();
             _callNumbersLeft = new Stack<double>();
@@ -116,7 +117,6 @@ namespace JoshMkhariPROG7312Game.Views
         
         private void AssignValuesToBlocks()
         {
-            var rnd = new Random();
             txtRectBlock1.Text = NumberFormatter(_callNumbersTop.ElementAt(4)) +_callNumbersStrings.ElementAt(0);
             txtRectBlock2.Text = NumberFormatter(_callNumbersTop.ElementAt(3))+ _callNumbersStrings.ElementAt(1);
             txtRectBlock3.Text =  NumberFormatter(_callNumbersTop.ElementAt(2))+ _callNumbersStrings.ElementAt(2);
@@ -143,25 +143,10 @@ namespace JoshMkhariPROG7312Game.Views
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(3), 9); //storing the value with the rectangle name
             _rectValueNamePair.Add(_callNumbersBottom.ElementAt(4), 10); //storing the value with the rectangle name
 
-            DisplayValuesInRectangles();
+            
+            //Set initial Difficulty
+            
         }
-
-        private void DisplayValuesInRectangles()
-        {
-            Debug.WriteLine("Top");
-            foreach (var VARIABLE in _callNumbersTop) Debug.WriteLine(VARIABLE.ToString());
-            Debug.WriteLine(" ");
-            Debug.WriteLine("Bottom");
-            foreach (var VARIABLE in _callNumbersBottom) Debug.WriteLine(VARIABLE.ToString());
-            Debug.WriteLine(" ");
-            Debug.WriteLine("Left");
-            foreach (var VARIABLE in _callNumbersLeft) Debug.WriteLine(VARIABLE.ToString());
-            Debug.WriteLine(" ");
-            Debug.WriteLine("Right");
-            foreach (var VARIABLE in _callNumbersRight) Debug.WriteLine(VARIABLE.ToString());
-            Debug.WriteLine(" ");
-        }
-
         //To colour block strokes
         private void ActivateBlockColour(Rectangle rect, int mode)
         {
@@ -243,17 +228,36 @@ namespace JoshMkhariPROG7312Game.Views
                     break;
             }
 
+            //RULES PLACED HERE
             if (_callNumbersLeft.Count > 1)
             {
-                if (_callNumbersLeft.ElementAt(0) < _callNumbersLeft.ElementAt(1))
+                Debug.WriteLine("This is element 4 " + _activeAscDesc.Values.ElementAt(4));
+                Debug.WriteLine("This is element 4 " + _activeAscDesc.Values.ElementAt(5));
+                if (_activeAscDesc.Values.ElementAt(4) && _activeAscDesc.Values.ElementAt(5))
                 {
-                    _rectangleSortOrder[2] = 'D'; //Store Descending for Left Rectangle
-                    imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                    if (_callNumbersLeft.ElementAt(0) < _callNumbersLeft.ElementAt(1))
+                    {
+                        _rectangleSortOrder[2] = 'D'; //Store Descending for Left Rectangle
+                        imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                    }
+                    else
+                    {
+                        _rectangleSortOrder[2] = 'A'; //Store Ascending for Left Rectangle
+                        imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                    }
                 }
                 else
                 {
-                    _rectangleSortOrder[2] = 'A'; //Store Ascending for Left Rectangle
-                    imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                    if (_activeAscDesc.Values.ElementAt(4) )
+                    {
+                        _rectangleSortOrder[2] = 'A'; //Store Ascending for Left Rectangle
+                        imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                    }
+                    else
+                    {
+                        _rectangleSortOrder[2] = 'D'; //Store Descending for Left Rectangle
+                        imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                    }
                 }
             }
             else
@@ -264,15 +268,33 @@ namespace JoshMkhariPROG7312Game.Views
 
             if (_callNumbersRight.Count > 1)
             {
-                if (_callNumbersRight.ElementAt(0) < _callNumbersRight.ElementAt(1))
+                Debug.WriteLine("This is element 6 " + _activeAscDesc.Values.ElementAt(6));
+                Debug.WriteLine("This is element 7 " + _activeAscDesc.Values.ElementAt(7));
+                if (_activeAscDesc.Values.ElementAt(6) && _activeAscDesc.Values.ElementAt(7))
                 {
-                    _rectangleSortOrder[3] = 'D'; //Store Descending for Right Rectangle
-                    imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                    if (_callNumbersRight.ElementAt(0) < _callNumbersRight.ElementAt(1))
+                    {
+                        _rectangleSortOrder[3] = 'D'; //Store Descending for Right Rectangle
+                        imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                    }
+                    else
+                    {
+                        _rectangleSortOrder[3] = 'A'; //Store Ascending for Right Rectangle
+                        imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                    }
                 }
                 else
                 {
-                    _rectangleSortOrder[3] = 'A'; //Store Ascending for Right Rectangle
-                    imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                    if (_activeAscDesc.Values.ElementAt(6))
+                    {
+                        _rectangleSortOrder[3] = 'A'; //Store Ascending for Right Rectangle
+                        imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));;
+                    }
+                    else
+                    {
+                        _rectangleSortOrder[3] = 'D'; //Store Descending for Right Rectangle
+                        imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));;
+                    }
                 }
             }
             else
@@ -281,12 +303,10 @@ namespace JoshMkhariPROG7312Game.Views
                 imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));;
             }
 
-            double size = 5;
-            
-            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / size)*100 + "%";
-            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / size)*100 + "%";
-            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / size)*100 + "%";
-            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / size)*100 + "%";
+            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / _stackSizes[0])*100 + "%";
+            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / _stackSizes[1])*100 + "%";
+            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / _stackSizes[2])*100 + "%";
+            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / _stackSizes[3])*100 + "%";
         }
 
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
@@ -315,7 +335,6 @@ namespace JoshMkhariPROG7312Game.Views
                     {
                         ActivateBlockColour(currentRectangle, 1); //Make Blue
                         _destinationRectangleNumber = currentRectangleNumber; //Set destination 
-                        Debug.WriteLine("if (isEmptyRect) _destinationRectangleNumber " + currentRectangleNumber);
                         UpdateStack(currentRectangleNumber);
                     }
                     else
@@ -331,57 +350,42 @@ namespace JoshMkhariPROG7312Game.Views
                     }
                     else
                     { 
-                        if (currentRectangleStack.Count < 5) //If there is still space for the block
+                        if (currentRectangleStack.Count < _stackSizes[currentRectangleNumber]) //If there is still space for the block
                         {
-                            if (currentRectangleStack.Count == 1) //If there is only one block inside
+                            if (currentRectangleStack.Count == 1 && _activeAscDesc.Values.ElementAt(currentRectangleNumber*2) &&_activeAscDesc.Values.ElementAt(currentRectangleNumber*2+1)) //If there is only one block inside and no rules on block
                             {
                                 ActivateBlockColour(currentRectangle, 1); //Make Blue
                                 _destinationRectangleNumber = currentRectangleNumber; //Set destination 
-                                Debug.WriteLine("if (currentRectangleStack.Count == 1) _destinationRectangleNumber " +
-                                                currentRectangleNumber);
                                 UpdateStack(currentRectangleNumber);
                             }
                             else
                             {
-                                Debug.WriteLine(" ");
-                                Debug.WriteLine("originRectangle Number " + _originalRectangleNumber);
-                                Debug.WriteLine("Current Rectangle Number " + currentRectangleNumber);
                                 //What is my order
-                                if (_rectangleSortOrder[currentRectangleNumber] == 'A') //If ascending
+                                if (_rectangleSortOrder[currentRectangleNumber] == 'A' || _activeAscDesc.Values.ElementAt(currentRectangleNumber*2)) //If ascending
                                 {
                                     if (PeepCallBlock(_originalRectangleNumber) >
                                         PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
                                     {
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
                                         _destinationRectangleNumber = currentRectangleNumber; //Set destination 
-                                        Debug.WriteLine("if Asscending _destinationRectangleNumber " +
-                                                        currentRectangleNumber);
                                         UpdateStack(currentRectangleNumber);
                                     }
                                     else
                                     {
-                                        Debug.WriteLine(" ");
-                                        Debug.WriteLine("You tried to add " + PeepCallBlock(_originalRectangleNumber) +
-                                                        " which is smaller than " + PeepCallBlock(currentRectangleNumber));
                                         ActivateRedError(currentRectangle, "This is a ascending list");
                                     }
                                 }
-                                else if (_rectangleSortOrder[currentRectangleNumber] == 'D') //If Descending
+                                else if (_rectangleSortOrder[currentRectangleNumber] == 'D'||  _activeAscDesc.Values.ElementAt(currentRectangleNumber*2+1)) //If Descending
                                 {
                                     if (PeepCallBlock(_originalRectangleNumber) <
                                         PeepCallBlock(currentRectangleNumber)) //If new addition is greater than top num
                                     {
                                         ActivateBlockColour(currentRectangle, 1); //Make Blue
                                         _destinationRectangleNumber = currentRectangleNumber; //Set destination 
-                                        Debug.WriteLine("if Descending _destinationRectangleNumber " +
-                                                        currentRectangleNumber);
                                         UpdateStack(currentRectangleNumber);
                                     }
                                     else
                                     {
-                                        Debug.WriteLine(" ");
-                                        Debug.WriteLine("You tried to add " + PeepCallBlock(_originalRectangleNumber) +
-                                                        " which is greater than " + PeepCallBlock(currentRectangleNumber));
                                         ActivateRedError(currentRectangle, "This is a descending list");
                                     }
                                 }
@@ -397,8 +401,6 @@ namespace JoshMkhariPROG7312Game.Views
 
                 }
             }
-
-            DisplayValuesInRectangles();
         }
 
         private void selectTopRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -434,8 +436,10 @@ namespace JoshMkhariPROG7312Game.Views
                     return 266;
                 case 4:
                     return 239;
+                case 5:
+                    return 212;
                 default: //Last rectangle
-                    return 213;
+                    return 185;
             }
         }
 
@@ -479,7 +483,6 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void StartXJourneyRight(Border border, int stop)
         {
-            // Debug.WriteLine("This is left now " +Canvas.GetLeft(border));
             do
             {
                 Canvas.SetLeft(border, Canvas.GetLeft(border) + 1);
@@ -488,7 +491,6 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void StartXJourneyLeft(Border border, int stop)
         {
-            // Debug.WriteLine("This is left now " + Canvas.GetLeft(border));
             do
             {
                 Canvas.SetLeft(border, Canvas.GetLeft(border) - 1);
@@ -498,51 +500,36 @@ namespace JoshMkhariPROG7312Game.Views
         private void StartYJourneyUp(Border border)
         {
             var destinationY = 0;
-            Debug.WriteLine("_destinationRectangleNumber nigga please" + _destinationRectangleNumber);
             switch (_destinationRectangleNumber)
             {
                 case 0: //For Top Block
-                    Debug.WriteLine("We going up");
                     destinationY = ReturnCurrentBlockYTopBottom(_callNumbersTop, _topRectCanvasYLocations);
                     break;
                 case 1: // For Bottom block
-                    Debug.WriteLine("We down up");
                     destinationY = ReturnCurrentBlockYTopBottom(_callNumbersBottom, _bottomRectCanvasYLocations);
                     break;
                 case 2: //For left Block
-                    Debug.WriteLine("We going left");
                     destinationY = ReturnCurrentBlockYLeftRight(_callNumbersLeft);
                     break;
                 case 3: // For right block
-                    Debug.WriteLine("We going right");
                     destinationY = ReturnCurrentBlockYLeftRight(_callNumbersRight);
                     break;
             }
-
-            //Debug.WriteLine("this is destination Y " + destinationY);
-            // Debug.WriteLine("this is current Y " + Canvas.GetTop(border));
-            Debug.WriteLine("0 ");
-            Debug.WriteLine("Current location " + Canvas.GetTop(border) + " with a destination of " + destinationY);
             do
             {
                 Canvas.SetTop(border, Canvas.GetTop(border) + 1);
             } while (Canvas.GetTop(border) < destinationY); //285<320
-            Debug.WriteLine("1 ");
-            Debug.WriteLine("Current location " + Canvas.GetTop(border) + " with a destination of " + destinationY);
             if (Canvas.GetTop(border) > destinationY) //320 <320  285< 218
                 do
                 {
                     Canvas.SetTop(border, Canvas.GetTop(border) - 1);
                 } while (Canvas.GetTop(border) > destinationY); //285>320  285>218
-            Debug.WriteLine("2 ");
-            Debug.WriteLine("Current location " + Canvas.GetTop(border) + " with a destination of " + destinationY);
             //Check destination amount of elements
         }
 
         private void StartYJourneyDown(Border border)
         {
             var destinationY = 0;
-            Debug.WriteLine("_destinationRectangleNumber nigga please " + _destinationRectangleNumber);
             switch (_destinationRectangleNumber)
             {
                 case 0: //For Top Block
@@ -558,8 +545,7 @@ namespace JoshMkhariPROG7312Game.Views
                     destinationY = ReturnCurrentBlockYLeftRight(_callNumbersRight);
                     break;
             }
-
-            //Debug.WriteLine("this is destination Y" + destinationY);
+            
             do
             {
                 Canvas.SetTop(border, Canvas.GetTop(border) + 1);
@@ -577,15 +563,13 @@ namespace JoshMkhariPROG7312Game.Views
             } while (Canvas.GetTop(border) > top);
 
             //Determine if need to be going left or right
-
-            Debug.WriteLine("_destinationRectangleNumber before YJourney " + _destinationRectangleNumber);
+            
             switch (_destinationRectangleNumber) //0 Top, 1 Bottom, 2 Left, 3 Right
             {
                 case 0: //Going to top
                     switch (_originalRectangleNumber)
                     {
                         case 1: //Starting from bottom
-                            Debug.WriteLine("We moving top from bottom");
                             StartYJourneyUp(border); //Just go straight up
                             break;
                         case 2: //Starting from left
@@ -606,7 +590,6 @@ namespace JoshMkhariPROG7312Game.Views
                     {
                         case 0: //Starting from Top
                             //Just go straight down
-                            Debug.WriteLine("We moving down from top");
                             StartYJourneyDown(border);
                             break;
                         case 2: //Starting from left
@@ -677,8 +660,6 @@ namespace JoshMkhariPROG7312Game.Views
 
         private int ReturnCurrentBlockYTopBottom(Stack<double> rectStack, int[] locations)
         {
-            Debug.WriteLine("");
-            
             int location; //To store where to place the block
             if (rectStack.Any())//If there are elements within the stack
             {
@@ -686,10 +667,6 @@ namespace JoshMkhariPROG7312Game.Views
             }
             else
                 location = 0;
-            Debug.WriteLine("Num items in stack " + rectStack.Count);
-            Debug.WriteLine("Location to be sent to is  " + location);
-            Debug.WriteLine("To move to this location " + locations[location]);
-            Debug.WriteLine("");
             return locations[location];
         }
 
@@ -786,12 +763,7 @@ namespace JoshMkhariPROG7312Game.Views
             _callNumbersRight.Clear();
 
             InitializeStacks();
-           
-           //AssignValuesToBlocks();
-           
-           //Reset Block Locations
         }
-        
         private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Change whatever you want
@@ -817,13 +789,149 @@ namespace JoshMkhariPROG7312Game.Views
             DockPanelBottom.Visibility = Visibility.Visible;
             DockPanelLeft.Visibility = Visibility.Visible;
             DockPanelRight.Visibility = Visibility.Visible;
-        }
 
+            selectTopRect.Visibility = Visibility.Collapsed;
+            selectBottomRect.Visibility = Visibility.Collapsed;
+            selectLeftRect.Visibility = Visibility.Collapsed;
+            selectRightRect.Visibility = Visibility.Collapsed;
+
+            rectBlock1.Visibility = Visibility.Collapsed;
+            rectBlock2.Visibility = Visibility.Collapsed;
+            rectBlock3.Visibility = Visibility.Collapsed;
+            rectBlock4.Visibility = Visibility.Collapsed;
+            rectBlock5.Visibility = Visibility.Collapsed;
+            rectBlock6.Visibility = Visibility.Collapsed;
+            rectBlock7.Visibility = Visibility.Collapsed;
+            rectBlock8.Visibility = Visibility.Collapsed;
+            rectBlock9.Visibility = Visibility.Collapsed;
+            rectBlock10.Visibility = Visibility.Collapsed;
+
+            _onSettingsPage = true;
+            UpdateDifficultyUiElements();
+        }
+        private void UpdateDifficultyUiElements()
+        {
+            if (_currentDifficulty > 5)
+            {
+                _currentDifficulty = 0;
+              
+            }
+            _activeAscDesc = _preSetDifficulty.ChangeDifficulty(_currentDifficulty);
+            switch (_currentDifficulty)
+            {
+                case 1:
+                    UpdateStackSizeText(5, 5, 5, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Normal.png", UriKind.Relative));
+                    break;
+                case 2:
+                    UpdateStackSizeText(6, 6, 6, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Difficult.png", UriKind.Relative));
+                    break;
+                case 3:
+                    UpdateStackSizeText(6, 6, 5, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Hard.png", UriKind.Relative));
+                    break;
+                case 4:
+                    UpdateStackSizeText(6, 5, 5, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Extreme.png", UriKind.Relative));
+                    break;
+                case 5:
+                    UpdateStackSizeText(5, 5, 5, 5);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Insane.png", UriKind.Relative));
+                    break;
+                default:
+                    UpdateStackSizeText(6, 6, 6, 6);
+                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
+                    break;;
+            }
+
+            UpdateArrows();
+            
+        }
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (_onSettingsPage)
+            {
+                _currentDifficulty++;
+                UpdateDifficultyUiElements();
+            }
+        }
+        private void UpdateArrows()
+        {
+            //Top Rectangle pointing down
+            imgTopRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+            imgBottomRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+            
+            if (_activeAscDesc.Values.ElementAt(1))
+            {
+                imgTopRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+            }
+            else
+            {
+                imgTopRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
+            
+            //Bottom Rectangle pointing down
+            if (_activeAscDesc.Values.ElementAt(3))
+            {
+                imgBottomRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+            }
+            else
+            {
+                imgBottomRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
+            
+            //Left Rectangle
+            if (_activeAscDesc.Values.ElementAt(4))
+            {
+                imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+            }
+            else
+            {
+                imgLeftRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+            }
+            
+            if (_activeAscDesc.Values.ElementAt(5))
+            {
+                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+            }
+            else
+            {
+                imgLeftRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
+            
+            //Left Rectangle
+            if (_activeAscDesc.Values.ElementAt(6))
+            {
+                imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+            }
+            else
+            {
+                imgRightRectUp.Source = new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+            }
+            
+            if (_activeAscDesc.Values.ElementAt(7))
+            {
+                imgRightRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+            }
+            else
+            {
+                imgRightRecDown.Source = new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+            }
 
         }
+        private void UpdateStackSizeText(int top,int bot,int left,int right)
+        {
+            StackSizeTop.Value = top;
+            StackSizeBottom.Value = bot;
+            StackSizeLeft.Value = left;
+            StackSizeRight.Value = right;
 
+            _stackSizes[0] = top;
+            _stackSizes[1] = bot;
+            _stackSizes[2] = left;
+            _stackSizes[3] = right;
+        }
         private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
            // throw new NotImplementedException();
@@ -842,20 +950,35 @@ namespace JoshMkhariPROG7312Game.Views
             Canvas.SetLeft(txtBottomRectStorageCapacity,332);
             Canvas.SetLeft(txtLeftRectStorageCapacity,184);
             Canvas.SetLeft(txtRightRectStorageCapacity,487);
-
-            double size = 5;
-            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / size)*100 + "%";
-            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / size)*100 + "%";
-            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / size)*100 + "%";
-            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / size)*100 + "%";
+            
+            txtTopRectStorageCapacity.Content = (_callNumbersTop.Count / _stackSizes[0])*100 + "%";
+            txtBottomRectStorageCapacity.Content = (_callNumbersBottom.Count / _stackSizes[1])*100 + "%";
+            txtLeftRectStorageCapacity.Content = (_callNumbersLeft.Count / _stackSizes[2])*100 + "%";
+            txtRightRectStorageCapacity.Content = (_callNumbersRight.Count / _stackSizes[3])*100 + "%";
             
             DockPanelTop.Visibility = Visibility.Collapsed;
             DockPanelBottom.Visibility = Visibility.Collapsed;
             DockPanelLeft.Visibility = Visibility.Collapsed;
             DockPanelRight.Visibility = Visibility.Collapsed;
             
-        }
+            selectTopRect.Visibility = Visibility.Visible;
+            selectBottomRect.Visibility = Visibility.Visible;
+            selectLeftRect.Visibility = Visibility.Visible;
+            selectRightRect.Visibility = Visibility.Visible;
 
+            rectBlock1.Visibility = Visibility.Visible;
+            rectBlock2.Visibility = Visibility.Visible;
+            rectBlock3.Visibility = Visibility.Visible;
+            rectBlock4.Visibility = Visibility.Visible;
+            rectBlock5.Visibility = Visibility.Visible;
+            rectBlock6.Visibility = Visibility.Visible;
+            rectBlock7.Visibility = Visibility.Visible;
+            rectBlock8.Visibility = Visibility.Visible;
+            rectBlock9.Visibility = Visibility.Visible;
+            rectBlock10.Visibility = Visibility.Visible;
+
+            _onSettingsPage = false;
+        }
         private void TStackSizeTop_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (TStackSizeTop.Text == "")
@@ -863,7 +986,6 @@ namespace JoshMkhariPROG7312Game.Views
                 TStackSizeTop.Text = "5";
             }
         }
-
         private void TStackSizeTop_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (int.TryParse(TStackSizeTop.Text, out int value)) return;
@@ -871,13 +993,10 @@ namespace JoshMkhariPROG7312Game.Views
             TStackSizeTop.Text = "5";
             e.Handled = true;
         }
-
-       
         private void StackSizeTop_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _stackSizes[0] = StackSizeTop.Value;
         }
-
         private void TStackSizeBottom_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (TStackSizeBottom.Text == "")
@@ -885,7 +1004,6 @@ namespace JoshMkhariPROG7312Game.Views
                 TStackSizeBottom.Text = "5";
             }
         }
-
         private void TStackSizeBottom_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (int.TryParse(TStackSizeBottom.Text, out int value)) return;
@@ -893,12 +1011,10 @@ namespace JoshMkhariPROG7312Game.Views
             TStackSizeBottom.Text = "5";
             e.Handled = true;
         }
-
         private void StackSizeBottom_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _stackSizes[1] = StackSizeBottom.Value;
         }
-
         private void TStackSizeLeft_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (TStackSizeLeft.Text == "")
@@ -906,7 +1022,6 @@ namespace JoshMkhariPROG7312Game.Views
                 TStackSizeLeft.Text = "5";
             }
         }
-
         private void TStackSizeLeft_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (int.TryParse(TStackSizeLeft.Text, out int value)) return;
@@ -914,12 +1029,10 @@ namespace JoshMkhariPROG7312Game.Views
             TStackSizeLeft.Text = "5";
             e.Handled = true;
         }
-
         private void StackSizeLeft_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _stackSizes[2] = StackSizeLeft.Value;
         }
-
         private void TStackSizeRight_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             if (TStackSizeRight.Text == "")
@@ -927,7 +1040,6 @@ namespace JoshMkhariPROG7312Game.Views
                 TStackSizeRight.Text = "5";
             }
         }
-
         private void TStackSizeRight_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (int.TryParse(TStackSizeRight.Text, out int value)) return;
@@ -935,10 +1047,43 @@ namespace JoshMkhariPROG7312Game.Views
             TStackSizeRight.Text = "5";
             e.Handled = true;
         }
-
         private void StackSizeRight_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             _stackSizes[3] = StackSizeRight.Value;
+        }
+        private void imgLeftRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+        private void imgBottomRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_onSettingsPage)
+            {
+                
+            }
+        }
+        private void imgRightRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void imgRightRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void imgLeftRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void imgTopRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void imgTopRectUp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+        private void imgBottomRecDown_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
