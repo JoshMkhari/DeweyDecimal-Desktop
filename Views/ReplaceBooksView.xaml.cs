@@ -169,9 +169,9 @@ namespace JoshMkhariPROG7312Game.Views
         private static bool CheckIfAscending(Stack<double> currentStack)
         {
             int index = 0;
-            while (index < 5)
+            while (index < 4)
             {
-                if (currentStack.ElementAt(index) < currentStack.ElementAt(index + 1))
+                if (currentStack.ElementAt(index) > currentStack.ElementAt(index + 1))
                 {
                     index++;
                 }
@@ -231,7 +231,6 @@ namespace JoshMkhariPROG7312Game.Views
                                 _replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber  +
                                     4)) //If there is only one block inside and no rules on block
                             {
-                                //Debug.WriteLine("The thunbg just ran");
                                 ActivateBlockColour(currentRectangle, 1); //Make Blue
                                 _replaceBooksViewModel.RectangleNumber[1] = currentRectangleNumber; //Set destination 
                                 UpdateStack(currentRectangleNumber);

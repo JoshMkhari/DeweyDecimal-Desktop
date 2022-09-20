@@ -53,8 +53,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     Text = NumberFormatter(replaceBooksViewModel.CallNumbers.ElementAt(i)) + 
                            replaceBooksViewModel.CallNumbersStrings.ElementAt(i)
                 };
-                rectBlock.Child = textForBlock; 
-                Debug.WriteLine(textForBlock.Text);
+                rectBlock.Child = textForBlock;
                 Canvas.SetLeft(rectBlock,BorderInitialLeft);
                 if (i < 5)
                 {
