@@ -11,16 +11,16 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 {
     public class BorderModel
     {
-        public double BorderInitialLeft { get;}
-        public byte[][] BorderDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        public int[] BorderInitialRight { get; }
-        public List<Border> _CallBlockBordersList { get; }
+        private double BorderInitialLeft { get;}
+        private byte[][] BorderDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
+        private int[] BorderInitialRight { get; }
+        public List<Border> CallBlockBordersList { get; }
 
         public BorderModel()
         {
             BorderInitialLeft = 321;
             BorderDefaults = new byte[3][];
-            _CallBlockBordersList = new List<Border>();
+            CallBlockBordersList = new List<Border>();
             BorderInitialRight = new []{ 422, 198 };
             //https://www.rapidtables.com/convert/color/hex-to-rgb.html
             byte[] borderReds = {108,240, 176,112,254,129,39,181,30,88};
@@ -32,25 +32,28 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             BorderDefaults[2] = borderBlues;
         }
         
-        public void AssignValuesToBlocks(ReplaceBooksViewModel _replaceBooksViewModel)
+        public void AssignValuesToBlocks(ReplaceBooksViewModel replaceBooksViewModel)
         {
             
             for (int i = 0; i < 10; i++)
             {
                 
-                Border rectBlock = new Border();
-                //rectBlock.Name = "border" + i;
-                rectBlock.BorderThickness = new Thickness(2);
-                rectBlock.BorderBrush = new SolidColorBrush(Colors.Black);
-                
-                rectBlock.Width = 80;
-                rectBlock.Height = 22;
-                rectBlock.Background = new SolidColorBrush(Color.FromRgb(BorderDefaults[0][i], BorderDefaults[1][i], BorderDefaults[2][i]));//https://www.rapidtables.com/convert/color/hex-to-rgb.html
-            
-                TextBlock textForBlock = new TextBlock();
-                textForBlock.HorizontalAlignment = HorizontalAlignment.Center;
-                textForBlock.Text = NumberFormatter(_replaceBooksViewModel.CallNumbers.ElementAt(0)) + 
-                                    _replaceBooksViewModel.CallNumbersStrings.ElementAt(0);
+                Border rectBlock = new Border
+                {
+                    //rectBlock.Name = "border" + i;
+                    BorderThickness = new Thickness(2),
+                    BorderBrush = new SolidColorBrush(Colors.Black),
+                    Width = 80,
+                    Height = 22,
+                    Background = new SolidColorBrush(Color.FromRgb(BorderDefaults[0][i], BorderDefaults[1][i], BorderDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                };
+
+                TextBlock textForBlock = new TextBlock
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Text = NumberFormatter(replaceBooksViewModel.CallNumbers.ElementAt(0)) + 
+                           replaceBooksViewModel.CallNumbersStrings.ElementAt(0)
+                };
                 rectBlock.Child = textForBlock; 
                 
                 Canvas.SetLeft(rectBlock,BorderInitialLeft);
@@ -63,7 +66,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     int current = i - 5;
                     Canvas.SetTop(rectBlock,BorderInitialRight[1]-(current*27));
                 }
-                _CallBlockBordersList.Add(rectBlock);
+                CallBlockBordersList.Add(rectBlock);
             }
             
 

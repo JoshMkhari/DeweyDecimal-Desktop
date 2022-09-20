@@ -27,14 +27,14 @@ namespace JoshMkhariPROG7312Game.ViewModels
         
         public List<double> CallNumbers { get; set;}
         public List<String> CallNumbersStrings { get; set;}
-       
-        public PreSetDifficulty PreSetDiff { get; set;}
+
+        private PreSetDifficulty PreSetDiff { get; set;}
         
         //https://www.tutorialsteacher.com/csharp/csharp-dictionary
         public IDictionary<double, int>
             RectValueNamePair{ get; set;} //Stores Random value and Rectangle name
         public IDictionary<int, bool>
-            ActiveAscDescStacks{ get; set;} //Stores Set difficulty for current game
+            ActiveAscDescStacks{ get; private set;} //Stores Set difficulty for current game
 
         public ReplaceBooksViewModel()
         {

@@ -7,8 +7,8 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 {
     public class RectangleModel
     {
-        public int[][] RectangleDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        public List<Rectangle> _selectRectanglesList { get; set; }
+        private int[][] RectangleDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
+        public List<Rectangle> SelectRectanglesList { get; set; }
         public RectangleModel()
         {
             int[] leftValues = new []{ 314,314,167,470 };
@@ -18,7 +18,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             RectangleDefaults[0] = leftValues;
             RectangleDefaults[1] = topValues;
             
-            _selectRectanglesList = new List<Rectangle>();
+            SelectRectanglesList = new List<Rectangle>();
             CreateSelectionRectangles();
         }
         
@@ -33,7 +33,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 currentRectangle.Fill = new SolidColorBrush(Colors.Transparent);
                 Canvas.SetLeft(currentRectangle,RectangleDefaults[0][i]);
                 Canvas.SetTop(currentRectangle,RectangleDefaults[1][i]);
-                _selectRectanglesList.Add(currentRectangle);
+                SelectRectanglesList.Add(currentRectangle);
             }
         }
         

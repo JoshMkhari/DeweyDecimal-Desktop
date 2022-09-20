@@ -1,7 +1,6 @@
 ﻿using JoshMkhariPROG7312Game.Core;
-using JoshMkhariPROG7312Game.ViewModels;
 
-namespace JoshMkhariPROG7312Game
+namespace JoshMkhariPROG7312Game.ViewModels
 {
     internal class MainViewModel : ObservableObjects
     {

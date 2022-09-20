@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,12 +18,12 @@ namespace JoshMkhariPROG7312Game.Views
     /// </summary>
     public partial class ReplaceBooksView : UserControl
     {
-        //Declerations
+        //Declarations
         private ReplaceBooksViewModel _replaceBooksViewModel;//Used to access all variables and methods within model
         
-        private BorderModel _borderModel;
-        private LabelsModel _labelModel;
-        private ArrowModel _arrowModel;
+        private readonly BorderModel _borderModel;
+        private readonly LabelsModel _labelModel;
+        private readonly ArrowModel _arrowModel;
        // private RectangleModel _rectangleModel;
 
         private bool _onSettingsPage;
@@ -42,17 +40,17 @@ namespace JoshMkhariPROG7312Game.Views
             _arrowModel = new ArrowModel();
             
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
-            foreach (Image arrow in _arrowModel._directionArrowsList)
+            foreach (Image arrow in _arrowModel.DirectionArrowsList)
             {
                 ReplacingBooks.Children.Add(arrow);
             }
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
-            foreach (Border border in _borderModel._CallBlockBordersList)
+            foreach (Border border in _borderModel.CallBlockBordersList)
             {
                 ReplacingBooks.Children.Add(border);
             }
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
-            foreach (Label label in _labelModel._currentStorageLevelList)
+            foreach (Label label in _labelModel.CurrentStorageLevelList)
             {
                 ReplacingBooks.Children.Add(label);
             }
@@ -80,10 +78,10 @@ namespace JoshMkhariPROG7312Game.Views
                     _replaceBooksViewModel.GameCounts[1]++; //Program now knows start, waiting for destination 
                     break;
                 case 1:
-                    _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Blue); //Reciever
+                    _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Blue); //Receiver
                     break;
                 case 2:
-                    _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Red); //Reciever
+                    _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Red); //Receiver
                     break;
                 default:
                     _replaceBooksViewModel.BlackBrush = new SolidColorBrush(Colors.Transparent); //Error
@@ -109,10 +107,10 @@ namespace JoshMkhariPROG7312Game.Views
         //To clear all colours surrounding blocks
         private void ClearAllFocus()
         {
-            ActivateBlockColour(selectTopRect, 3); //Make Transparent
-            ActivateBlockColour(selectBottomRect, 3); //Make Transparent
-            ActivateBlockColour(selectLeftRect, 3); //Make Transparent
-            ActivateBlockColour(selectRightRect, 3); //Make Transparent
+            ActivateBlockColour(SelectTopRect, 3); //Make Transparent
+            ActivateBlockColour(SelectBottomRect, 3); //Make Transparent
+            ActivateBlockColour(SelectLeftRect, 3); //Make Transparent
+            ActivateBlockColour(SelectRightRect, 3); //Make Transparent
             _replaceBooksViewModel.GameCounts[1] = 0;//Active Block Count
             _replaceBooksViewModel.RectangleNumber[1] = 0;//Destination Rectangle Number
         }
@@ -122,7 +120,7 @@ namespace JoshMkhariPROG7312Game.Views
         {
             AnimateBlockMovement();
             _replaceBooksViewModel.GameCounts[0]++;
-            txtMovesCount.Content = "Moves: " + _replaceBooksViewModel.GameCounts[0];
+            TxtMovesCount.Content = "Moves: " + _replaceBooksViewModel.GameCounts[0];
             _replaceBooksViewModel.PushCallNumber(rectangleNumber,_replaceBooksViewModel.RectangleNumber[0]);
             ClearAllFocus();
 
@@ -227,22 +225,22 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void selectTopRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedRectangle(selectTopRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(0), 0);
+            SelectedRectangle(SelectTopRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(0), 0);
         }
 
         private void selectBottomRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedRectangle(selectBottomRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(1), 1);
+            SelectedRectangle(SelectBottomRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(1), 1);
         }
 
         private void selectLeftRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedRectangle(selectLeftRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(2), 2);
+            SelectedRectangle(SelectLeftRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(2), 2);
         }
 
         private void selectRightRect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedRectangle(selectRightRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(3), 3);
+            SelectedRectangle(SelectRightRect, _replaceBooksViewModel.CallNumberStacks.ElementAt(3), 3);
         }
 
         //For both left and right rectangles
@@ -280,7 +278,7 @@ namespace JoshMkhariPROG7312Game.Views
                     originRectangle = 180;
                     break;
             }
-            StartYJourney(_borderModel._CallBlockBordersList.ElementAt(blockNumber-1), originRectangle);
+            StartYJourney(_borderModel.CallBlockBordersList.ElementAt(blockNumber-1), originRectangle);
         }
 
         private void StartXJourneyRight(Border border, int stop)
@@ -458,13 +456,8 @@ namespace JoshMkhariPROG7312Game.Views
 
         private int ReturnCurrentBlockYTopBottom(Stack<double> rectStack, int[] locations)
         {
-            int location; //To store where to place the block
-            if (rectStack.Any())//If there are elements within the stack
-            {
-                location = rectStack.Count;
-            }
-            else
-                location = 0;
+            //To store where to place the block
+            int location = rectStack.Any() ? rectStack.Count : 0; //If there are elements within the stack
             return locations[location];
         }
 
@@ -487,31 +480,31 @@ namespace JoshMkhariPROG7312Game.Views
         private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //Change whatever you want
-            txtMovesCount.Visibility = Visibility.Collapsed;
-            btnReset.Visibility = Visibility.Collapsed;
-            btnSettings.Visibility = Visibility.Collapsed;
+            TxtMovesCount.Visibility = Visibility.Collapsed;
+            BtnReset.Visibility = Visibility.Collapsed;
+            BtnSettings.Visibility = Visibility.Collapsed;
 
-            btnSaveSettings.Visibility = Visibility.Visible;
-            btnCloseSettings.Visibility = Visibility.Visible;
+            BtnSaveSettings.Visibility = Visibility.Visible;
+            BtnCloseSettings.Visibility = Visibility.Visible;
             //btnSettings.Source = new BitmapImage(new Uri(@"/Theme/Assets/Save.png", UriKind.Relative));;
 
             for (int i = 0; i < 4; i++)
             {
-                Canvas.SetLeft(_labelModel._currentStorageLevelList.ElementAt(i),
-                    Canvas.GetLeft(_labelModel._currentStorageLevelList.ElementAt(i))-10);
-                _labelModel._currentStorageLevelList.ElementAt(i).Content = "Size:";
+                Canvas.SetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i),
+                    Canvas.GetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i))-10);
+                _labelModel.CurrentStorageLevelList.ElementAt(i).Content = "Size:";
                 
             }
             
 
-            selectTopRect.Visibility = Visibility.Collapsed;
-            selectBottomRect.Visibility = Visibility.Collapsed;
-            selectLeftRect.Visibility = Visibility.Collapsed;
-            selectRightRect.Visibility = Visibility.Collapsed;
+            SelectTopRect.Visibility = Visibility.Collapsed;
+            SelectBottomRect.Visibility = Visibility.Collapsed;
+            SelectLeftRect.Visibility = Visibility.Collapsed;
+            SelectRightRect.Visibility = Visibility.Collapsed;
 
             for (int i = 0; i < 10; i++)
             {
-                _borderModel._CallBlockBordersList.ElementAt(i).Visibility = Visibility.Collapsed;
+                _borderModel.CallBlockBordersList.ElementAt(i).Visibility = Visibility.Collapsed;
             }
 
             _onSettingsPage = true;
@@ -529,28 +522,28 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 case 1:
                     UpdateStackSizeText(5, 5, 5, 5);
-                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Normal.png", UriKind.Relative));
+                    ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Normal.png", UriKind.Relative));
                     break;
                 case 2:
                     UpdateStackSizeText(6, 6, 6, 5);
-                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Difficult.png", UriKind.Relative));
+                    ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Difficult.png", UriKind.Relative));
                     break;
                 case 3:
                     UpdateStackSizeText(6, 6, 5, 5);
-                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Hard.png", UriKind.Relative));
+                    ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Hard.png", UriKind.Relative));
                     break;
                 case 4:
                     UpdateStackSizeText(6, 5, 5, 5);
-                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Extreme.png", UriKind.Relative));
+                    ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Extreme.png", UriKind.Relative));
                     break;
                 case 5:
                     UpdateStackSizeText(5, 5, 5, 5);
-                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Insane.png", UriKind.Relative));
+                    ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Insane.png", UriKind.Relative));
                     break;
                 default:
                     UpdateStackSizeText(6, 6, 6, 6);
-                    imgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
-                    break;;
+                    ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
+                    break;
             }
 
             _arrowModel.UpdateArrows(_replaceBooksViewModel);
@@ -580,29 +573,29 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void BtnCloseSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            txtMovesCount.Visibility = Visibility.Visible;
-            btnReset.Visibility = Visibility.Visible;
-            btnSettings.Visibility = Visibility.Visible;
+            TxtMovesCount.Visibility = Visibility.Visible;
+            BtnReset.Visibility = Visibility.Visible;
+            BtnSettings.Visibility = Visibility.Visible;
 
-            btnSaveSettings.Visibility = Visibility.Collapsed;
-            btnCloseSettings.Visibility = Visibility.Collapsed;
+            BtnSaveSettings.Visibility = Visibility.Collapsed;
+            BtnCloseSettings.Visibility = Visibility.Collapsed;
             
             for (int i = 0; i < 4; i++)
             {
-                Canvas.SetLeft(_labelModel._currentStorageLevelList.ElementAt(i),
-                    Canvas.GetLeft(_labelModel._currentStorageLevelList.ElementAt(i))+10);
-                _labelModel._currentStorageLevelList.ElementAt(i).Content = 
+                Canvas.SetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i),
+                    Canvas.GetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i))+10);
+                _labelModel.CurrentStorageLevelList.ElementAt(i).Content = 
                 (_replaceBooksViewModel.CallNumberStacks.ElementAt(i).Count / _replaceBooksViewModel.StackSizes[i])*100 + "%";
             }
 
-            selectTopRect.Visibility = Visibility.Visible;
-            selectBottomRect.Visibility = Visibility.Visible;
-            selectLeftRect.Visibility = Visibility.Visible;
-            selectRightRect.Visibility = Visibility.Visible;
+            SelectTopRect.Visibility = Visibility.Visible;
+            SelectBottomRect.Visibility = Visibility.Visible;
+            SelectLeftRect.Visibility = Visibility.Visible;
+            SelectRightRect.Visibility = Visibility.Visible;
 
             for (int i = 0; i < 10; i++)
             {
-                _borderModel._CallBlockBordersList.ElementAt(i).Visibility = Visibility.Visible;
+                _borderModel.CallBlockBordersList.ElementAt(i).Visibility = Visibility.Visible;
             }
 
             _onSettingsPage = false;
