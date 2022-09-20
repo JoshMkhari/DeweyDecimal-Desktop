@@ -51,14 +51,16 @@
                              Command="{Binding ReplaceViewCommand}" />
                 <RadioButton Content="Identifying areas"
                              Height="50"
-                             Foreground="White"
+                             Foreground="DimGray"
                              FontSize="14"
+                             IsEnabled="False"
                              Style="{StaticResource MenuButtonTheme}" />
                 <RadioButton Content="Finding call numbers"
                              Height="50"
-                             Foreground="White"
+                             Foreground="DimGray"
                              FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}" />
+                             IsEnabled="False"
+                             Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
 
             <ContentControl Grid.Row="1"

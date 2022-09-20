@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -127,14 +126,7 @@ namespace JoshMkhariPROG7312Game.Views
             if (_replaceBooksViewModel.CallNumberStacks.ElementAt(0).Count == 5 &&
                 _replaceBooksViewModel.CallNumberStacks.ElementAt(1).Count == 5)
             {
-                if (CheckIfWon() == 5)
-                {
-                    MessageBox.Show("You win");
-                }
-                else
-                {
-                    MessageBox.Show("The call blocks are not correctly sorted, try again");
-                }
+                MessageBox.Show(CheckIfWon() == 5 ? "You win" : "The call blocks are not correctly sorted, try again");
             }
         }
 
