@@ -10,7 +10,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
     public class ArrowModel
     {
         public int[][] ArrowDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        private List<Image> _directionArrowsList;
+        public List<Image> _directionArrowsList;
         public ArrowModel()
         {
             int[] leftValues = new []{ 407,407, 260,450 };

@@ -26,7 +26,7 @@ namespace JoshMkhariPROG7312Game.Views
         private BorderModel _borderModel;
         private LabelsModel _labelModel;
         private ArrowModel _arrowModel;
-        private RectangleModel _rectangleModel;
+       // private RectangleModel _rectangleModel;
 
         private bool _onSettingsPage;
         
@@ -41,12 +41,16 @@ namespace JoshMkhariPROG7312Game.Views
 
             _arrowModel = new ArrowModel();
             
-            _rectangleModel = new RectangleModel();
-
+            //_rectangleModel = new RectangleModel();
+            foreach (Image arrow in _arrowModel._directionArrowsList)
+            {
+                ReplacingBooks.Children.Add(arrow);
+            }
+            
             _onSettingsPage = false;
 
         }
-
+        
         //To colour block strokes
         private void ActivateBlockColour(Rectangle rect, int mode)
         {

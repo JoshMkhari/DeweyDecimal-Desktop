@@ -103,5 +103,10 @@
                    Canvas.Top="205"
                    MouseLeftButtonDown="selectRightRect_MouseLeftButtonDown" />
         
+        <Image Width="800"
+               Height="460"
+               Source="/Theme/Assets/Background.png"
+               Canvas.Left="-39"
+               Canvas.Top="46" />
     </Canvas>
 </UserControl>
