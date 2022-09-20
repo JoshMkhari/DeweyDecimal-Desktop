@@ -66,6 +66,129 @@
                MouseLeftButtonDown="BtnSaveSettings_OnMouseLeftButtonDown">
         </Image>
         
+        <Rectangle x:Name="selectTopRect"
+                   Panel.ZIndex="20"
+                   Width="94"
+                   Height="146"
+                   Fill="Transparent"
+                   Canvas.Left="314"
+                   Canvas.Top="82"
+                   MouseLeftButtonDown="selectTopRect_MouseLeftButtonDown" />
 
+        <Rectangle x:Name="selectBottomRect"
+                   Panel.ZIndex="20"
+                   Width="94"
+                   Height="146"
+                   Fill="Transparent"
+                   Canvas.Left="314"
+                   Canvas.Top="308"
+                   MouseLeftButtonDown="selectBottomRect_MouseLeftButtonDown" />
+
+        <Rectangle x:Name="selectLeftRect"
+                   Panel.ZIndex="20"
+                   Width="94"
+                   Height="146"
+                   Fill="Transparent"
+                   Canvas.Left="167"
+                   Canvas.Top="205"
+
+                   MouseLeftButtonDown="selectLeftRect_MouseLeftButtonDown" />
+
+        <Rectangle x:Name="selectRightRect"
+                   Panel.ZIndex="20"
+                   Width="94"
+                   Height="146"
+                   Fill="Transparent"
+                   Canvas.Left="470"
+                   Canvas.Top="205"
+                   MouseLeftButtonDown="selectRightRect_MouseLeftButtonDown" />
+        
+        <DockPanel VerticalAlignment="Center"
+                   Canvas.Left="372"
+                   Canvas.Top="230"
+                   Name="DockPanelTop"
+                   Visibility="Collapsed">
+            <TextBox x:Name="TStackSizeTop" 
+                     Text="{Binding ElementName=StackSizeTop, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
+                     DockPanel.Dock="Top" 
+                     TextAlignment="Left" 
+                     Width="20" 
+                     TextChanged="TStackSizeTop_OnTextChanged" 
+                     KeyDown="TStackSizeTop_OnKeyDown" />
+            <Slider Maximum="6" 
+                    Minimum="5"
+                    TickPlacement="BottomRight" 
+                    TickFrequency="1" 
+                    IsSnapToTickEnabled="True" 
+                    x:Name="StackSizeTop" 
+                    Cursor="Hand" 
+                    ValueChanged="StackSizeTop_OnValueChanged"/>
+        </DockPanel>
+        
+        <DockPanel VerticalAlignment="Center"
+                   Canvas.Left="372"
+                   Canvas.Top="456"
+                   Name="DockPanelBottom"
+                   Visibility="Collapsed">
+               <TextBox x:Name="TStackSizeBottom" 
+                        Text="{Binding ElementName=StackSizeBottom, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
+                        DockPanel.Dock="Top" 
+                        TextAlignment="Left" 
+                        Width="20" 
+                        TextChanged="TStackSizeBottom_OnTextChanged"
+                        KeyDown="TStackSizeBottom_OnKeyDown" />
+               <Slider Maximum="6" 
+                       Minimum="5"
+                       TickPlacement="BottomRight" 
+                       TickFrequency="1" 
+                       IsSnapToTickEnabled="True" 
+                       x:Name="StackSizeBottom" 
+                       Cursor="Hand" 
+                       ValueChanged="StackSizeBottom_OnValueChanged"/>
+        </DockPanel>
+        
+        <DockPanel VerticalAlignment="Center"
+                   Canvas.Left="224"
+                   Canvas.Top="352"
+                   Name="DockPanelLeft"
+                   Visibility="Collapsed">
+               <TextBox x:Name="TStackSizeLeft" 
+                        Text="{Binding ElementName=StackSizeLeft, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
+                        DockPanel.Dock="Top" 
+                        TextAlignment="Left" 
+                        Width="20" 
+                        TextChanged="TStackSizeLeft_OnTextChanged" 
+                        KeyDown="TStackSizeLeft_OnKeyDown" />
+               <Slider Maximum="6" 
+                       Minimum="5"
+                       TickPlacement="BottomRight" 
+                       TickFrequency="1" 
+                       IsSnapToTickEnabled="True" 
+                       x:Name="StackSizeLeft" 
+                       Cursor="Hand" 
+                       ValueChanged="StackSizeLeft_OnValueChanged"/>
+        </DockPanel>
+        
+        <DockPanel VerticalAlignment="Center"
+                   Canvas.Left="527"
+                   Canvas.Top="352"
+                   Name="DockPanelRight"
+                   Visibility="Collapsed">
+               <TextBox x:Name="TStackSizeRight" 
+                        Text="{Binding ElementName=StackSizeRight, Path=Value, UpdateSourceTrigger=PropertyChanged}" 
+                        DockPanel.Dock="Top" 
+                        TextAlignment="Left" 
+                        Width="20" 
+                        TextChanged="TStackSizeRight_OnTextChanged" 
+                        KeyDown="TStackSizeRight_OnKeyDown" />
+               <Slider Maximum="6" 
+                       Minimum="5"
+                       TickPlacement="BottomRight" 
+                       TickFrequency="1" 
+                       IsSnapToTickEnabled="True" 
+                       x:Name="StackSizeRight" 
+                       Cursor="Hand" 
+                       ValueChanged="StackSizeRight_OnValueChanged"/>
+        </DockPanel>
     </Canvas>
 </UserControl>

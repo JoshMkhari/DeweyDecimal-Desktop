@@ -41,13 +41,13 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
         {
             _activeAscDesc.Clear();
             
-            //Top
+            //Top Up Arrows
             _activeAscDesc.Add(0,true);
-            _activeAscDesc.Add(1,false);
+            _activeAscDesc.Add(4,false);
             
-            //Bottom
-            _activeAscDesc.Add(2,true);
-            _activeAscDesc.Add(3,false);
+            //Bottom 
+            _activeAscDesc.Add(1,true);
+            _activeAscDesc.Add(5,false);
 
             for (int i = 4; i < 8; i++)
             {

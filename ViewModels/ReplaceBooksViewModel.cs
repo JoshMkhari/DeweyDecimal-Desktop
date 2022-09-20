@@ -6,7 +6,7 @@ using JoshMkhariPROG7312Game.Logic.Replacing_Books;
 
 namespace JoshMkhariPROG7312Game.ViewModels
 {
-    internal class ReplaceBooksViewModel
+    public class ReplaceBooksViewModel
     {
         public bool OnSettingsPage { get; set; }//True if current page is settings page
         
