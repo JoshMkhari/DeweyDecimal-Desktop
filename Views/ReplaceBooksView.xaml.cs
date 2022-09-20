@@ -27,7 +27,7 @@ namespace JoshMkhariPROG7312Game.Views
         private readonly ArrowModel _arrowModel;
        // private RectangleModel _rectangleModel;
 
-       // private bool _onSettingsPage;
+       private bool _onSettingsPage;
         
         public ReplaceBooksView()
         {
@@ -55,7 +55,7 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 ReplacingBooks.Children.Add(label);
             }
-            //_onSettingsPage = false;
+            _onSettingsPage = false;
         }
         //To colour block strokes
         private void ActivateBlockColour(Rectangle rect, int mode)
@@ -178,13 +178,13 @@ namespace JoshMkhariPROG7312Game.Views
                             else
                             {
                                 //What is my order
-                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber *
-                                        2) && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2+1))
+                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber) 
+                                    && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber+4))
                                 {
                                     _replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] = 'A';
                                 }
-                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber *
-                                        2+1) && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber*2))
+                                if (_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber+4) 
+                                    && !_replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(currentRectangleNumber))
                                 {
                                     _replaceBooksViewModel.RectangleSortOrder[currentRectangleNumber] = 'D';
                                 }
@@ -489,14 +489,12 @@ namespace JoshMkhariPROG7312Game.Views
 
             BtnSaveSettings.Visibility = Visibility.Visible;
             BtnCloseSettings.Visibility = Visibility.Visible;
-            //btnSettings.Source = new BitmapImage(new Uri(@"/Theme/Assets/Save.png", UriKind.Relative));;
 
             for (int i = 0; i < 4; i++)
             {
                 Canvas.SetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i),
                     Canvas.GetLeft(_labelModel.CurrentStorageLevelList.ElementAt(i))-10);
                 _labelModel.CurrentStorageLevelList.ElementAt(i).Content = "Size:";
-                
             }
             
 
@@ -510,7 +508,7 @@ namespace JoshMkhariPROG7312Game.Views
                 _borderModel.CallBlockBordersList.ElementAt(i).Visibility = Visibility.Collapsed;
             }
 
-            //_onSettingsPage = true;
+            _onSettingsPage = true;
             UpdateDifficultyUiElements();
         }
         private void UpdateDifficultyUiElements()
@@ -550,11 +548,11 @@ namespace JoshMkhariPROG7312Game.Views
             }
 
             _arrowModel.UpdateArrows(_replaceBooksViewModel);
-            
+            Debug.WriteLine("This is end");
         }
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (_replaceBooksViewModel.OnSettingsPage)
+            if (_onSettingsPage)
             {
                 _replaceBooksViewModel.CurrentDifficulty++;
                 UpdateDifficultyUiElements();
@@ -601,7 +599,7 @@ namespace JoshMkhariPROG7312Game.Views
                 _borderModel.CallBlockBordersList.ElementAt(i).Visibility = Visibility.Visible;
             }
 
-            //_onSettingsPage = false;
+            _onSettingsPage = false;
         }
 
     }

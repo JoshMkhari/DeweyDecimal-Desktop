@@ -9,8 +9,6 @@ namespace JoshMkhariPROG7312Game.ViewModels
 {
     public class ReplaceBooksViewModel
     {
-        public bool OnSettingsPage { get; set; }//True if current page is settings page
-        
         public int[] GameCounts { get; set; }//Move count, BlockCount
         //Stores both the moves made count and current amount of rectangles that are active
         public int CurrentDifficulty { get; set; } //0 for easy, 5 for insane
@@ -39,7 +37,6 @@ namespace JoshMkhariPROG7312Game.ViewModels
 
         public ReplaceBooksViewModel()
         {
-            OnSettingsPage = false;
             CurrentDifficulty = 0;
             RectangleNumber = new[] { 4, 4 };//Origin and Destination
             //rectangleNumber 0 The rectangle that is receiving the number

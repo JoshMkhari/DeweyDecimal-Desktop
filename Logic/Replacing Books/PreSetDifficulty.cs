@@ -36,23 +36,26 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 
             return _activeAscDesc;
         }
-        
         private IDictionary<int, bool> Normal()
         {
             _activeAscDesc.Clear();
             
             //Top Up Arrows
             _activeAscDesc.Add(0,true);
-            _activeAscDesc.Add(1,false);
+            _activeAscDesc.Add(4,false);
             
             //Bottom 
+            _activeAscDesc.Add(1,true);
+            _activeAscDesc.Add(5,false);
+            
+            //Left
             _activeAscDesc.Add(2,true);
-            _activeAscDesc.Add(3,false);
-
-            for (int i = 4; i < 8; i++)
-            {
-                _activeAscDesc.Add(i,true);
-            }
+            _activeAscDesc.Add(6,true);
+            
+            //Right
+            _activeAscDesc.Add(3,true);
+            _activeAscDesc.Add(7,true);
+            
             return _activeAscDesc;
         }
         
@@ -62,18 +65,18 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             
             //Top
             _activeAscDesc.Add(0,true);
-            _activeAscDesc.Add(1,false);
+            _activeAscDesc.Add(4,false);
             
             //Bottom
-            _activeAscDesc.Add(2,true);
-            _activeAscDesc.Add(3,false);
+            _activeAscDesc.Add(1,true);
+            _activeAscDesc.Add(5,false);
 
             //Left
-            _activeAscDesc.Add(4,true);
-            _activeAscDesc.Add(5,false);
+            _activeAscDesc.Add(2,true);
+            _activeAscDesc.Add(6,false);
            
             //Right
-            _activeAscDesc.Add(6,true);
+            _activeAscDesc.Add(3,true);
             _activeAscDesc.Add(7,true);
             return _activeAscDesc;
         }
@@ -84,18 +87,18 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             
             //Top Ascending
             _activeAscDesc.Add(0,true);
-            _activeAscDesc.Add(1,false);
+            _activeAscDesc.Add(4,false);
             
             //Bottom Ascending
-            _activeAscDesc.Add(2,true);
-            _activeAscDesc.Add(3,false);
+            _activeAscDesc.Add(1,true);
+            _activeAscDesc.Add(5,false);
 
             //Left Descending
-            _activeAscDesc.Add(4,false);
-            _activeAscDesc.Add(5,true);
+            _activeAscDesc.Add(2,false);
+            _activeAscDesc.Add(6,true);
            
             //Right Descending
-            _activeAscDesc.Add(6,false);
+            _activeAscDesc.Add(3,false);
             _activeAscDesc.Add(7,true);
             return _activeAscDesc;
         }
@@ -106,18 +109,18 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             
             //Top Ascending
             _activeAscDesc.Add(0,true);
-            _activeAscDesc.Add(1,false);
+            _activeAscDesc.Add(4,false);
             
             //Bottom Ascending
-            _activeAscDesc.Add(2,true);
-            _activeAscDesc.Add(3,false);
+            _activeAscDesc.Add(1,true);
+            _activeAscDesc.Add(5,false);
  
             //Left Ascending
-            _activeAscDesc.Add(4,true);
-            _activeAscDesc.Add(5,false);
+            _activeAscDesc.Add(2,true);
+            _activeAscDesc.Add(6,false);
            
             //Right Descending
-            _activeAscDesc.Add(6,false);
+            _activeAscDesc.Add(3,false);
             _activeAscDesc.Add(7,true);
             return _activeAscDesc;
         }
@@ -128,18 +131,18 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             
             //Top Ascending
             _activeAscDesc.Add(0,true);
-            _activeAscDesc.Add(1,false);
+            _activeAscDesc.Add(4,false);
             
             //Bottom Ascending
-            _activeAscDesc.Add(2,true);
-            _activeAscDesc.Add(3,false);
+            _activeAscDesc.Add(1,true);
+            _activeAscDesc.Add(5,false);
 
             //Left Ascending
-            _activeAscDesc.Add(4,true);
-            _activeAscDesc.Add(5,false);
+            _activeAscDesc.Add(2,true);
+            _activeAscDesc.Add(6,false);
            
             //Right Ascending
-            _activeAscDesc.Add(6,true);
+            _activeAscDesc.Add(3,true);
             _activeAscDesc.Add(7,false);
             return _activeAscDesc;
         }
