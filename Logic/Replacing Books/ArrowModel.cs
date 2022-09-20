@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using JoshMkhariPROG7312Game.ViewModels;
@@ -10,7 +11,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
     public class ArrowModel
     {
         public int[][] ArrowDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        public List<Image> DirectionArrowsList;
+        public readonly List<Image> DirectionArrowsList;
         public ArrowModel()
         {
             int[] leftValues = new []{ 407,407, 260,450 };
@@ -101,18 +102,33 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
         
         public void UpdateArrows(ReplaceBooksViewModel replaceBooksViewModel)
         {
-           
-            DirectionArrowsList.ElementAt(0).Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
-            DirectionArrowsList.ElementAt(1).Source = new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
-
             for (int i = 0; i < 4; i++)
             {
-                DirectionArrowsList.ElementAt(i).Source = replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i) ? new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative)) : new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+               // DirectionArrowsList.ElementAt(i).Source = replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i) ? new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative)) : new BitmapImage(new Uri(@"/Theme/Assets/UpBlack.png", UriKind.Relative));
+               if (replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i))
+               {
+                   DirectionArrowsList.ElementAt(i).Visibility = Visibility.Visible;
+                   DirectionArrowsList.ElementAt(i).Source =
+                       new BitmapImage(new Uri(@"/Theme/Assets/UpGreen.png", UriKind.Relative));
+               }
+               else
+               {
+                   DirectionArrowsList.ElementAt(i).Visibility = Visibility.Collapsed;
+               }
             }
 
             for (int i = 4; i < 8; i++)
             {
-                DirectionArrowsList.ElementAt(i).Source = replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i) ? new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative)) : new BitmapImage(new Uri(@"/Theme/Assets/DownBlack.png", UriKind.Relative));
+                if (replaceBooksViewModel.ActiveAscDescStacks.Values.ElementAt(i))
+                {
+                    DirectionArrowsList.ElementAt(i).Visibility = Visibility.Visible;
+                    DirectionArrowsList.ElementAt(i).Source =
+                        new BitmapImage(new Uri(@"/Theme/Assets/DownRed.png", UriKind.Relative));
+                }
+                else
+                {
+                    DirectionArrowsList.ElementAt(i).Visibility = Visibility.Collapsed;
+                }
             }
             
         }

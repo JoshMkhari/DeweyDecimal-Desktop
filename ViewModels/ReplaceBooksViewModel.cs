@@ -47,7 +47,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
             CallNumbers = new List<double>();
             CallNumbersStrings = new List<string>();
             RectValueNamePair = new Dictionary<double, int>();
-            RectangleSortOrder = new char[4];
+            RectangleSortOrder = new[] { 'A', 'A', 'A', 'A' };
             StackSizes = new[] { 6.0, 6.0, 6.0, 6.0 };
             
             GameCounts = new []{0,0};//movesCount, activatedCount
@@ -68,8 +68,8 @@ namespace JoshMkhariPROG7312Game.ViewModels
             PreSetDiff = new PreSetDifficulty();
             ActiveAscDescStacks = PreSetDiff.ChangeDifficulty(CurrentDifficulty);//Determine sort order for each stack
             
-            RectangleSortOrder[0] = 'A';
-            RectangleSortOrder[1] = 'A';
+            //RectangleSortOrder[0] = 'A';
+            //RectangleSortOrder[1] = 'A';
 
             InitializeStacks();
         }

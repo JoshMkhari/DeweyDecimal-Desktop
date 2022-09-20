@@ -129,6 +129,13 @@ namespace JoshMkhariPROG7312Game.Views
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
             int currentRectangleNumber)
         {
+            Debug.WriteLine("This is current sorts stored");
+            foreach (char VARIABLE in _replaceBooksViewModel.RectangleSortOrder)
+            {
+                Debug.WriteLine(VARIABLE);
+            }
+            Debug.WriteLine("");
+            
             var isEmptyRect = !currentRectangleStack.Any(); //check if the list is empty
             if (_replaceBooksViewModel.GameCounts[1] == 0) //This is start block
             {
@@ -546,9 +553,7 @@ namespace JoshMkhariPROG7312Game.Views
                     ImgDifficulty.Source = new BitmapImage(new Uri(@"/Theme/Assets/Easy.png", UriKind.Relative));
                     break;
             }
-
             _arrowModel.UpdateArrows(_replaceBooksViewModel);
-            Debug.WriteLine("This is end");
         }
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
