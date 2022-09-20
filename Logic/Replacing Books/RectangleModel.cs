@@ -24,6 +24,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
         
         private void CreateSelectionRectangles()
         {
+            int d = 5;
             for (int i = 0; i < 4; i++)
             {
                 Rectangle currentRectangle = new Rectangle();
