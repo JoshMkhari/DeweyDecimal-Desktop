@@ -123,19 +123,42 @@ namespace JoshMkhariPROG7312Game.Views
 
             _arrowModel.UpdateArrowsEasyMode(_replaceBooksViewModel);
             _labelModel.UpdateCapacityLabels(_replaceBooksViewModel);
-            
+
+            if (_replaceBooksViewModel.CallNumberStacks.ElementAt(0).Count == 5 &&
+                _replaceBooksViewModel.CallNumberStacks.ElementAt(1).Count == 5)
+            {
+                if (CheckIfWon() == 5)
+                {
+                    MessageBox.Show("You win");
+                }
+                else
+                {
+                    MessageBox.Show("The call blocks are not correctly sorted, try again");
+                }
+            }
         }
 
+        private int CheckIfWon()
+        {
+            int passed =0;
+            do
+            {
+                if (_replaceBooksViewModel.CallNumberStacks.ElementAt(0).ElementAt(passed) >
+                    _replaceBooksViewModel.CallNumberStacks.ElementAt(1).ElementAt(passed))
+                {
+                    passed++; 
+                }
+                else
+                {
+                    break;
+                }
+            } while (passed<5);
+
+            return passed;
+        }
         private void SelectedRectangle(Rectangle currentRectangle, Stack<double> currentRectangleStack,
             int currentRectangleNumber)
         {
-            Debug.WriteLine("This is current sorts stored");
-            foreach (char VARIABLE in _replaceBooksViewModel.RectangleSortOrder)
-            {
-                Debug.WriteLine(VARIABLE);
-            }
-            Debug.WriteLine("");
-            
             var isEmptyRect = !currentRectangleStack.Any(); //check if the list is empty
             if (_replaceBooksViewModel.GameCounts[1] == 0) //This is start block
             {
