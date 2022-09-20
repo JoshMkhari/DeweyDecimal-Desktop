@@ -47,6 +47,11 @@ namespace JoshMkhariPROG7312Game.Views
                 ReplacingBooks.Children.Add(arrow);
             }
             
+            foreach (Border border in _borderModel._CallBlockBordersList)
+            {
+                ReplacingBooks.Children.Add(border);
+            }
+            
             _onSettingsPage = false;
 
         }
