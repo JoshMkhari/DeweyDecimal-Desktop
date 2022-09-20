@@ -41,19 +41,22 @@ namespace JoshMkhariPROG7312Game.Views
 
             _arrowModel = new ArrowModel();
             
-            //_rectangleModel = new RectangleModel();
+            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Image arrow in _arrowModel._directionArrowsList)
             {
                 ReplacingBooks.Children.Add(arrow);
             }
-            
+            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Border border in _borderModel._CallBlockBordersList)
             {
                 ReplacingBooks.Children.Add(border);
             }
-            
+            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
+            foreach (Label label in _labelModel._currentStorageLevelList)
+            {
+                ReplacingBooks.Children.Add(label);
+            }
             _onSettingsPage = false;
-
         }
         
         //To colour block strokes
