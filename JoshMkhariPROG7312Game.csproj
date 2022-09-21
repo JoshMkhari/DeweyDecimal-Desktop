@@ -172,5 +172,17 @@
     <Resource Include="Theme\Assets\minimize iconHover.png" />
     <Resource Include="Theme\Assets\minimizeIcon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\myAppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\InAppIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\InAppLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\GridTitle.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

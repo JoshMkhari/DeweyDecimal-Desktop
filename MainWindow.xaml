@@ -9,7 +9,8 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="True"
+        Icon="/Theme/Assets/myAppIcon.ico">
 
     <Window.DataContext>
         <viewModels:MainViewModel />
@@ -115,14 +116,27 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <TextBlock Text="Game Name"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Left"
-                       Margin="20,0,0,0"
-                       Grid.Row="1"
-                       Grid.Column="0"
-                       Foreground="White"
-                       FontSize="22" />
+            
+
+            <Image 
+                   Panel.ZIndex="51"
+                   Source="/Theme/Assets/InAppLogo.png"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                    Height="60"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+            <Image 
+                   Panel.ZIndex="51"
+                   Source="/Theme/Assets/GridTitle.png"
+                   RenderOptions.BitmapScalingMode="Fant"
+                    Grid.Row="0"
+                     Grid.Column="0"
+                    Margin="10,0,0,0"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+            
 
             <StackPanel Grid.Row="2" Grid.Column="0">
                 <RadioButton Content="Home"
