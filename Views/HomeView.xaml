@@ -34,20 +34,21 @@
                 </Border.Clip>
                 <Grid>
                     <StackPanel>
-                        <TextBlock Text="Watch guide &#x0a; on Youtube"
+                        <TextBlock Text="Watch guide on Youtube"
+                                   Foreground="White"
+                                   FontSize="30"
+                                   Margin="10,10,10,0" />
+                            <TextBlock Text="A comprehensive guide on how to &#x0a;change difficulty, win games &#x0a;and how to play."
                                    Foreground="White"
                                    FontSize="20"
-                                   Margin="20,10,10,0" />
-                        <TextBlock Text="Full app run through"
-                                   Foreground="White"
-                                   FontSize="20"
-                                   Margin="20,10,10,0" />
+                                   Margin="18,20,10,0" />
                     </StackPanel>
-                    <Image Width="250"
-                           Height="250"
-                           Source="/Theme/Assets/twitter.png"
+                    <Image Width="100"
+                           Height="80"
+                           Source="/Theme/Assets/uTubeIcon.png"
                            HorizontalAlignment="Right"
-                           VerticalAlignment="Bottom" />
+                           VerticalAlignment="Bottom" 
+                           Margin="25"/>
                 </Grid>
             </Border>
 
@@ -89,31 +90,56 @@
 
             <StackPanel
                 Orientation="Horizontal">
-                <Border Name="replacingBooksTutorial" 
+                    <Border Name="replacingBooksTutorial" 
                         Width="150"
                         Height="150"
                         Background="#844eff"
                         CornerRadius="10"
-                        MouseLeftButtonDown="ReplacingBooksTutorial_OnMouseLeftButtonDown"/>
+                        MouseLeftButtonDown="ReplacingBooksTutorial_OnMouseLeftButtonDown">
+                        <Image Width="140"
+                           Height="140"
+                           Source="/Theme/Assets/repBooksIcon.png"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+                    </Border>
 
-                <Border Name="identifyingAreasTutorial"  
+                    <Border Name="identifyingAreasTutorial"  
                         Width="150"
                         Height="150"
                         Background="#4e99ff"
-                        CornerRadius="10" />
+                        CornerRadius="10">
+                        <Image Width="140"
+                           Height="140"
+                           Source="/Theme/Assets/comingSoon.png"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+                    </Border>
 
-                <Border Name="findingCallNumbersTutorial"  
+                    <Border Name="findingCallNumbersTutorial"  
                         Width="150"
                         Height="150"
                         Background="#4eff91"
-                        CornerRadius="10" />
+                        CornerRadius="10" >
+                        <Image Width="140"
+                           Height="140"
+                           Source="/Theme/Assets/comingSoon.png"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+                    </Border>
 
-                <Border Name = "fullGauntletTutorial" 
+                    <Border Name = "fullGauntletTutorial" 
                         Width="150"
                         Height="150"
                         Background="#ecff4e"
-                        CornerRadius="10" />
-            </StackPanel>
+                        CornerRadius="10" >
+                        <Image Width="140"
+                           Height="140"
+                           Source="/Theme/Assets/comingSoon.png"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+                    </Border>
+                
+                </StackPanel>
         </StackPanel>
     </StackPanel>
         <Image Name="ReplacingBooksBackground" 

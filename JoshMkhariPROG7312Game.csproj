@@ -123,7 +123,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Theme\Assets\twitter.png" />
   </ItemGroup>
@@ -158,6 +157,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Theme\Assets\ReplacingBooksTutotial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\repBooksIcon.png" />
+    <Resource Include="Theme\Assets\uTubeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\comingSoon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
