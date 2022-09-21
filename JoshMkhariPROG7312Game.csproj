@@ -158,5 +158,8 @@
     <Resource Include="Theme\Assets\Close.png" />
     <Resource Include="Theme\Assets\Save.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Theme\Assets\ReplacingBooksBackground.PNG" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
