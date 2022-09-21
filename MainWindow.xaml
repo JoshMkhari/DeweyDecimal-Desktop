@@ -154,9 +154,9 @@
                              Style="{StaticResource MenuButtonTheme}"/>
             </StackPanel>
 
-            <ContentControl Grid.Row="1"
-                            Grid.Column="1"
-                            Margin="10"
+            <ContentControl Grid.Row="2"
+                            Grid.Column="2"
+                            Margin="-10"
                             Content="{Binding CurrentView}" />
         </Grid>
 
