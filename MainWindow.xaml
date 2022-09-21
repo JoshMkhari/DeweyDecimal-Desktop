@@ -18,32 +18,123 @@
     <Border Background="#272537"
             CornerRadius="20">
         <Grid>
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="163"/>
+                <ColumnDefinition Width="37"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="75" />
+                <RowDefinition Height="40"/>
+                <!--To host the exit and minimize buttons-->
+                <RowDefinition Height="75"/>
+                <!--To host the App Name-->
                 <RowDefinition />
             </Grid.RowDefinitions>
+            
+            <Grid 
+                Panel.ZIndex="50"
+                Background="#0F0F2D" 
+                  Grid.ColumnSpan="3"
+                  MouseDown="UIElement_OnMouseDown">
+                <Grid.Style>
+                    <Style TargetType="Grid">
+                        <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                    </Style>
+                </Grid.Style>
+                <!--giving top rows a darker colour-->
+                <Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <Image Width="350" Height="300"
+                   Source="/Theme/Assets/CoolLines.png"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Margin="-99,149,669,36" 
+                   Grid.ColumnSpan="3"/>
 
+            <Image Width="350" Height="300"
+                   Source="/Theme/Assets/CoolLines.png"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   Name="TopCoolLines"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Grid.Column="2" Margin="461,-45,-91,345" Grid.RowSpan="3"/>
+
+            <Button
+                x:Name="MinimizeButton"
+                   Click="MinimizeButton_Click"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="1"
+                   Panel.ZIndex="51"
+                   Margin="630,0,45,0"
+                   Background="Transparent"
+                   BorderBrush="Transparent" >
+
+                <Image Width="30" Height="30"
+                    Source="/Theme/Assets/minimizeIcon.png"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button
+                   x:Name="CloseButton"
+                   Click="CloseButton_Click"
+                   Width="45" 
+                   Panel.ZIndex="51"
+                   Height="40"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Grid.Row="0"
+                   Grid.Column="2"
+                   Grid.ColumnSpan="1"
+                   Margin="675,0,0,0"
+                   Background="Transparent"
+                   BorderBrush="Transparent">
+                <Image Width="30" Height="30"
+                   Source="/Theme/Assets/closeIcon.png"
+                   RenderOptions.BitmapScalingMode="Fant"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="TextElement.FontFamily" Value="Fonts/#Dosis"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                    </Style>
+                </Button.Style>
+            </Button>
             <TextBlock Text="Game Name"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Left"
                        Margin="20,0,0,0"
+                       Grid.Row="1"
+                       Grid.Column="0"
                        Foreground="White"
                        FontSize="22" />
 
-            <StackPanel Grid.Row="1" Grid.Column="0">
+            <StackPanel Grid.Row="2" Grid.Column="0">
                 <RadioButton Content="Home"
                              Height="50"
+                             Checked="ToggleButtonHome_OnChecked"
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"
                              IsChecked="True"
                              Command="{Binding HomeViewCommand}" />
                 <RadioButton Content="Replacing Books"
+                             Checked="ToggleButtonReplacingBooks_OnChecked"
                              Height="50"
                              Foreground="White"
                              FontSize="14"

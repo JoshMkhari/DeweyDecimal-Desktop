@@ -165,5 +165,12 @@
   <ItemGroup>
     <Resource Include="Theme\Assets\comingSoon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\closeIcon.png" />
+    <Resource Include="Theme\Assets\closeIconHover.png" />
+    <Resource Include="Theme\Assets\CoolLines.png" />
+    <Resource Include="Theme\Assets\minimize iconHover.png" />
+    <Resource Include="Theme\Assets\minimizeIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
