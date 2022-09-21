@@ -117,10 +117,21 @@
         </StackPanel>
     </StackPanel>
         <Image Name="ReplacingBooksBackground" 
+               Visibility="Collapsed"
                Width="900"
                Height="510"
                Source="/Theme/Assets/ReplacingBooksTutotial.png"
                Canvas.Left="-49"
                Canvas.Top="0" />
+        <Image Width="50"
+               Height="50"
+               Panel.ZIndex="20"
+               Name="BtnCloseTutorial"
+               Source="/Theme/Assets/Close.png"
+               Visibility="Collapsed"
+               Canvas.Left="42" 
+               Canvas.Top="24"
+               MouseLeftButtonDown="BtnCloseTutorial_OnMouseLeftButtonDown">
+        </Image>
     </Canvas>
 </UserControl>

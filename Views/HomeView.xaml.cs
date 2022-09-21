@@ -19,7 +19,6 @@ namespace JoshMkhariPROG7312Game.Views
         {
             InitializeComponent();
             _textBlockModel = new TextBlockModel();
-            ReplacingBooksBackground.Visibility = Visibility.Collapsed;
             foreach (TextBlock textBlock in TextBlockModel.TextBlocksList)
             {
                 WinHistoryStackPanel.Children.Add(textBlock);
@@ -35,8 +34,20 @@ namespace JoshMkhariPROG7312Game.Views
             CanvasBack.Background =
                 new SolidColorBrush(Color.FromRgb(246,239,231)); //https://www.rapidtables.com/convert/color/hex-to-rgb.html
             ReplacingBooksBackground.Visibility = Visibility.Visible;
-            
-            
+            BtnCloseTutorial.Visibility = Visibility.Visible;
+
+        }
+
+        private void BtnCloseTutorial_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Hide all tutorial elements
+            StackPanelBackground.Visibility = Visibility.Visible;
+            PageNameTitleTextBlock.Text = "Home";
+            PageNameTitleTextBlock.Foreground = new SolidColorBrush(Colors.White);
+            CanvasBack.Background =
+                new SolidColorBrush(Colors.Transparent); //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+            ReplacingBooksBackground.Visibility = Visibility.Collapsed;
+            BtnCloseTutorial.Visibility = Visibility.Collapsed;
         }
     }
 }
