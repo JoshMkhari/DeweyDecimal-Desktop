@@ -36,6 +36,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             for (int i = 0; i < 2; i++)
             {
                 Label currentLabel = new Label();
+                currentLabel.FontSize = 20;
                 Canvas.SetLeft(currentLabel,LabelDefaults[0][0]);
                 Canvas.SetTop(currentLabel,LabelDefaults[1][1]+(i*226));
                 CurrentStorageLevelList.Add(currentLabel);
@@ -45,6 +46,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             for (int i = 0; i < 2; i++)
             {
                 Label currentLabel = new Label();
+                currentLabel.FontSize = 20;
                 Canvas.SetLeft(currentLabel,LabelDefaults[0][1]+(i*304));
                 Canvas.SetTop(currentLabel,LabelDefaults[1][0]);
                 CurrentStorageLevelList.Add(currentLabel);

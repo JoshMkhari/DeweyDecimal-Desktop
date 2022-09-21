@@ -54,19 +54,30 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                            replaceBooksViewModel.CallNumbersStrings.ElementAt(i)
                 };
                 rectBlock.Child = textForBlock;
-                Canvas.SetLeft(rectBlock,BorderInitialLeft);
+                CallBlockBordersList.Add(rectBlock);
+            }
+
+            PlaceBlocksAtStartPositions();
+        }
+
+        public void PlaceBlocksAtStartPositions()
+        {
+
+            for (int i = 0; i < 10; i++)
+            {
+                
+                Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft);
                 if (i < 5)
                 {
-                    Canvas.SetTop(rectBlock,BorderInitialRight[0]-(i*27));  
+                    Canvas.SetTop(CallBlockBordersList.ElementAt(i),BorderInitialRight[0]-(i*27));  
                 }
                 else
                 {
                     int current = i - 5;
-                    Canvas.SetTop(rectBlock,BorderInitialRight[1]-(current*27));
+                    Canvas.SetTop(CallBlockBordersList.ElementAt(i),BorderInitialRight[1]-(current*27));
                 }
-                CallBlockBordersList.Add(rectBlock);
             }
-
+            
         }
         
         private String NumberFormatter(double input)

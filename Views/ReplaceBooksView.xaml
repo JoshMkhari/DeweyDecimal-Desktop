@@ -56,16 +56,6 @@
                MouseLeftButtonDown="BtnSettings_OnMouseLeftButtonDown">
         </Image>
         
-        <Image Width="50"
-               Height="50"
-               Panel.ZIndex="20"
-               Name="BtnSaveSettings"
-               Visibility="Collapsed"
-               Source="/Theme/Assets/Save.png"
-               Canvas.Left="622" Canvas.Top="24"
-               MouseLeftButtonDown="BtnSaveSettings_OnMouseLeftButtonDown">
-        </Image>
-        
         <Rectangle x:Name="SelectTopRect"
                    Panel.ZIndex="20"
                    Width="94"

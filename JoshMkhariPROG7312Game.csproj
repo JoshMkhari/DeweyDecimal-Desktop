@@ -124,9 +124,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logic\Replacing Books\" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Theme\Assets\twitter.png" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +154,35 @@
   <ItemGroup>
     <Resource Include="Theme\Assets\Close.png" />
     <Resource Include="Theme\Assets\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\ReplacingBooksTutotial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\repBooksIcon.png" />
+    <Resource Include="Theme\Assets\uTubeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\comingSoon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\closeIcon.png" />
+    <Resource Include="Theme\Assets\closeIconHover.png" />
+    <Resource Include="Theme\Assets\CoolLines.png" />
+    <Resource Include="Theme\Assets\minimize iconHover.png" />
+    <Resource Include="Theme\Assets\minimizeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\myAppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\InAppIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\InAppLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\GridTitle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
