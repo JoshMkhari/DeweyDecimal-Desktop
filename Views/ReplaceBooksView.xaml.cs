@@ -35,29 +35,33 @@ namespace JoshMkhariPROG7312Game.Views
         {
             InitializeComponent();
             _replaceBooksViewModel = new ReplaceBooksViewModel();
-            _borderModel = new BorderModel();
-            _borderModel.AssignValuesToBlocks(_replaceBooksViewModel);
-
             _labelModel = new LabelsModel();
 
             _arrowModel = new ArrowModel();
-
-            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
-            foreach (Image arrow in _arrowModel.DirectionArrowsList)
-            {
-                ReplacingBooks.Children.Add(arrow);
-            }
-            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
-            foreach (Border border in _borderModel.CallBlockBordersList)
-            {
-                ReplacingBooks.Children.Add(border);
-            }
+            
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Label label in _labelModel.CurrentStorageLevelList)
             {
                 ReplacingBooks.Children.Add(label);
             }
+            
+            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
+            foreach (Image arrow in _arrowModel.DirectionArrowsList)
+            {
+                ReplacingBooks.Children.Add(arrow);
+            }
+            _borderModel = new BorderModel();
+            _borderModel.AssignValuesToBlocks(_replaceBooksViewModel);
+            
+            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
+            foreach (Border border in _borderModel.CallBlockBordersList)
+            {
+                ReplacingBooks.Children.Add(border);
+            }
+            
             _onSettingsPage = false;
+            _arrowModel.UpdateArrows(_replaceBooksViewModel);
+            _labelModel.UpdateCapacityLabels(_replaceBooksViewModel);
         }
 
         //To colour block strokes
@@ -570,7 +574,12 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void BtnReset_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _replaceBooksViewModel = new ReplaceBooksViewModel();
+            _borderModel.PlaceBlocksAtStartPositions();
+            _replaceBooksViewModel.GameCounts[0] = 0;
+            TxtMovesCount.Content = "Moves: " + _replaceBooksViewModel.GameCounts[0];
+            _replaceBooksViewModel.InitializeTopAndBottomStacks();
+            _arrowModel.UpdateArrows(_replaceBooksViewModel);
+            _labelModel.UpdateCapacityLabels(_replaceBooksViewModel);
         }
 
         private void BtnSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

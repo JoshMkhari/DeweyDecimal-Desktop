@@ -86,14 +86,23 @@ namespace JoshMkhariPROG7312Game.ViewModels
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
             
-            for (var i = 0; i < 5; i++) CallNumberStacks.ElementAt(1).Push(CallNumbers.ElementAt(i));
-            
-            for (var i = 5; i < 10; i++) CallNumberStacks.ElementAt(0).Push(CallNumbers.ElementAt(i));
-            
             for (int i = 0; i < 10; i++)
             {
                 RectValueNamePair.Add(CallNumbers.ElementAt(i), i+1); //storing the value with the rectangle name
             }
+
+            InitializeTopAndBottomStacks();
+        }
+
+        public void InitializeTopAndBottomStacks()
+        {
+            CallNumberStacks.ElementAt(0).Clear();
+            CallNumberStacks.ElementAt(1).Clear();
+            CallNumberStacks.ElementAt(2).Clear();
+            CallNumberStacks.ElementAt(3).Clear();
+            for (var i = 0; i < 5; i++) CallNumberStacks.ElementAt(1).Push(CallNumbers.ElementAt(i));
+            
+            for (var i = 5; i < 10; i++) CallNumberStacks.ElementAt(0).Push(CallNumbers.ElementAt(i));
         }
 
         public void PushCallNumber(int destinationStack, int originStack)
