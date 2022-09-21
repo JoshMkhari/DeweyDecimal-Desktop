@@ -26,6 +26,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
         
         public List<double> CallNumbers { get; set;}
         public List<String> CallNumbersStrings { get; set;}
+        public List<int> CallNumbersStringValues { get; set; }
 
         private PreSetDifficulty PreSetDiff { get; set;}
         
@@ -43,7 +44,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
             //rectangleNumber 1 The rectangle that is sending the number
             BottomRectCanvasYLocations =new[] { 422, 396, 369, 342, 315, 288 }; //For bottom rectangle 
             TopRectCanvasYLocations = new[]{ 198, 171, 144, 117, 90, 63}; //For top rectangle
-            
+            CallNumbersStringValues = new List<int>();
             CallNumbers = new List<double>();
             CallNumbersStrings = new List<string>();
             RectValueNamePair = new Dictionary<double, int>();
@@ -82,7 +83,11 @@ namespace JoshMkhariPROG7312Game.ViewModels
             for (int i = 0; i < 10; i++)
             {
                 CallNumbers.Add((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value
-                CallNumbersStrings.Add(" " +(char) rnd.Next(65, 90) + (char) rnd.Next(65, 90) + (char) rnd.Next(65, 90));
+                int num1 = (char)rnd.Next(65, 90);
+                int num2 = (char)rnd.Next(65, 90);
+                int num3 = (char)rnd.Next(65, 90);
+                CallNumbersStringValues.Add(num1+num2+num3);
+                CallNumbersStrings.Add(" " +num1 + (char) num2 + (char) num3);
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
             

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -144,7 +143,12 @@ namespace JoshMkhariPROG7312Game.Views
                 bool finalCheck = true;
                 for (int i = 0; i < 2; i++)
                 {
-                    if (CheckIfAscending(_replaceBooksViewModel.CallNumberStacks.ElementAt(i))) continue;
+                    int stackNum = 0;
+                    if (i == 1)
+                    {
+                        stackNum = 4;
+                    }
+                    if (CheckIfAscending(_replaceBooksViewModel.CallNumberStacks.ElementAt(i),stackNum)) continue;
                     finalCheck = false;
                     break;
                 }
@@ -181,7 +185,7 @@ namespace JoshMkhariPROG7312Game.Views
                 : current;
         }
 
-        private static bool CheckIfAscending(Stack<double> currentStack)
+        private bool CheckIfAscending(Stack<double> currentStack,int stackNum)
         {
             int index = 0;
             while (index < 4)
@@ -190,8 +194,22 @@ namespace JoshMkhariPROG7312Game.Views
                 {
                     index++;
                 }
+                else if(currentStack.ElementAt(index).Equals(currentStack.ElementAt(index + 1)) )
+                {
+                    double current = currentStack.ElementAt(index + stackNum) +
+                                 _replaceBooksViewModel.CallNumbersStringValues.ElementAt(index + stackNum);
+                    double next = currentStack.ElementAt(index + stackNum + 1) +
+                                  _replaceBooksViewModel.CallNumbersStringValues.ElementAt(index + stackNum + 1);
+                    if ( current> next || current.Equals(next))
+                    {
+                        index++;
+                    }
+                }
                 else
+                {
                     return false;
+                }
+                    
             }
 
             return true;
@@ -563,8 +581,8 @@ namespace JoshMkhariPROG7312Game.Views
         {
             //Based on original rectangle number between 0-3
             for (var i = 0; i < _replaceBooksViewModel.RectValueNamePair.Count; i++)
-                if (_replaceBooksViewModel.RectValueNamePair.Keys.ElementAt(i) == _replaceBooksViewModel
-                        .CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek())
+                if (_replaceBooksViewModel.RectValueNamePair.Keys.ElementAt(i).Equals(_replaceBooksViewModel
+                        .CallNumberStacks.ElementAt(_replaceBooksViewModel.RectangleNumber[0]).Peek()) )
                 {
                     MoveRectangle(_replaceBooksViewModel.RectValueNamePair.Values.ElementAt(i),
                         _replaceBooksViewModel.RectangleNumber[0]);
@@ -674,11 +692,6 @@ namespace JoshMkhariPROG7312Game.Views
                 _labelModel.CurrentStorageLevelList.ElementAt(i).Content = "Size:  "+  _replaceBooksViewModel.StackSizes[i] ;
             }
             
-        }
-
-        private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            // throw new NotImplementedException();
         }
 
         private void BtnCloseSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
