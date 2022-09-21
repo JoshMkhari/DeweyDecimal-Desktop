@@ -87,7 +87,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
                 int num2 = (char)rnd.Next(65, 90);
                 int num3 = (char)rnd.Next(65, 90);
                 CallNumbersStringValues.Add(num1+num2+num3);
-                CallNumbersStrings.Add(" " +num1 + (char) num2 + (char) num3);
+                CallNumbersStrings.Add(" " +(char) num1 + (char) num2 + (char) num3);
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
             
