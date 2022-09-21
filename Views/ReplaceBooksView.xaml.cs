@@ -579,8 +579,7 @@ namespace JoshMkhariPROG7312Game.Views
             TxtMovesCount.Visibility = Visibility.Collapsed;
             BtnReset.Visibility = Visibility.Collapsed;
             BtnSettings.Visibility = Visibility.Collapsed;
-
-            BtnSaveSettings.Visibility = Visibility.Visible;
+            
             BtnCloseSettings.Visibility = Visibility.Visible;
 
             for (int i = 0; i < 4; i++)
@@ -642,6 +641,7 @@ namespace JoshMkhariPROG7312Game.Views
             }
 
             _arrowModel.UpdateArrows(_replaceBooksViewModel);
+            
         }
 
         private void ImgDifficulty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -659,6 +659,12 @@ namespace JoshMkhariPROG7312Game.Views
             _replaceBooksViewModel.StackSizes[1] = bot;
             _replaceBooksViewModel.StackSizes[2] = left;
             _replaceBooksViewModel.StackSizes[3] = right;
+
+            for (int i = 0; i < 4; i++)
+            {
+                _labelModel.CurrentStorageLevelList.ElementAt(i).Content = "Size:  "+  _replaceBooksViewModel.StackSizes[i] ;
+            }
+            
         }
 
         private void BtnSaveSettings_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -671,8 +677,7 @@ namespace JoshMkhariPROG7312Game.Views
             TxtMovesCount.Visibility = Visibility.Visible;
             BtnReset.Visibility = Visibility.Visible;
             BtnSettings.Visibility = Visibility.Visible;
-
-            BtnSaveSettings.Visibility = Visibility.Collapsed;
+            
             BtnCloseSettings.Visibility = Visibility.Collapsed;
 
             for (int i = 0; i < 4; i++)
