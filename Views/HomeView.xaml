@@ -117,10 +117,10 @@
         </StackPanel>
     </StackPanel>
         <Image Name="ReplacingBooksBackground" 
-               Width="800"
-               Height="460"
-               Source="/Theme/Assets/Background.png"
-               Canvas.Left="-39"
+               Width="900"
+               Height="510"
+               Source="/Theme/Assets/ReplacingBooksTutotial.png"
+               Canvas.Left="-49"
                Canvas.Top="0" />
     </Canvas>
 </UserControl>

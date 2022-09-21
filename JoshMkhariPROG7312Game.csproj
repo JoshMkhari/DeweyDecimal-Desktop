@@ -123,9 +123,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logic\Replacing Books\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Theme\Assets\twitter.png" />
   </ItemGroup>
@@ -159,7 +157,7 @@
     <Resource Include="Theme\Assets\Save.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Theme\Assets\ReplacingBooksBackground.PNG" />
+    <Resource Include="Theme\Assets\ReplacingBooksTutotial.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
