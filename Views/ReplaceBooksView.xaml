@@ -31,21 +31,19 @@
                Panel.ZIndex="20"
                Name="BtnReset"
                Source="/Theme/Assets/Restart.png"
-               Canvas.Left="42" 
+               Canvas.Left="42"
                Canvas.Top="24"
-               MouseLeftButtonDown="BtnReset_OnMouseLeftButtonDown">
-        </Image>
-        
+               MouseLeftButtonDown="BtnReset_OnMouseLeftButtonDown" />
+
         <Image Width="50"
                Height="50"
                Panel.ZIndex="20"
                Name="BtnCloseSettings"
                Source="/Theme/Assets/Close.png"
                Visibility="Collapsed"
-               Canvas.Left="42" 
+               Canvas.Left="42"
                Canvas.Top="24"
-               MouseLeftButtonDown="BtnCloseSettings_OnMouseLeftButtonDown">
-        </Image>
+               MouseLeftButtonDown="BtnCloseSettings_OnMouseLeftButtonDown" />
 
         <Image Width="50"
                Height="50"
@@ -53,9 +51,8 @@
                Name="BtnSettings"
                Source="/Theme/Assets/Settings.png"
                Canvas.Left="622" Canvas.Top="24"
-               MouseLeftButtonDown="BtnSettings_OnMouseLeftButtonDown">
-        </Image>
-        
+               MouseLeftButtonDown="BtnSettings_OnMouseLeftButtonDown" />
+
         <Rectangle x:Name="SelectTopRect"
                    Panel.ZIndex="20"
                    Width="94"
@@ -92,7 +89,7 @@
                    Canvas.Left="470"
                    Canvas.Top="205"
                    MouseLeftButtonDown="selectRightRect_MouseLeftButtonDown" />
-        
+
         <Image Width="800"
                Height="460"
                Source="/Theme/Assets/Background.png"

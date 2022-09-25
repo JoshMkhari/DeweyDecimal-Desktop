@@ -12,21 +12,21 @@ namespace JoshMkhariPROG7312Game.ViewModels
             ReplaceVm = new ReplaceBooksViewModel();
             CurrentView = HomeVm;
 
-            HomeViewCommand = new RelayCOmmand(o => { CurrentView = HomeVm; });
+            HomeViewCommand = new RelayCommand(o => { CurrentView = HomeVm; });
 
-            ReplaceViewCommand = new RelayCOmmand(o => { CurrentView = ReplaceVm; });
+            ReplaceViewCommand = new RelayCommand(o => { CurrentView = ReplaceVm; });
         }
 
-        public RelayCOmmand HomeViewCommand { get; set; }
-        public RelayCOmmand ReplaceViewCommand { get; set; }
+        public RelayCommand HomeViewCommand { get; }
+        public RelayCommand ReplaceViewCommand { get; }
 
-        public HomeViewModel HomeVm { get; set; }
-        public ReplaceBooksViewModel ReplaceVm { get; set; }
+        private HomeViewModel HomeVm { get; }
+        private ReplaceBooksViewModel ReplaceVm { get; }
 
         public object CurrentView
         {
             get => _currentView;
-            set
+            private set
             {
                 _currentView = value;
                 OnPropertyChanged();
