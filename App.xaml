@@ -16,6 +16,9 @@
             <DataTemplate DataType="{x:Type viewModel:ReplaceBooksViewModel}">
                 <view:ReplaceBooksView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:IdentifyingAreasViewModel}">
+                <view:IdentifyingAreas />
+            </DataTemplate>
         </ResourceDictionary>
 
     </Application.Resources>
