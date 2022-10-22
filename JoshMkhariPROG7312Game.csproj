@@ -189,5 +189,17 @@
   <ItemGroup>
     <Resource Include="Theme\Assets\GridTitle.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\editedBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\scoreboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\ball.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\net.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

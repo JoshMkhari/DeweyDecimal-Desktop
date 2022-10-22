@@ -156,7 +156,7 @@
                              Command="{Binding ReplaceViewCommand}" />
                 <RadioButton Content="Identifying areas"
                              Height="50"
-                             Foreground="DimGray"
+                             Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}" 
                              Command="{Binding IdentifyingAreasCommand}"/>

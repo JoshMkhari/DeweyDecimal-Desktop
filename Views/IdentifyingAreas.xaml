@@ -7,6 +7,249 @@
              mc:Ignorable="d"
              d:DesignHeight="460" d:DesignWidth="800"
              Background="#f6efe7">
-    
-    
+
+    <Canvas>
+        <Image Width="900"
+           Height="528"
+           Name="BtnCloseTutorial"
+           Source="/Theme/Assets/editedBackground.png"
+           Canvas.Left="-51"/>
+
+        <Image Width="325"
+               Height="95"
+               Panel.ZIndex="1"
+               Source="/Theme/Assets/scoreboard.png"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom" 
+               Canvas.Top="293" 
+               Canvas.Left="7"/>
+
+        <Image Width="60"
+               Height="60"
+               Panel.ZIndex="1"
+               Source="/Theme/Assets/ball.png"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom" 
+               Canvas.Top="400" 
+               Canvas.Left="256"/>
+
+        <Image Width="60"
+               Height="60"
+               Panel.ZIndex="1"
+               Source="/Theme/Assets/ball.png"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom" 
+               Canvas.Top="400" 
+               Canvas.Left="388"/>
+
+        <Label FontSize="30"
+               Name="TxtMissedCount"
+               Content="0"
+               Panel.ZIndex="2"
+               Foreground="Red"
+               Canvas.Left="70"
+               Canvas.Top="317" />
+        <Label FontSize="30"
+               Name="TxtScoredCount"
+               Content="0"
+               Panel.ZIndex="2"
+               Foreground="Green"
+               Canvas.Left="290"
+               Canvas.Top="317" />
+
+        <Label FontSize="20"
+               Name="TxtRoundCount"
+               Content="0"
+               Panel.ZIndex="2"
+               Foreground="Green"
+               Canvas.Left="177"
+               Canvas.Top="348" RenderTransformOrigin="2.671,1.37" />
+
+        <Path x:Name="HexOne"
+              Width="120" 
+              Height="120" 
+              Stretch="Uniform"
+              Fill="Blue"
+              Data="M8.660254,
+              0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z" 
+              Canvas.Left="11.031" 
+              Canvas.Top="-0.198" 
+              RenderTransformOrigin="0.5,0.5" >
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+
+
+        <Path x:Name="HexTwo"
+              Width="120" 
+              Height="120" 
+              Stretch="Uniform" 
+              Fill="Blue"
+              Data="M8.660254,
+              0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z" 
+              Canvas.Left="111.863" 
+              Canvas.Top="104" 
+              RenderTransformOrigin="0.5,0.5" >
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+
+        <Path x:Name="HexThree"
+              Width="120" 
+              Height="120" 
+              Stretch="Uniform" 
+              Fill="Blue"
+              Data="M8.660254,
+              0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z" 
+              Canvas.Left="212.634" 
+              Canvas.Top="-1" 
+              RenderTransformOrigin="0.5,0.5" >
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+
+        <Path x:Name="HexFour"
+              Width="120" 
+              Height="120" 
+              Stretch="Uniform" 
+              Fill="Blue"
+              Data="M8.660254,
+              0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z" 
+              Canvas.Left="306.74" 
+              Canvas.Top="106.122" 
+              RenderTransformOrigin="0.5,0.5" >
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+
+        <Path x:Name="HexFive"
+              Width="120" 
+              Height="120" 
+              Stretch="Uniform" 
+              Fill="Blue"
+              Data="M8.660254,
+              0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z" 
+              Canvas.Left="403.07" 
+              Canvas.Top="0.626" 
+              RenderTransformOrigin="0.5,0.5" >
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+
+        <!---194.877-->
+        <Path x:Name="HexSix"
+              Width="120" 
+              Height="120" 
+              Stretch="Uniform" 
+              Fill="Blue"
+              Data="M8.660254,
+              0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z" 
+              Canvas.Left="501.015" 
+              Canvas.Top="108.511" 
+              RenderTransformOrigin="0.5,0.5" >
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+
+        <Path x:Name="HexSeven"
+              Width="120" 
+              Height="120" 
+              Stretch="Uniform" 
+              Fill="Blue"
+              Data="M8.660254,
+              0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z" 
+              Canvas.Left="593.506" 
+              Canvas.Top="-1.122" 
+              RenderTransformOrigin="0.5,0.5" >
+            <Path.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Path.RenderTransform>
+        </Path>
+
+        <Rectangle Width="70"
+                   Height="20"
+                   Fill="Beige" 
+                   Canvas.Left="250" 
+                   Canvas.Top="465">
+        </Rectangle>
+
+        <Rectangle Width="70"
+                   Height="20"
+                   Fill="Beige" 
+                   Canvas.Left="383" 
+                   Canvas.Top="465">
+
+        </Rectangle>
+
+        <Rectangle Width="70"
+                   Height="20"
+                   Fill="Beige" 
+                   Canvas.Left="520" 
+                   Canvas.Top="465">
+
+        </Rectangle>
+
+        <Image Width="60"
+            Height="60"
+            Panel.ZIndex="1"
+            Source="/JoshMkhariPROG7312Game;component/Theme/Assets/ball.png"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom" 
+            Canvas.Top="400" 
+            Canvas.Left="526"/>
+
+        <Image Width="60"
+            Height="60"
+            Panel.ZIndex="1"
+            Source="/JoshMkhariPROG7312Game;component/Theme/Assets/net.png"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom" 
+            Canvas.Top="200" 
+            Canvas.Left="530"/>
+
+
+    </Canvas>
+
+
 </UserControl>
