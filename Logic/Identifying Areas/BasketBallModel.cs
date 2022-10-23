@@ -26,6 +26,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 {
                     Width = 60,
                     Height = 60,
+                    Name = "Ball"+i,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom,
                     Source = new BitmapImage(new Uri(@"/Theme/Assets/ball.png", UriKind.Relative))
