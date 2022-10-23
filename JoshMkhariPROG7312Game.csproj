@@ -58,6 +58,7 @@
     <Compile Include="Core\ObservableObjects.cs" />
     <Compile Include="Core\RelayCOmmand.cs" />
     <Compile Include="Logic\Home\TextBlockModel.cs" />
+    <Compile Include="Logic\Identifying Areas\HexagonModel.cs" />
     <Compile Include="Logic\Replacing Books\ArrowModel.cs" />
     <Compile Include="Logic\Replacing Books\BorderModel.cs" />
     <Compile Include="Logic\Replacing Books\LabelsModel.cs" />
