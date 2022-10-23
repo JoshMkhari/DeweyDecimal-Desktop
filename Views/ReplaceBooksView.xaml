@@ -81,7 +81,6 @@
                    Fill="Transparent"
                    Canvas.Left="167"
                    Canvas.Top="205"
-
                    MouseLeftButtonDown="selectLeftRect_MouseLeftButtonDown" />
 
         <Rectangle x:Name="SelectRightRect"

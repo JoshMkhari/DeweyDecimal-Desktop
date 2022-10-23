@@ -47,8 +47,9 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 {
                     Width = 120,
                     Height = 120,
+                    Name = "Hex"+i,
                     RenderTransformOrigin = new Point(0.5,0.5) ,
-                    RenderTransform = rt,
+                    RenderTransform = rt,//https://www.c-sharpcorner.com/uploadfile/mahesh/rotatetransform-in-wpf/
                     Stretch = Stretch.Uniform, //https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.stretch?view=windowsdesktop-6.0
                     Fill = new SolidColorBrush(Color.FromRgb(BorderDefaults[0][i], BorderDefaults[1][i],
                         BorderDefaults[2][i])), //https://www.rapidtables.com/convert/color/hex-to-rgb.html
@@ -57,7 +58,6 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 Canvas.SetLeft(currentHex,HexDefaults[0][i]);
                 Canvas.SetTop(currentHex,HexDefaults[1][i]);
                 Panel.SetZIndex(currentHex,5);
-                
                 HexagonList.Add(currentHex);
             }
             
