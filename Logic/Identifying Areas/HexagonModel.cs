@@ -17,8 +17,8 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         private ColoursModel _coloursModel;
         public HexagonModel()
         {
-            int[] leftValues = new []{ 11,111,212,306,403,501,593};
-            int[] topValues = new []{ 0,104,0,104,0,108,0 };
+            int[] leftValues = new []{ 12,112,212,306,404,502,594};
+            int[] topValues = new []{ 0,104,0,104,0,104,0 };
             
             HexDefaults = new int[2][];
             HexDefaults[0] = leftValues;
