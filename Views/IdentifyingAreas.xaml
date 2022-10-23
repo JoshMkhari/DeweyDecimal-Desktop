@@ -23,24 +23,8 @@
                VerticalAlignment="Bottom" 
                Canvas.Top="293" 
                Canvas.Left="7"/>
-
-        <Image Width="60"
-               Height="60"
-               Panel.ZIndex="1"
-               Source="/Theme/Assets/ball.png"
-               HorizontalAlignment="Right"
-               VerticalAlignment="Bottom" 
-               Canvas.Top="400" 
-               Canvas.Left="256"/>
-
-        <Image Width="60"
-               Height="60"
-               Panel.ZIndex="1"
-               Source="/Theme/Assets/ball.png"
-               HorizontalAlignment="Right"
-               VerticalAlignment="Bottom" 
-               Canvas.Top="400" 
-               Canvas.Left="388"/>
+        
+        
 
         <Label FontSize="30"
                Name="TxtMissedCount"
@@ -88,16 +72,7 @@
                    Canvas.Top="465">
 
         </Rectangle>
-
-        <Image Width="60"
-            Height="60"
-            Panel.ZIndex="1"
-            Source="/JoshMkhariPROG7312Game;component/Theme/Assets/ball.png"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom" 
-            Canvas.Top="400" 
-            Canvas.Left="526"/>
-
+        
         <Image Width="60"
             Height="60"
             Panel.ZIndex="1"
