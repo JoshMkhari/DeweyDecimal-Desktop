@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 using JoshMkhariPROG7312Game.Logic.Identifying_Areas;
 
 namespace JoshMkhariPROG7312Game.Views
@@ -12,8 +13,13 @@ namespace JoshMkhariPROG7312Game.Views
             //https://stackoverflow.com/questions/11485843/how-can-i-create-hexagon-menu-using-wpf
 
             HexagonModel hexagonModel = new HexagonModel();
-
-            IdentifyAreaCanvas.Children.Add(hexagonModel.HexagonList.ElementAt(0));
+            
+            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
+            foreach (Path hex in hexagonModel.HexagonList)
+            {
+                IdentifyAreaCanvas.Children.Add(hex);
+            }
+            
         }
     }
 }

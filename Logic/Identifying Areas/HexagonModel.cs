@@ -17,8 +17,8 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         public Path hex;
         public HexagonModel()
         {
-            int[] leftValues = new []{ 314,314,167,470 };
-            int[] topValues = new []{ 82,308,205,205 };
+            int[] leftValues = new []{ 11,111,212,306,403,501,593};
+            int[] topValues = new []{ 0,104,0,104,0,108,0 };
             
             HexDefaults = new int[2][];
             HexDefaults[0] = leftValues;
@@ -42,21 +42,22 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         {
             for (int i = 0; i < 7; i++)
             {
+                RotateTransform rt = new RotateTransform(-90);
                 Path currentHex = new Path
                 {
                     Width = 120,
                     Height = 120,
                     RenderTransformOrigin = new Point(0.5,0.5) ,
+                    RenderTransform = rt,
                     Stretch = Stretch.Uniform, //https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.stretch?view=windowsdesktop-6.0
                     Fill = new SolidColorBrush(Color.FromRgb(BorderDefaults[0][i], BorderDefaults[1][i],
                         BorderDefaults[2][i])), //https://www.rapidtables.com/convert/color/hex-to-rgb.html
                     Data = Geometry.Parse("M8.660254,0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z")
                 };
-                Canvas.SetLeft(currentHex,501);
-                Canvas.SetTop(currentHex,108);
+                Canvas.SetLeft(currentHex,HexDefaults[0][i]);
+                Canvas.SetTop(currentHex,HexDefaults[1][i]);
                 Panel.SetZIndex(currentHex,5);
-                RotateTransform rt = new RotateTransform(-90);
-                currentHex.RenderTransform = rt;  
+                
                 HexagonList.Add(currentHex);
             }
             
