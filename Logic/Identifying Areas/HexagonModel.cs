@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -45,6 +46,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 {
                     Width = 120,
                     Height = 120,
+                    RenderTransformOrigin = new Point(0.5,0.5) ,
                     Stretch = Stretch.Uniform, //https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.stretch?view=windowsdesktop-6.0
                     Fill = new SolidColorBrush(Color.FromRgb(BorderDefaults[0][i], BorderDefaults[1][i],
                         BorderDefaults[2][i])), //https://www.rapidtables.com/convert/color/hex-to-rgb.html
@@ -53,22 +55,9 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 Canvas.SetLeft(currentHex,501);
                 Canvas.SetTop(currentHex,108);
                 Panel.SetZIndex(currentHex,5);
+                RotateTransform rt = new RotateTransform(-90);
+                currentHex.RenderTransform = rt;  
                 HexagonList.Add(currentHex);
-                /* 
-                 <Path x:Name="HexSix"
-             Canvas.Left="501.015" 
-             Canvas.Top="108.511" 
-             RenderTransformOrigin="0.5,0.5" >
-                 <Path.RenderTransform>
-                 <TransformGroup>
-                 <ScaleTransform/>
-                 <SkewTransform/>
-                 <RotateTransform Angle="-90"/>
-                 <TranslateTransform/>
-                 </TransformGroup>
-                 </Path.RenderTransform>
-                 </Path>
-                 */
             }
             
             
