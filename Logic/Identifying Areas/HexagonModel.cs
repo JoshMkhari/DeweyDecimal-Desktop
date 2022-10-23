@@ -9,12 +9,12 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
 {
     public class HexagonModel
     {
-        private int[][] HexDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        private byte[][] BorderDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        
-        public List<Path> HexagonList { get; set; }
+        private int[][] HexDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays
 
+        public List<Path> HexagonList { get; set; }
         public Path hex;
+
+        private ColoursModel _coloursModel;
         public HexagonModel()
         {
             int[] leftValues = new []{ 11,111,212,306,403,501,593};
@@ -24,17 +24,8 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             HexDefaults[0] = leftValues;
             HexDefaults[1] = topValues;
             
-            
-            byte[] borderReds = {108,240, 176,112,254,129,39,181,30,88};
-            byte[] borderGreen = {71,145, 198,168,202,129,51,71,136,51};
-            byte[] borderBlues= { 34,60,83,188,80,129,73,106,109,84};
-            
-            BorderDefaults = new byte[3][];
-            BorderDefaults[0] = borderReds;
-            BorderDefaults[1] = borderGreen;
-            BorderDefaults[2] = borderBlues;
-
             HexagonList = new List<Path>();
+            _coloursModel = new ColoursModel();
             CreateHexagons();
         }
 
@@ -51,8 +42,8 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                     RenderTransformOrigin = new Point(0.5,0.5) ,
                     RenderTransform = rt,//https://www.c-sharpcorner.com/uploadfile/mahesh/rotatetransform-in-wpf/
                     Stretch = Stretch.Uniform, //https://learn.microsoft.com/en-us/dotnet/api/system.windows.media.stretch?view=windowsdesktop-6.0
-                    Fill = new SolidColorBrush(Color.FromRgb(BorderDefaults[0][i], BorderDefaults[1][i],
-                        BorderDefaults[2][i])), //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                    Fill = new SolidColorBrush(Color.FromRgb(_coloursModel.ColourDefaults[0][i], _coloursModel.ColourDefaults[1][i],
+                        _coloursModel.ColourDefaults[2][i])), //https://www.rapidtables.com/convert/color/hex-to-rgb.html
                     Data = Geometry.Parse("M8.660254,0 L17.320508,5 17.320508,15 8.660254,20 0,15 0,5 8.660254,0 Z")
                 };
                 Canvas.SetLeft(currentHex,HexDefaults[0][i]);

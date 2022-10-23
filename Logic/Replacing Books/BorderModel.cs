@@ -7,35 +7,44 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using JoshMkhariPROG7312Game.ViewModels;
+using JoshMkhariPROG7312Game.Views;
 
 namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 {
     public class BorderModel
     {
         private double BorderInitialLeft { get;}
-        private byte[][] BorderDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
-        private int[] BorderInitialRight { get; }
+        private int[] BorderInitialTop { get; }
         public List<Border> CallBlockBordersList { get; }
-
-        public BorderModel()
+        private int currentMode;
+        private ColoursModel _coloursModel;
+        public BorderModel(int mode)
         {
-            BorderInitialLeft = 321;
-            BorderDefaults = new byte[3][];
+            currentMode = mode;
             CallBlockBordersList = new List<Border>();
-            BorderInitialRight = new []{ 422, 198 };
-            //https://www.rapidtables.com/convert/color/hex-to-rgb.html
-            byte[] borderReds = {108,240, 176,112,254,129,39,181,30,88};
-            byte[] borderGreen = {71,145, 198,168,202,129,51,71,136,51};
-            byte[] borderBlues= { 34,60,83,188,80,129,73,106,109,84};
-            
-            BorderDefaults[0] = borderReds;
-            BorderDefaults[1] = borderGreen;
-            BorderDefaults[2] = borderBlues;
+            _coloursModel = new ColoursModel();
+            switch (mode)
+            {
+                case 0://Replacing books model
+                {
+                    BorderInitialLeft = 321;
+
+                    BorderInitialTop = new []{ 422, 198 };
+                    //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                    break;
+                }
+                case 1:
+                {
+                    BorderInitialLeft = 250;
+                    break;
+                }
+            }
+
         }
         
-        public void AssignValuesToBlocks(ReplaceBooksViewModel replaceBooksViewModel)
+        public void AssignValuesToBlocks(List<double> numbers, List<string> texts, int numItems, int start)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = start; i < numItems; i++)
             {
                 Border rectBlock = new Border
                 {
@@ -44,39 +53,55 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     BorderBrush = new SolidColorBrush(Colors.Black),
                     Width = 80,
                     Height = 22,
-                    Background = new SolidColorBrush(Color.FromRgb(BorderDefaults[0][i], BorderDefaults[1][i], BorderDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                    Background = new SolidColorBrush(Color.FromRgb(_coloursModel.ColourDefaults[0][i], _coloursModel.ColourDefaults[1][i], _coloursModel.ColourDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
                 };
 
                 TextBlock textForBlock = new TextBlock
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
-                    Text = NumberFormatter(replaceBooksViewModel.CallNumbers.ElementAt(i)) + 
-                           replaceBooksViewModel.CallNumbersStrings.ElementAt(i)
+                    Text = NumberFormatter(numbers.ElementAt(i)) + 
+                           texts.ElementAt(i)
                 };
                 rectBlock.Child = textForBlock;
                 CallBlockBordersList.Add(rectBlock);
             }
-
-            PlaceBlocksAtStartPositions();
+            PlaceBlocksAtStartPositions(); 
         }
 
         public void PlaceBlocksAtStartPositions()
         {
 
-            for (int i = 0; i < 10; i++)
+            switch (currentMode)
             {
+                case 0:
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
                 
-                Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft);
-                if (i < 5)
-                {
-                    Canvas.SetTop(CallBlockBordersList.ElementAt(i),BorderInitialRight[0]-(i*27));  
+                        Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft);
+                        if (i < 5)
+                        {
+                            Canvas.SetTop(CallBlockBordersList.ElementAt(i),BorderInitialTop[0]-(i*27));  
+                        }
+                        else
+                        {
+                            int current = i - 5;
+                            Canvas.SetTop(CallBlockBordersList.ElementAt(i),BorderInitialTop[1]-(current*27));
+                        }
+                    } 
+                    break;
                 }
-                else
+                case 1:
                 {
-                    int current = i - 5;
-                    Canvas.SetTop(CallBlockBordersList.ElementAt(i),BorderInitialRight[1]-(current*27));
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft+(i*133));
+                        Canvas.SetTop(CallBlockBordersList.ElementAt(i),465);
+                    }
+                    break;
                 }
             }
+
             
         }
         

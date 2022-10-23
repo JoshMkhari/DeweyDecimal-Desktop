@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using JoshMkhariPROG7312Game.Logic.Identifying_Areas;
+using JoshMkhariPROG7312Game.Logic.Replacing_Books;
 
 namespace JoshMkhariPROG7312Game.Views
 {
@@ -41,6 +42,9 @@ namespace JoshMkhariPROG7312Game.Views
                 IdentifyAreaCanvas.Children.Add(currentBall);
                 
             }
+
+            //BorderModel borderModel = new BorderModel(1);
+            //borderModel.AssignValuesToBlocks();
             
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += dispatcherTimer_Tick;
