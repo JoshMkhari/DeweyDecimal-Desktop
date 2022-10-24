@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows;
@@ -24,6 +25,10 @@ namespace JoshMkhariPROG7312Game.Views
         private int _currentRound = 0;
 
         private int _gaugeSpeed = 2;
+
+        private int _textBlockNum;
+
+        private int gameMode;
         private Point _ballDestination,_ballStartLocation;
 
         private bool _aimSet, _ballChosen, _targetReached, _ballStop;
@@ -32,11 +37,14 @@ namespace JoshMkhariPROG7312Game.Views
         private DispatcherTimer _ballTimer, _gaugeTimer;
 
         private QuestionsAnswersModel _questionsAnswersModel;
+        private BorderModel _borderModel;
+        private ReplaceBooksViewModel _replaceBooksViewModel;
         public IdentifyingAreas()
         {
             InitializeComponent();
             //https://stackoverflow.com/questions/11485843/how-can-i-create-hexagon-menu-using-wpf
 
+            gameMode = 0;
             HexagonModel hexagonModel = new HexagonModel();
             _aimSet = false;
             _ballChosen = false;
@@ -69,19 +77,19 @@ namespace JoshMkhariPROG7312Game.Views
             
             _questionsAnswersModel = new QuestionsAnswersModel();
             //_questionsAnswersModel._ChosenSet;
-
-            ReplaceBooksViewModel replaceBooksViewModel = new ReplaceBooksViewModel(1);
-            BorderModel borderModel = new BorderModel(1);
-            borderModel.AssignValuesToBlocks(replaceBooksViewModel.CallNumbers,replaceBooksViewModel.CallNumbersStrings,4,0);
             
-            foreach (Border currentBorder in borderModel.CallBlockBordersList)
+            _replaceBooksViewModel = new ReplaceBooksViewModel(1); 
+            _borderModel = new BorderModel(1);
+            _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,4,0);
+            
+            foreach (Border currentBorder in _borderModel.CallBlockBordersList)
             {
                 //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
                 IdentifyAreaCanvas.Children.Add(currentBorder);
                 
             }
-            borderModel.CreateQuestionBlocks(_questionsAnswersModel,0,hexagonModel);
-            foreach (Border currentBorder in borderModel.AnswerBlockBordersList)
+            _borderModel.CreateQuestionBlocks(_questionsAnswersModel,gameMode,hexagonModel);
+            foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)
             {
                 //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
                 IdentifyAreaCanvas.Children.Add(currentBorder);
@@ -94,7 +102,7 @@ namespace JoshMkhariPROG7312Game.Views
             _gaugeTimer.Tick += gaugeTimer_Tick;
 
         }
-
+        
         private void gaugeTimer_Tick(object sender, EventArgs e)
         {
             //Move Indicator up and back down
@@ -107,9 +115,6 @@ namespace JoshMkhariPROG7312Game.Views
         }
         private void ballTimer_Tick(object sender, EventArgs e)
         {
-            Debug.WriteLine(Canvas.GetLeft(_currentBall) + " currentBall Left");
-            Debug.WriteLine(Canvas.GetTop(_currentBall)+ " currentBall Top");
-
             //If ball is to right of target
             if (Canvas.GetLeft(_currentBall)>_ballDestination.X)
             {
@@ -173,7 +178,15 @@ namespace JoshMkhariPROG7312Game.Views
             Canvas.SetTop(_currentBall,_ballStartLocation.Y);
             if (_targetReached)
             {
-                _scored++;
+                //Check ball number to see which text block it belongs to
+                if (IsCorrectAnswer())
+                {
+                    _scored++; 
+                }
+                else
+                {
+                    _scored--;
+                }
                 TxtScoredCount.Content = _scored;
             }
             else
@@ -182,6 +195,21 @@ namespace JoshMkhariPROG7312Game.Views
                 TxtMissedCount.Content = _missed;
             }
             
+        }
+
+        private bool IsCorrectAnswer()
+        {
+
+            if (gameMode == 0)//Basketballs have callnumbers beneath them
+            {
+               return _questionsAnswersModel.CheckAnswerNumber(_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum),
+                    _questionsAnswersModel._ChosenSet);
+            }
+
+            //return _questionsAnswersModel.CheckAnswerString(_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum),
+                //_questionsAnswersModel._ChosenSet);
+                return false;
+
         }
         private void OnHexClick(object sender, RoutedEventArgs e)
         {
@@ -195,8 +223,7 @@ namespace JoshMkhariPROG7312Game.Views
             double left =Canvas.GetLeft(currentHex) + 30;
 
             double top =Canvas.GetTop(currentHex) + 30;
-
-            string name = currentHex.Name;
+            
             _ballDestination = new Point(left, top);
 
             _gaugeTimer.Interval = new TimeSpan(0,0,0,0,1);
@@ -221,18 +248,15 @@ namespace JoshMkhariPROG7312Game.Views
             if (!_aimSet|| !_ballChosen) return;
             
             if (e.Key != Key.Space) return;
-            //Stop Gauge and store gauge value
+
+            _textBlockNum = Convert.ToInt32(_currentBall.Name.Substring(3));
+            //Debug.WriteLine("From text block " + _textBlockNum);
             _gaugeTimer.Stop();
             SetTargetAccuracy(Canvas.GetTop(indicatorLevel));
         }
 
         private void SetTargetAccuracy(double gauge)
         {
-            //236
-            //424
-            Debug.WriteLine(" Ball destination X at start " + _ballDestination.X);
-            Debug.WriteLine(" Ball destination Y at start " + _ballDestination.Y);
-            Debug.WriteLine(" Guage value " + gauge);
             var rnd = new Random();
 
             int updateAccuracy = 0;
@@ -277,9 +301,6 @@ namespace JoshMkhariPROG7312Game.Views
                 }
             }
             
-            
-            Debug.WriteLine(" Ball destination X at end " + _ballDestination.X);
-            Debug.WriteLine(" Ball destination Y at end " + _ballDestination.Y);
             _ballTimer.Interval = new TimeSpan(0,0,0,0,1);
             _ballTimer.Start();
         }

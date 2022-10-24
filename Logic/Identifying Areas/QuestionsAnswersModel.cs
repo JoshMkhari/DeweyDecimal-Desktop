@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -70,6 +71,28 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             _numbersList.Add(800);
             _numbersList.Add(900);
             _numbersList.Add(900);
+        }
+
+        public bool CheckAnswerString(String input,IDictionary<string, int> _set  )
+        {
+
+            return true;
+        }
+        
+        public bool CheckAnswerNumber(double input,IDictionary<string, int> _set  )
+        {
+            double changed = Math.Floor(input);
+            int workWith = (int)Math.Round(changed - 50);
+            int rounded = ((workWith + 99) / 100 ) * 100;
+            for (int i = 0; i < _set.Count; i++)
+            {
+                Debug.WriteLine("Lets do this " + rounded + " vs " + _set.Values.ElementAt(i));
+                if (rounded == _set.Values.ElementAt(i))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
