@@ -22,7 +22,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
         public double[] StackSizes { get; set; }//Stores the capacity of each rectangle stack
         
         public SolidColorBrush BlackBrush{ get; set; }//Used to change rectangle selection colour
-        public List<Stack<double>> CallNumberStacks{ get; set; }//Holds all relevant stackd
+        public List<Stack<double>> CallNumberStacks{ get; set; }//Holds all relevant stacks
         
         public List<double> CallNumbers { get; set;}
         public List<String> CallNumbersStrings { get; set;}

@@ -268,7 +268,10 @@ namespace JoshMkhariPROG7312Game.Views
 
         private int MakeEven(int num)
         {
-            return num % 2 == 0 ? num : num++;
+            if (num % 2 == 0) return num;
+            num++;
+            return num;
+
         }
     }
 }

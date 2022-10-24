@@ -9,7 +9,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
     public class BasketBallModel
     {
         public List<Image> BallLocationList;
-        private int[] leftValues = new []{ 256,388, 526 };
+        private int[] leftValues = new []{ 196,310,420 ,516 };
 
         public BasketBallModel()
         {
@@ -20,7 +20,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         private void CreateBasketBalls()
         {
             //Creates BasketBalls
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Image currentImage = new Image
                 {
@@ -36,8 +36,6 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 Panel.SetZIndex(currentImage,11);
                 BallLocationList.Add(currentImage);
             }
-
-
         }
     }
 }
