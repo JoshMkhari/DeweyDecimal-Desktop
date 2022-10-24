@@ -9,7 +9,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
     public class BasketBallModel
     {
         public List<Image> BallLocationList;
-        private int[] leftValues = new []{ 196,310,420 ,516 };
+        private int[] leftValues = new []{ 196,310,424 ,538 };
 
         public BasketBallModel()
         {

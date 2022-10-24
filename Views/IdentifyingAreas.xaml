@@ -69,34 +69,6 @@
                Canvas.Top="348" RenderTransformOrigin="2.671,1.37" />
 
 
-        <Rectangle Width="70"
-                   Height="20"
-                   Fill="Beige" 
-                   Canvas.Left="195" 
-                   Canvas.Top="465">
-        </Rectangle>
-
-        <Rectangle Width="70"
-                   Height="20"
-                   Fill="Beige" 
-                   Canvas.Left="308" 
-                   Canvas.Top="465">
-
-        </Rectangle>
-
-        <Rectangle Width="70"
-                   Height="20"
-                   Fill="Beige" 
-                   Canvas.Left="513" 
-                   Canvas.Top="465">
-        </Rectangle>
-        <Rectangle Width="70"
-            Height="20"
-            Fill="Beige" 
-            Canvas.Left="413" 
-            Canvas.Top="465"/>
-
-
 
     </Canvas>
 

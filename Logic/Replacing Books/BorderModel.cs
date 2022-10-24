@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using JoshMkhariPROG7312Game.Logic.Identifying_Areas;
 using JoshMkhariPROG7312Game.ViewModels;
 using JoshMkhariPROG7312Game.Views;
 
@@ -16,6 +17,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
         private double BorderInitialLeft { get;}
         private int[] BorderInitialTop { get; }
         public List<Border> CallBlockBordersList { get; }
+        public List<Border> AnswerBlockBordersList { get; }
         private int currentMode;
         private ColoursModel _coloursModel;
         public BorderModel(int mode)
@@ -36,12 +38,49 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 case 1:
                 {
                     BorderInitialLeft = 185;
+                    AnswerBlockBordersList = new List<Border>();
                     break;
                 }
             }
 
         }
-        
+
+        public void CreateQuestionBlocks(QuestionsAnswersModel questionsAnswersModel, int mode, HexagonModel hexagonModel)
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                Border rectBlock = new Border
+                {
+                    //rectBlock.Name = "border" + i;
+                    BorderThickness = new Thickness(2),
+                    BorderBrush =Brushes.White,
+                    Width = 80,
+                    Height = 22
+                    //Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                };
+                string textForBlockMode = mode == 0 ? questionsAnswersModel._ChosenSet.Keys.ElementAt(i) : questionsAnswersModel._ChosenSet.Values.ElementAt(i).ToString();
+                TextBlock textForBlock = new TextBlock
+                {
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Foreground = Brushes.White,
+                    Text = textForBlockMode
+                };
+                rectBlock.Child = textForBlock;
+                Panel.SetZIndex(rectBlock,6);
+                AnswerBlockBordersList.Add(rectBlock);
+            }
+            PlaceQuestionsAtPositions(hexagonModel); 
+        }
+
+        private void PlaceQuestionsAtPositions(HexagonModel hexagonModel)
+        {
+            //Those center positions the ball uses for targets
+            for (int i = 0; i < 7; i++)
+            {
+                Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
+                Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
+            }
+        }
         public void AssignValuesToBlocks(List<double> numbers, List<string> texts, int numItems, int start)
         {
             for (int i = start; i < numItems; i++)
@@ -119,7 +158,6 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     commaLocation = i;
                 }
             }
-
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(num);
             while (commaLocation!=3)

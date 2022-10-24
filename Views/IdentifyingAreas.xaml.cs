@@ -80,6 +80,13 @@ namespace JoshMkhariPROG7312Game.Views
                 IdentifyAreaCanvas.Children.Add(currentBorder);
                 
             }
+            borderModel.CreateQuestionBlocks(_questionsAnswersModel,0,hexagonModel);
+            foreach (Border currentBorder in borderModel.AnswerBlockBordersList)
+            {
+                //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                IdentifyAreaCanvas.Children.Add(currentBorder);
+                
+            }
             _ballTimer = new DispatcherTimer();
             _ballTimer.Tick += ballTimer_Tick;
 
@@ -129,7 +136,7 @@ namespace JoshMkhariPROG7312Game.Views
                 Panel.SetZIndex(_currentBall,7);
                 if (_ballStop)
                 {
-                    stopBall();
+                    StopBall();
                 }
                 else
                 {
@@ -143,7 +150,7 @@ namespace JoshMkhariPROG7312Game.Views
                 || Canvas.GetTop(_currentBall) < 0
                 || Canvas.GetTop(_currentBall) >500)
             {
-                stopBall();
+                StopBall();
             }
             //Move ball down through net
             if (Canvas.GetTop(_currentBall)<_ballDestination.Y)
@@ -154,7 +161,7 @@ namespace JoshMkhariPROG7312Game.Views
         }
         
         
-        private void stopBall()
+        private void StopBall()
         {
             _ballTimer.Stop();
             _aimSet = false;

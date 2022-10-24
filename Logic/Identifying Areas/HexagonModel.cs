@@ -12,7 +12,6 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         private int[][] HexDefaults { get; }//https://www.geeksforgeeks.org/c-sharp-jagged-arrays
 
         public List<Path> HexagonList { get; set; }
-        public Path hex;
 
         private ColoursModel _coloursModel;
         public HexagonModel()
