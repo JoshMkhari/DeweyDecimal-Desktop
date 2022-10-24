@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using JoshMkhariPROG7312Game.Logic.Home;
+using JoshMkhariPROG7312Game.Logic.Identifying_Areas;
 using JoshMkhariPROG7312Game.Logic.Replacing_Books;
 using JoshMkhariPROG7312Game.ViewModels;
 using Border = System.Windows.Controls.Border;
@@ -50,7 +51,7 @@ namespace JoshMkhariPROG7312Game.Views
                 ReplacingBooks.Children.Add(arrow);
             }
             _borderModel = new BorderModel(0);
-            _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,10,0);
+            _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,10,0, new HexagonModel());
             
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
             foreach (Border border in _borderModel.CallBlockBordersList)
@@ -592,7 +593,7 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void BtnReset_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _borderModel.PlaceBlocksAtStartPositions();
+            _borderModel.PlaceBlocksAtStartPositions(new HexagonModel());
             _replaceBooksViewModel.GameCounts[0] = 0;
             TxtMovesCount.Content = "Moves: " + _replaceBooksViewModel.GameCounts[0];
             _replaceBooksViewModel.InitializeTopAndBottomStacks();

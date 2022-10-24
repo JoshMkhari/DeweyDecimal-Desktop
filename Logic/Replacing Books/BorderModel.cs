@@ -35,7 +35,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     //https://www.rapidtables.com/convert/color/hex-to-rgb.html
                     break;
                 }
-                case 1:
+                default:
                 {
                     BorderInitialLeft = 185;
                     AnswerBlockBordersList = new List<Border>();
@@ -47,8 +47,12 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 
         public void CreateQuestionBlocks(QuestionsAnswersModel questionsAnswersModel, int mode, HexagonModel hexagonModel)
         {
-
-            for (int i = 0; i < 7; i++)
+            int repeatSize = 4;
+            if (mode == 0)
+            {
+                repeatSize = 7;
+            }
+            for (int i = 0; i < repeatSize; i++)
             {
                 Border rectBlock = new Border
                 {
@@ -59,30 +63,42 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     Height = 22
                     //Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
                 };
-                string textForBlockMode = mode == 0 ? questionsAnswersModel._ChosenSet.Keys.ElementAt(i) : questionsAnswersModel._ChosenSet.Values.ElementAt(i).ToString();
+
                 TextBlock textForBlock = new TextBlock
                 {
                     HorizontalAlignment = HorizontalAlignment.Center,
                     Foreground = Brushes.White,
-                    Text = textForBlockMode
+                    Text = questionsAnswersModel._ChosenSet.Keys.ElementAt(i)
                 };
                 rectBlock.Child = textForBlock;
                 Panel.SetZIndex(rectBlock,6);
                 AnswerBlockBordersList.Add(rectBlock);
             }
-            PlaceQuestionsAtPositions(hexagonModel); 
+            PlaceQuestionsAtPositions(hexagonModel, mode); 
         }
 
-        private void PlaceQuestionsAtPositions(HexagonModel hexagonModel)
+        private void PlaceQuestionsAtPositions(HexagonModel hexagonModel,int mode)
         {
             //Those center positions the ball uses for targets
-            for (int i = 0; i < 7; i++)
+            if (mode == 0)
             {
-                Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
-                Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
+                for (int i = 0; i < 7; i++)
+                {
+                    Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
+                    Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
+                } 
             }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft+(i*113));
+                    Canvas.SetTop(CallBlockBordersList.ElementAt(i),465);
+                } 
+            }
+
         }
-        public void AssignValuesToBlocks(List<double> numbers, List<string> texts, int numItems, int start)
+        public void AssignValuesToBlocks(List<double> numbers, List<string> texts, int numItems, int start,HexagonModel hexagonModel)
         {
             for (int i = start; i < numItems; i++)
             {
@@ -105,12 +121,11 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 rectBlock.Child = textForBlock;
                 CallBlockBordersList.Add(rectBlock);
             }
-            PlaceBlocksAtStartPositions(); 
+            PlaceBlocksAtStartPositions(hexagonModel); 
         }
 
-        public void PlaceBlocksAtStartPositions()
+        public void PlaceBlocksAtStartPositions(HexagonModel hexagonModel)
         {
-
             switch (currentMode)
             {
                 case 0:
@@ -137,6 +152,15 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     {
                         Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft+(i*113));
                         Canvas.SetTop(CallBlockBordersList.ElementAt(i),465);
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    for (int i = 0; i < 7; i++)
+                    {
+                        Canvas.SetLeft(CallBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
+                        Canvas.SetTop(CallBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
                     }
                     break;
                 }

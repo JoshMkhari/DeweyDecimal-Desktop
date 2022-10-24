@@ -14,7 +14,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         private List<string> _descriptonsList;
         private List<int> _numbersList;
 
-        public QuestionsAnswersModel(List<double> numbers)
+        public QuestionsAnswersModel(List<double> numbers, int mode)
         {
             _descriptonsList = new List<string>();
             _numbersList = new List<int>();
@@ -22,18 +22,17 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             
             PopulateDescriptions();
             PopulateNumbers();
-            PopulateChosenSet(numbers);
+            PopulateChosenSet(numbers, mode);
 
         }
 
-        private void PopulateChosenSet(List<double> numbers)
+        private void PopulateChosenSet(List<double> numbers,int mode)
         {
             IDictionary<string, int> Set = new Dictionary<string, int>();
             for (int i = 0; i < 4; i++)
             {
                 double changed = Math.Floor(numbers.ElementAt(i));
-                int workWith = (int)Math.Round(changed - 50);
-                int rounded = ((workWith + 99) / 100 ) * 100;
+                int rounded = (((int)changed) / 100 ) * 100;
                 bool found = false;
                 for (int j = 0; j < _numbersList.Count; j++)
                 {
@@ -50,32 +49,36 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 }
                 
             }
-            Debug.WriteLine("SetCOunt " + Set.Count);
-            int repeat = 3;
 
-            while (Set.Count+repeat!=7)
+            int repeatSize = 4;
+            if (mode == 0)
             {
-                repeat++;
+                repeatSize = 7;
+                int repeat = 3;
+
+                while (Set.Count+repeat!=7)
+                {
+                    repeat++;
+                }
+                for (int i = 0; i < repeat; i++)
+                {
+                    var rnd = new Random();
+                    int chosenIndex = rnd.Next(_descriptonsList.Count - 1);
+                    Set.Add(_descriptonsList.ElementAt(chosenIndex),_numbersList.ElementAt(chosenIndex));
+                    _numbersList.RemoveAt(chosenIndex);
+                    _descriptonsList.RemoveAt(chosenIndex);
+                }
+
             }
-            for (int i = 0; i < repeat; i++)
+            for (int i = 0; i < repeatSize; i++)
             {
                 var rnd = new Random();
-                int chosenIndex = rnd.Next(_descriptonsList.Count - 1);
-                Set.Add(_descriptonsList.ElementAt(chosenIndex),_numbersList.ElementAt(chosenIndex));
-                _numbersList.RemoveAt(chosenIndex);
-                _descriptonsList.RemoveAt(chosenIndex);
-            }
-            Debug.WriteLine("SetCOunt " + Set.Count);
-            for (int i = 0; i < 7; i++)
-            {
-                var rnd = new Random();
-                Debug.WriteLine("SetCOunt " + Set.Count);
                 int chosenIndex = rnd.Next(Set.Count - 1);
                 _ChosenSet.Add(Set.ElementAt(chosenIndex));
                 Set.Remove(Set.Keys.ElementAt(chosenIndex));
             }
 
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < repeatSize; i++)
             {
                 Debug.WriteLine("Chosen Set 0 : " + _ChosenSet.Keys.ElementAt(i) + " value " + _ChosenSet.Values.ElementAt(i) );
             }

@@ -28,7 +28,9 @@ namespace JoshMkhariPROG7312Game.Views
 
         private int _textBlockNum;
 
-        private int gameMode;
+        private int _numBasketBallsAvailable;
+
+        private int _gameMode;
         private Point _ballDestination,_ballStartLocation;
 
         private bool _aimSet, _ballChosen, _targetReached, _ballStop;
@@ -39,27 +41,30 @@ namespace JoshMkhariPROG7312Game.Views
         private QuestionsAnswersModel _questionsAnswersModel;
         private BorderModel _borderModel;
         private ReplaceBooksViewModel _replaceBooksViewModel;
+        private BasketBallModel _basketBallModel;
+        private HexagonModel _hexagonModel;
         public IdentifyingAreas()
         {
             InitializeComponent();
             //https://stackoverflow.com/questions/11485843/how-can-i-create-hexagon-menu-using-wpf
 
-            gameMode = 0;
-            HexagonModel hexagonModel = new HexagonModel();
+            _gameMode = 0;
+            _numBasketBallsAvailable = 4; 
+            _hexagonModel = new HexagonModel();
             _aimSet = false;
             _ballChosen = false;
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
-            foreach (Path hex in hexagonModel.HexagonList)
+            foreach (Path hex in _hexagonModel.HexagonList)
             {
                 hex.MouseLeftButtonDown += OnHexClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
                 IdentifyAreaCanvas.Children.Add(hex);
                 
             }
             
-            BasketBallModel basketBallModel = new BasketBallModel();
+            _basketBallModel = new BasketBallModel();
             
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
-            foreach (Image currentBall in basketBallModel.BallLocationList)
+            foreach (Image currentBall in _basketBallModel.BallLocationList)
             {
                 currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
                 IdentifyAreaCanvas.Children.Add(currentBall);
@@ -74,28 +79,16 @@ namespace JoshMkhariPROG7312Game.Views
                 IdentifyAreaCanvas.Children.Add(currentRim);
                 
             }
+
             
            
             //_questionsAnswersModel._ChosenSet;
+ 
             
-            _replaceBooksViewModel = new ReplaceBooksViewModel(1); 
-            _borderModel = new BorderModel(1);
-            _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,4,0);
+            CreateQuestionsAnswers();
             
-            _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers);
-            foreach (Border currentBorder in _borderModel.CallBlockBordersList)
-            {
-                //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
-                IdentifyAreaCanvas.Children.Add(currentBorder);
-                
-            }
-            _borderModel.CreateQuestionBlocks(_questionsAnswersModel,gameMode,hexagonModel);
-            foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)
-            {
-                //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
-                IdentifyAreaCanvas.Children.Add(currentBorder);
-                
-            }
+            
+
             _ballTimer = new DispatcherTimer();
             _ballTimer.Tick += ballTimer_Tick;
 
@@ -185,12 +178,18 @@ namespace JoshMkhariPROG7312Game.Views
                     _scored++;
                     _currentBall.Visibility = Visibility.Collapsed;
                     _borderModel.CallBlockBordersList.ElementAt(_textBlockNum).Visibility = Visibility.Collapsed;
+                    _numBasketBallsAvailable--;
+                    
                 }
                 else
                 {
                     _scored--;
                 }
                 TxtScoredCount.Content = _scored;
+                if (_numBasketBallsAvailable == 0)
+                {
+                    ChangeMode();
+                }
             }
             else
             {
@@ -200,11 +199,95 @@ namespace JoshMkhariPROG7312Game.Views
             
         }
 
+        private void ChangeMode()
+        {
+            if (_gameMode == 0)
+            {
+                _gameMode++;
+            }
+            else
+            {
+                _gameMode = 0;
+            }
+
+            foreach (Image currentBall in _basketBallModel.BallLocationList)
+            {
+                currentBall.Visibility = Visibility.Visible;
+            }
+            
+            //Remove CallBlocks
+            foreach (Image currentBall in _basketBallModel.BallLocationList)
+            {
+                currentBall.Visibility = Visibility.Visible;
+            }
+            foreach (Border currentBorder in _borderModel.CallBlockBordersList)
+            {
+                IdentifyAreaCanvas.Children.Remove(currentBorder);
+                
+            }
+            foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)
+            {
+                IdentifyAreaCanvas.Children.Remove(currentBorder);
+            }
+
+            CreateQuestionsAnswers();
+        }
+
+        private void CreateQuestionsAnswers()
+        {
+                       
+            _replaceBooksViewModel = new ReplaceBooksViewModel(1); 
+            
+            if (_gameMode == 0)
+            {
+                _borderModel = new BorderModel(1);
+                _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,4,0, new HexagonModel());
+            
+                _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers,_gameMode);
+                
+                foreach (Border currentBorder in _borderModel.CallBlockBordersList)
+                {
+                    //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                    IdentifyAreaCanvas.Children.Add(currentBorder);
+                
+                }
+                _borderModel.CreateQuestionBlocks(_questionsAnswersModel,_gameMode,_hexagonModel);
+                foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)
+                {
+                    //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                    IdentifyAreaCanvas.Children.Add(currentBorder);
+                
+                }   
+            }
+            else
+            {
+                Debug.WriteLine("We in ELSE");
+                _borderModel = new BorderModel(2);
+                _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,7,0, _hexagonModel);
+                
+                foreach (Border currentBorder in _borderModel.CallBlockBordersList)
+                {
+                    //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                    IdentifyAreaCanvas.Children.Add(currentBorder);
+                }
+                
+                _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers,_gameMode);
+                _borderModel.CreateQuestionBlocks(_questionsAnswersModel,_gameMode,_hexagonModel);
+                foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)
+                {
+                    //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                    IdentifyAreaCanvas.Children.Add(currentBorder);
+                
+                }   
+            }
+
+        }
+
         private bool IsCorrectAnswer()
         {
             int hexNum = Convert.ToInt32(_destination.Name.Substring(3)); 
 
-            if (gameMode == 0)//Basketballs have callnumbers beneath them
+            if (_gameMode == 0)//Basketballs have callnumbers beneath them
             {
                return _questionsAnswersModel.CheckAnswerNumber(_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum),
                     _questionsAnswersModel._ChosenSet,hexNum);
