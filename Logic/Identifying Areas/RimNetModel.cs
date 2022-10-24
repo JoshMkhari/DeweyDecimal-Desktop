@@ -28,7 +28,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 {
                     Width = 80,
                     Height = 80,
-                    Name = "Ball"+i,
+                    Name = "Net"+i,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     VerticalAlignment = VerticalAlignment.Bottom,
                     Source = new BitmapImage(new Uri(@"/Theme/Assets/net.png", UriKind.Relative))

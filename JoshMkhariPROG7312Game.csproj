@@ -205,5 +205,11 @@
   <ItemGroup>
     <Resource Include="Theme\Assets\net.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\verticalGuage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\GuageLevel.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

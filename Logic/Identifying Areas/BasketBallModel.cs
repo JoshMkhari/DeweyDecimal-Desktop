@@ -33,7 +33,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 };
                 Canvas.SetLeft(currentImage,leftValues[i]); 
                 Canvas.SetTop(currentImage,400);
-                Panel.SetZIndex(currentImage,6);
+                Panel.SetZIndex(currentImage,11);
                 BallLocationList.Add(currentImage);
             }
 

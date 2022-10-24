@@ -26,7 +26,7 @@ namespace JoshMkhariPROG7312Game.Views
         private bool _aimSet, _ballChosen;
         private Image _currentBall;
         private Path _destination;
-        private System.Windows.Threading.DispatcherTimer _ballTimer;
+        private System.Windows.Threading.DispatcherTimer _ballTimer, _guageTimer;
         public IdentifyingAreas()
         {
             InitializeComponent();
@@ -102,6 +102,9 @@ namespace JoshMkhariPROG7312Game.Views
                 _aimSet = false;
                 _ballChosen = false;
                 _ballTimer.Stop();
+                
+                //To send ball back down through
+                Panel.SetZIndex(_currentBall,7);
             }
         }
         
@@ -136,6 +139,7 @@ namespace JoshMkhariPROG7312Game.Views
             //https://stackoverflow.com/questions/67609123/wpf-c-sharp-create-click-event-for-dynamically-created-button
             if(_ballChosen){return;}
             Image currentBall = (Image)sender;
+            
             string name = currentBall.Name;
             _currentBall = currentBall;
             _ballChosen = true;

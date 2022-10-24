@@ -25,8 +25,25 @@
                VerticalAlignment="Bottom" 
                Canvas.Top="293" 
                Canvas.Left="7"/>
-        
-        
+
+        <Image Width="46"
+               Name="indicatorLevel"
+               Height="35"
+               Panel.ZIndex="5"
+               Source="/Theme/Assets/GuageLevel.png"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom" 
+               Canvas.Top="415" 
+               Canvas.Left="653"/>
+
+        <Image Width="46"
+               Height="224"
+               Panel.ZIndex="1"
+               Source="/Theme/Assets/verticalGuage.png"
+               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom" 
+               Canvas.Top="236" 
+               Canvas.Left="683"/>
 
         <Label FontSize="30"
                Name="TxtMissedCount"
@@ -50,7 +67,7 @@
                Foreground="Green"
                Canvas.Left="177"
                Canvas.Top="348" RenderTransformOrigin="2.671,1.37" />
-        
+
 
         <Rectangle Width="70"
                    Height="20"
@@ -74,15 +91,7 @@
                    Canvas.Top="465">
 
         </Rectangle>
-        
-        <Image Width="60"
-            Height="60"
-            Panel.ZIndex="1"
-            Source="/JoshMkhariPROG7312Game;component/Theme/Assets/net.png"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom" 
-            Canvas.Top="200" 
-            Canvas.Left="530"/>
+
 
 
     </Canvas>
