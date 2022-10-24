@@ -125,8 +125,9 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         public bool CheckAnswerNumber(double input,IDictionary<string, int> _set,int answerLocation )
         {
             double changed = Math.Floor(input);
-            int workWith = (int)Math.Round(changed);
-            int rounded = ((workWith + 99) / 100 ) * 100;
+            Debug.WriteLine( " This changed " + changed);
+            int rounded = (((int)changed) / 100 ) * 100;
+            Debug.WriteLine( " This rounded " + rounded);
             
             Debug.WriteLine("Comparing " + rounded + " vs " + _set.Values.ElementAt(answerLocation));
             if (rounded == _set.Values.ElementAt(answerLocation))
