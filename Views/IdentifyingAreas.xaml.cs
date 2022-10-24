@@ -64,29 +64,30 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void ballTimer_Tick(object sender, EventArgs e)
         {
-            Debug.WriteLine(Canvas.GetLeft(_currentBall));
-            Debug.WriteLine(Canvas.GetLeft(_destination));
+            Debug.WriteLine(Canvas.GetLeft(_currentBall) + " currentBall Left");
+            Debug.WriteLine(Canvas.GetLeft(_destination)+ " currentBall Top");
+
             //If ball is to right of target
-            if (Canvas.GetLeft(_currentBall)>Canvas.GetLeft(_destination))
+            if (Canvas.GetLeft(_currentBall)>_ballDestination.X)
             {
                 Canvas.SetLeft(_currentBall,Canvas.GetLeft(_currentBall)-2);
             }
             
             //If ball is to left of target
-            if (Canvas.GetLeft(_currentBall)<Canvas.GetLeft(_destination))
+            if (Canvas.GetLeft(_currentBall)<_ballDestination.X)
             {
                 Canvas.SetLeft(_currentBall,Canvas.GetLeft(_currentBall)+2);
             }
             
             //Move ball up towards target
-            if (Canvas.GetTop(_currentBall)>Canvas.GetTop(_destination))
+            if (Canvas.GetTop(_currentBall)>_ballDestination.Y)
             {
                 
                 Canvas.SetTop(_currentBall,Canvas.GetTop(_currentBall)-2);
             }
            
 
-            if (Canvas.GetLeft(_currentBall) == Canvas.GetLeft(_destination) && Canvas.GetTop(_currentBall) == Canvas.GetTop(_destination))
+            if (Canvas.GetLeft(_currentBall) == _ballDestination.X && Canvas.GetTop(_currentBall) == _ballDestination.Y)
             {
                 _aimSet = false;
                 _ballChosen = false;
@@ -99,14 +100,24 @@ namespace JoshMkhariPROG7312Game.Views
             
             if(_aimSet || !_ballChosen){return;}//Prevent user from double clicking same target
             _aimSet = true;
-            _ballTimer.Interval = new TimeSpan(0,0,0,0,1);
-            _ballTimer.Start();
+            
             
             
             //https://stackoverflow.com/questions/67609123/wpf-c-sharp-create-click-event-for-dynamically-created-button
             Path currentHex = (Path)sender;
             _destination = currentHex;
+            double left =Canvas.GetLeft(currentHex) + 30;
+            Debug.WriteLine("Left vaklue 1 Round " + left);
+            
+            double top =Canvas.GetTop(currentHex) + 30;
+            Debug.WriteLine("Top vaklue 1 Round " + top);
+            
             string name = currentHex.Name;
+            _ballDestination = new Point(left, top);
+            
+            _ballTimer.Interval = new TimeSpan(0,0,0,0,1);
+            _ballTimer.Start();
+            
             
         }
         
@@ -116,7 +127,6 @@ namespace JoshMkhariPROG7312Game.Views
             if(_ballChosen){return;}
             Image currentBall = (Image)sender;
             string name = currentBall.Name;
-            Debug.WriteLine(name + " clicked");
             _currentBall = currentBall;
             _ballChosen = true;
         }
