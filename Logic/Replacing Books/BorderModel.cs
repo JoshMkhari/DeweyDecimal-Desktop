@@ -18,11 +18,9 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
         private int[] BorderInitialTop { get; }
         public List<Border> CallBlockBordersList { get; }
         public List<Border> AnswerBlockBordersList { get; }
-        private int currentMode;
         private ColoursModel _coloursModel;
         public BorderModel(int mode)
         {
-            currentMode = mode;
             CallBlockBordersList = new List<Border>();
             _coloursModel = new ColoursModel();
             switch (mode)
@@ -45,50 +43,66 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 
         }
 
-        public void CreateQuestionBlocks(QuestionsAnswersModel questionsAnswersModel, int mode, HexagonModel hexagonModel)
+        public void CreateQuestionBlocks(QuestionsAnswersModel questionsAnswersModel, int mode, HexagonModel hexagonModel,List<double> numbers, List<string> texts)
         {
-            int repeatSize = 4;
             if (mode == 0)
             {
-                repeatSize = 7;
-            }
-            for (int i = 0; i < repeatSize; i++)
-            {
-                Border rectBlock = new Border
+                for (int i = 0; i < 4; i++)
                 {
-                    //rectBlock.Name = "border" + i;
-                    BorderThickness = new Thickness(2),
-                    BorderBrush =Brushes.White,
-                    Width = 80,
-                    Height = 22
-                    //Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
-                };
+                    Border rectBlock = new Border
+                    {
+                        //rectBlock.Name = "border" + i;
+                        BorderThickness = new Thickness(2),
+                        BorderBrush =Brushes.White,
+                        Width = 80,
+                        Height = 22
+                        //Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                    };
 
-                TextBlock textForBlock = new TextBlock
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Foreground = Brushes.White,
-                    Text = questionsAnswersModel._ChosenSet.Keys.ElementAt(i)
-                };
-                rectBlock.Child = textForBlock;
-                Panel.SetZIndex(rectBlock,6);
-                AnswerBlockBordersList.Add(rectBlock);
+                    TextBlock textForBlock = new TextBlock
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Foreground = Brushes.White,
+                        Text = questionsAnswersModel._ChosenSet.Keys.ElementAt(i)
+                    };
+                    rectBlock.Child = textForBlock;
+                    Panel.SetZIndex(rectBlock,6);
+                    AnswerBlockBordersList.Add(rectBlock);
+                }
             }
+            else
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    Border rectBlock = new Border
+                    {
+                        //rectBlock.Name = "border" + i;
+                        BorderThickness = new Thickness(2),
+                        BorderBrush = new SolidColorBrush(Colors.Black),
+                        Width = 80,
+                        Height = 22,
+                        Background = new SolidColorBrush(Color.FromRgb(_coloursModel.ColourDefaults[0][i], _coloursModel.ColourDefaults[1][i], _coloursModel.ColourDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                    };
+
+                    TextBlock textForBlock = new TextBlock
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Text = NumberFormatter(numbers.ElementAt(i)) + 
+                               texts.ElementAt(i)
+                    };
+                    rectBlock.Child = textForBlock;
+                    CallBlockBordersList.Add(rectBlock);
+                }
+            }
+
             PlaceQuestionsAtPositions(hexagonModel, mode); 
         }
 
         private void PlaceQuestionsAtPositions(HexagonModel hexagonModel,int mode)
         {
+            
             //Those center positions the ball uses for targets
             if (mode == 0)
-            {
-                for (int i = 0; i < 7; i++)
-                {
-                    Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
-                    Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
-                } 
-            }
-            else
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -96,36 +110,74 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     Canvas.SetTop(CallBlockBordersList.ElementAt(i),465);
                 } 
             }
-
-        }
-        public void AssignValuesToBlocks(List<double> numbers, List<string> texts, int numItems, int start,HexagonModel hexagonModel)
-        {
-            for (int i = start; i < numItems; i++)
+            else
             {
-                Border rectBlock = new Border
+                for (int i = 0; i < 7; i++)
                 {
-                    //rectBlock.Name = "border" + i;
-                    BorderThickness = new Thickness(2),
-                    BorderBrush = new SolidColorBrush(Colors.Black),
-                    Width = 80,
-                    Height = 22,
-                    Background = new SolidColorBrush(Color.FromRgb(_coloursModel.ColourDefaults[0][i], _coloursModel.ColourDefaults[1][i], _coloursModel.ColourDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
-                };
 
-                TextBlock textForBlock = new TextBlock
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Text = NumberFormatter(numbers.ElementAt(i)) + 
-                           texts.ElementAt(i)
-                };
-                rectBlock.Child = textForBlock;
-                CallBlockBordersList.Add(rectBlock);
+                    Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
+                    Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
+                } 
             }
-            PlaceBlocksAtStartPositions(hexagonModel); 
+
+        }
+        public void AssignValuesToBlocks(List<double> numbers, List<string> texts, int numItems, int start,HexagonModel hexagonModel, int mode)
+        {
+            if (mode == 0)
+            {
+                for (int i = start; i < numItems; i++)
+                {
+                    Border rectBlock = new Border
+                    {
+                        //rectBlock.Name = "border" + i;
+                        BorderThickness = new Thickness(2),
+                        BorderBrush = new SolidColorBrush(Colors.Black),
+                        Width = 80,
+                        Height = 22,
+                        Background = new SolidColorBrush(Color.FromRgb(_coloursModel.ColourDefaults[0][i], _coloursModel.ColourDefaults[1][i], _coloursModel.ColourDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                    };
+
+                    TextBlock textForBlock = new TextBlock
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Text = NumberFormatter(numbers.ElementAt(i)) + 
+                               texts.ElementAt(i)
+                    };
+                    rectBlock.Child = textForBlock;
+                    CallBlockBordersList.Add(rectBlock);
+                }
+            }
+            else
+            {
+                for (int i = start; i < numItems; i++)
+                {
+                    Border rectBlock = new Border
+                    {
+                        //rectBlock.Name = "border" + i;
+                        BorderThickness = new Thickness(2),
+                        BorderBrush = new SolidColorBrush(Colors.Black),
+                        Width = 80,
+                        Height = 22,
+                        Background = new SolidColorBrush(Color.FromRgb(_coloursModel.ColourDefaults[0][i], _coloursModel.ColourDefaults[1][i], _coloursModel.ColourDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+                    };
+
+                    TextBlock textForBlock = new TextBlock
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Foreground = Brushes.White,
+                        Text = texts.ElementAt(i)
+                    };
+                    rectBlock.Child = textForBlock;
+                    CallBlockBordersList.Add(rectBlock);
+                }
+            }
+      
+            PlaceBlocksAtStartPositions(hexagonModel, mode); 
         }
 
-        public void PlaceBlocksAtStartPositions(HexagonModel hexagonModel)
+        public void PlaceBlocksAtStartPositions(HexagonModel hexagonModel, int currentMode)
         {
+            Debug.WriteLine("This is current modfe " + currentMode);
             switch (currentMode)
             {
                 case 0:
