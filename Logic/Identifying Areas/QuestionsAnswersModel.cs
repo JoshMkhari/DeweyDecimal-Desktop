@@ -14,7 +14,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         private List<string> _descriptonsList;
         private List<int> _numbersList;
 
-        public QuestionsAnswersModel()
+        public QuestionsAnswersModel(List<double> numbers)
         {
             _descriptonsList = new List<string>();
             _numbersList = new List<int>();
@@ -22,13 +22,35 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             
             PopulateDescriptions();
             PopulateNumbers();
-            PopulateChosenSet();
+            PopulateChosenSet(numbers);
 
         }
 
-        private void PopulateChosenSet()
+        private void PopulateChosenSet(List<double> numbers)
         {
-            for (int i = 0; i < 11; i++)
+            for (int i = 0; i < 4; i++)
+            {
+                double changed = Math.Floor(numbers.ElementAt(i));
+                int workWith = (int)Math.Round(changed - 50);
+                int rounded = ((workWith + 99) / 100 ) * 100;
+                bool found = false;
+                for (int j = 0; j < _numbersList.Count; j++)
+                {
+                    if (rounded == _numbersList.ElementAt(j))
+                    {
+                        if (!found)
+                        {
+                            _ChosenSet.Add(_descriptonsList.ElementAt(j),_numbersList.ElementAt(j));
+                            found = true;
+                        }
+                        _numbersList.RemoveAt(j);
+                        _descriptonsList.RemoveAt(j);
+                    }
+                }
+                
+            }
+
+            for (int i = 0; i < 3; i++)
             {
                 var rnd = new Random();
                 int chosenIndex = rnd.Next(_descriptonsList.Count - 1);
@@ -36,6 +58,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 _numbersList.RemoveAt(chosenIndex);
                 _descriptonsList.RemoveAt(chosenIndex);
             }
+            
         }
         
         
@@ -79,18 +102,16 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             return true;
         }
         
-        public bool CheckAnswerNumber(double input,IDictionary<string, int> _set  )
+        public bool CheckAnswerNumber(double input,IDictionary<string, int> _set,int answerLocation )
         {
             double changed = Math.Floor(input);
             int workWith = (int)Math.Round(changed - 50);
             int rounded = ((workWith + 99) / 100 ) * 100;
-            for (int i = 0; i < _set.Count; i++)
+            
+            Debug.WriteLine("Comparing " + rounded + " vs " + _set.Values.ElementAt(answerLocation));
+            if (rounded == _set.Values.ElementAt(answerLocation))
             {
-                Debug.WriteLine("Lets do this " + rounded + " vs " + _set.Values.ElementAt(i));
-                if (rounded == _set.Values.ElementAt(i))
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }

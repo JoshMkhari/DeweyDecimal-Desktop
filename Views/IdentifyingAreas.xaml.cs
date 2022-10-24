@@ -75,13 +75,14 @@ namespace JoshMkhariPROG7312Game.Views
                 
             }
             
-            _questionsAnswersModel = new QuestionsAnswersModel();
+           
             //_questionsAnswersModel._ChosenSet;
             
             _replaceBooksViewModel = new ReplaceBooksViewModel(1); 
             _borderModel = new BorderModel(1);
             _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,4,0);
             
+            _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers);
             foreach (Border currentBorder in _borderModel.CallBlockBordersList)
             {
                 //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
@@ -199,11 +200,12 @@ namespace JoshMkhariPROG7312Game.Views
 
         private bool IsCorrectAnswer()
         {
+            int hexNum = Convert.ToInt32(_destination.Name.Substring(3)); 
 
             if (gameMode == 0)//Basketballs have callnumbers beneath them
             {
                return _questionsAnswersModel.CheckAnswerNumber(_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum),
-                    _questionsAnswersModel._ChosenSet);
+                    _questionsAnswersModel._ChosenSet,hexNum);
             }
 
             //return _questionsAnswersModel.CheckAnswerString(_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum),

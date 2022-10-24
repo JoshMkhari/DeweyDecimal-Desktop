@@ -47,6 +47,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 
         public void CreateQuestionBlocks(QuestionsAnswersModel questionsAnswersModel, int mode, HexagonModel hexagonModel)
         {
+
             for (int i = 0; i < 7; i++)
             {
                 Border rectBlock = new Border
