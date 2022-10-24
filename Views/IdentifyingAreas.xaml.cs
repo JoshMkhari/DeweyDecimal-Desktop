@@ -23,9 +23,9 @@ namespace JoshMkhariPROG7312Game.Views
         private int _currentRound = 0;
 
         private int _gaugeSpeed = 2;
-        private Point _ballDestination;
+        private Point _ballDestination,_ballStartLocation;
 
-        private bool _aimSet, _ballChosen;
+        private bool _aimSet, _ballChosen, _targetReached, _ballStop;
         private Image _currentBall;
         private Path _destination;
         private DispatcherTimer _ballTimer, _gaugeTimer;
@@ -111,14 +111,20 @@ namespace JoshMkhariPROG7312Game.Views
                 Canvas.SetTop(_currentBall,Canvas.GetTop(_currentBall)-2);
             }
 
-            if (Canvas.GetLeft(_currentBall) == _ballDestination.X && Canvas.GetTop(_currentBall) == _ballDestination.Y)
+            if (Canvas.GetLeft(_currentBall) == _ballDestination.X 
+                && Canvas.GetTop(_currentBall) == _ballDestination.Y)
             {
-                _aimSet = false;
-                _ballChosen = false;
-                _ballTimer.Stop();
-                
                 //To send ball back down through
                 Panel.SetZIndex(_currentBall,7);
+                if (_ballStop)
+                {
+                    stopBall();
+                }
+                else
+                {
+                    _ballDestination.Y += 50;
+                    _ballStop = true;
+                }
             }
 
             if (Canvas.GetLeft(_currentBall) < 0
@@ -126,22 +132,43 @@ namespace JoshMkhariPROG7312Game.Views
                 || Canvas.GetTop(_currentBall) < 0
                 || Canvas.GetTop(_currentBall) >500)
             {
-                _aimSet = false;
-                _ballChosen = false;
-                _ballTimer.Stop();
+                stopBall();
+            }
+            //Move ball down through net
+            if (Canvas.GetTop(_currentBall)<_ballDestination.Y)
+            {
                 
-                //To send ball back down through
-                Panel.SetZIndex(_currentBall,7);
+                Canvas.SetTop(_currentBall,Canvas.GetTop(_currentBall)+2);
             }
         }
         
+        
+        private void stopBall()
+        {
+            _ballTimer.Stop();
+            _aimSet = false;
+            _ballChosen = false;
+            _ballStop = false;
+            Panel.SetZIndex(_currentBall,11);
+            Canvas.SetLeft(_currentBall,_ballStartLocation.X);
+            Canvas.SetTop(_currentBall,_ballStartLocation.Y);
+            if (_targetReached)
+            {
+                _scored++;
+                TxtScoredCount.Content = _scored;
+            }
+            else
+            {
+                _missed++;
+                TxtMissedCount.Content = _missed;
+            }
+            
+        }
         private void OnHexClick(object sender, RoutedEventArgs e)
         {
             
             if(_aimSet || !_ballChosen){return;}//Prevent user from double clicking same target
             _aimSet = true;
-            
-            
             
             //https://stackoverflow.com/questions/67609123/wpf-c-sharp-create-click-event-for-dynamically-created-button
             Path currentHex = (Path)sender;
@@ -166,6 +193,7 @@ namespace JoshMkhariPROG7312Game.Views
             
             string name = currentBall.Name;
             _currentBall = currentBall;
+            _ballStartLocation = new Point(Canvas.GetLeft(_currentBall), Canvas.GetTop(_currentBall));
             _ballChosen = true;
         }
 
@@ -189,17 +217,8 @@ namespace JoshMkhariPROG7312Game.Views
             Debug.WriteLine(" Guage value " + gauge);
             var rnd = new Random();
 
-            
-            
-            
             int updateAccuracy = 0;
-            
-            
-            if (gauge < 250)
-            {
-                _scored++;
-            }
-            
+
             if (gauge < 300 && gauge > 250)
             {
                 updateAccuracy = 20;
@@ -216,25 +235,26 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 updateAccuracy = 100;
             }
-
+            _targetReached = true;
             if (updateAccuracy != 0)
             {
+                _targetReached = false;
                 int both = rnd.Next(1, 10);
                 if (both % 2 == 0)
                 {
-                    _ballDestination.X += rnd.Next(20, updateAccuracy);
-                    _ballDestination.Y += rnd.Next(20, updateAccuracy);
+                    _ballDestination.X += MakeEven(rnd.Next(20, updateAccuracy));
+                    _ballDestination.Y += MakeEven(rnd.Next(20, updateAccuracy));
                 }
                 else
                 {
                     int one = rnd.Next(1, 2);
                     if (one == 1)
                     {
-                        _ballDestination.X += rnd.Next(20, updateAccuracy);
+                        _ballDestination.X += MakeEven(rnd.Next(20, updateAccuracy));
                     }
                     else
                     {
-                        _ballDestination.Y += rnd.Next(20, updateAccuracy); 
+                        _ballDestination.Y += MakeEven(rnd.Next(20, updateAccuracy)); 
                     }
                 }
             }
@@ -244,6 +264,11 @@ namespace JoshMkhariPROG7312Game.Views
             Debug.WriteLine(" Ball destination Y at end " + _ballDestination.Y);
             _ballTimer.Interval = new TimeSpan(0,0,0,0,1);
             _ballTimer.Start();
+        }
+
+        private int MakeEven(int num)
+        {
+            return num % 2 == 0 ? num : num++;
         }
     }
 }
