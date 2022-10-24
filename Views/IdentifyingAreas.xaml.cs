@@ -149,6 +149,7 @@ namespace JoshMkhariPROG7312Game.Views
             _aimSet = false;
             _ballChosen = false;
             _ballStop = false;
+            Canvas.SetTop(indicatorLevel,424);
             Panel.SetZIndex(_currentBall,11);
             Canvas.SetLeft(_currentBall,_ballStartLocation.X);
             Canvas.SetTop(_currentBall,_ballStartLocation.Y);
@@ -199,13 +200,12 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void IdentifyAreaCanvas_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Space)
-            {
-                //Stop Gauge and store gauge value
-                _gaugeTimer.Stop();
-                SetTargetAccuracy(Canvas.GetTop(indicatorLevel));
-
-            }
+            if (!_aimSet|| !_ballChosen) return;
+            
+            if (e.Key != Key.Space) return;
+            //Stop Gauge and store gauge value
+            _gaugeTimer.Stop();
+            SetTargetAccuracy(Canvas.GetTop(indicatorLevel));
         }
 
         private void SetTargetAccuracy(double gauge)
