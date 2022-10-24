@@ -50,8 +50,14 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 }
                 
             }
+            Debug.WriteLine("SetCOunt " + Set.Count);
+            int repeat = 3;
 
-            for (int i = 0; i < 3; i++)
+            while (Set.Count+repeat!=7)
+            {
+                repeat++;
+            }
+            for (int i = 0; i < repeat; i++)
             {
                 var rnd = new Random();
                 int chosenIndex = rnd.Next(_descriptonsList.Count - 1);
@@ -59,15 +65,20 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 _numbersList.RemoveAt(chosenIndex);
                 _descriptonsList.RemoveAt(chosenIndex);
             }
-
+            Debug.WriteLine("SetCOunt " + Set.Count);
             for (int i = 0; i < 7; i++)
             {
                 var rnd = new Random();
+                Debug.WriteLine("SetCOunt " + Set.Count);
                 int chosenIndex = rnd.Next(Set.Count - 1);
                 _ChosenSet.Add(Set.ElementAt(chosenIndex));
                 Set.Remove(Set.Keys.ElementAt(chosenIndex));
             }
-            
+
+            for (int i = 0; i < 7; i++)
+            {
+                Debug.WriteLine("Chosen Set 0 : " + _ChosenSet.Keys.ElementAt(i) + " value " + _ChosenSet.Values.ElementAt(i) );
+            }
         }
         
         
@@ -114,7 +125,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         public bool CheckAnswerNumber(double input,IDictionary<string, int> _set,int answerLocation )
         {
             double changed = Math.Floor(input);
-            int workWith = (int)Math.Round(changed - 50);
+            int workWith = (int)Math.Round(changed);
             int rounded = ((workWith + 99) / 100 ) * 100;
             
             Debug.WriteLine("Comparing " + rounded + " vs " + _set.Values.ElementAt(answerLocation));
