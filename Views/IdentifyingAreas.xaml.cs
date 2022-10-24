@@ -54,6 +54,16 @@ namespace JoshMkhariPROG7312Game.Views
                 
             }
 
+            RimNetModel rimNetModel = new RimNetModel();
+            //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
+            foreach (Image currentRim in rimNetModel.NetLocationList)
+            {
+                //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                IdentifyAreaCanvas.Children.Add(currentRim);
+                
+            }
+            
+
             //BorderModel borderModel = new BorderModel(1);
             //borderModel.AssignValuesToBlocks();
             
