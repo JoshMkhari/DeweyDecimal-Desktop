@@ -116,21 +116,17 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             _numbersList.Add(900);
         }
 
-        public bool CheckAnswerString(String input,IDictionary<string, int> _set  )
+        public bool CheckAnswerString(String input,IDictionary<string, int> set  )
         {
 
             return true;
         }
         
-        public bool CheckAnswerNumber(double input,IDictionary<string, int> _set,int answerLocation )
+        public bool CheckAnswerNumber(double input,IDictionary<string, int> set,int answerLocation )
         {
             double changed = Math.Floor(input);
-            Debug.WriteLine( " This changed " + changed);
             int rounded = (((int)changed) / 100 ) * 100;
-            Debug.WriteLine( " This rounded " + rounded);
-            
-            Debug.WriteLine("Comparing " + rounded + " vs " + _set.Values.ElementAt(answerLocation));
-            if (rounded == _set.Values.ElementAt(answerLocation))
+            if (rounded == set.Values.ElementAt(answerLocation))
             {
                 return true;
             }

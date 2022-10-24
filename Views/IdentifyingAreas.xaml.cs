@@ -182,7 +182,9 @@ namespace JoshMkhariPROG7312Game.Views
                 //Check ball number to see which text block it belongs to
                 if (IsCorrectAnswer())
                 {
-                    _scored++; 
+                    _scored++;
+                    _currentBall.Visibility = Visibility.Collapsed;
+                    _borderModel.CallBlockBordersList.ElementAt(_textBlockNum).Visibility = Visibility.Collapsed;
                 }
                 else
                 {
@@ -202,7 +204,6 @@ namespace JoshMkhariPROG7312Game.Views
         {
             int hexNum = Convert.ToInt32(_destination.Name.Substring(3)); 
 
-            Debug.WriteLine("IsCorrectAnswer hex= " + hexNum + " and " +_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum));
             if (gameMode == 0)//Basketballs have callnumbers beneath them
             {
                return _questionsAnswersModel.CheckAnswerNumber(_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum),
