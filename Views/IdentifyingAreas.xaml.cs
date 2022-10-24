@@ -33,7 +33,6 @@ namespace JoshMkhariPROG7312Game.Views
         public IdentifyingAreas()
         {
             InitializeComponent();
-            IdentifyAreaCanvas.Focus();
             //https://stackoverflow.com/questions/11485843/how-can-i-create-hexagon-menu-using-wpf
 
             HexagonModel hexagonModel = new HexagonModel();
@@ -80,10 +79,9 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void gaugeTimer_Tick(object sender, EventArgs e)
         {
-            //Move ball up towards target
+            //Move Indicator up and back down
             Canvas.SetTop(indicatorLevel,Canvas.GetTop(indicatorLevel)-_gaugeSpeed);
-            //236
-            //424
+
             if (Canvas.GetTop(indicatorLevel)<236 || Canvas.GetTop(indicatorLevel)>424)
             {
                 _gaugeSpeed = -_gaugeSpeed;
@@ -92,7 +90,7 @@ namespace JoshMkhariPROG7312Game.Views
         private void ballTimer_Tick(object sender, EventArgs e)
         {
             Debug.WriteLine(Canvas.GetLeft(_currentBall) + " currentBall Left");
-            Debug.WriteLine(Canvas.GetLeft(_destination)+ " currentBall Top");
+            Debug.WriteLine(Canvas.GetTop(_currentBall)+ " currentBall Top");
 
             //If ball is to right of target
             if (Canvas.GetLeft(_currentBall)>_ballDestination.X)
@@ -112,9 +110,21 @@ namespace JoshMkhariPROG7312Game.Views
                 
                 Canvas.SetTop(_currentBall,Canvas.GetTop(_currentBall)-2);
             }
-           
 
             if (Canvas.GetLeft(_currentBall) == _ballDestination.X && Canvas.GetTop(_currentBall) == _ballDestination.Y)
+            {
+                _aimSet = false;
+                _ballChosen = false;
+                _ballTimer.Stop();
+                
+                //To send ball back down through
+                Panel.SetZIndex(_currentBall,7);
+            }
+
+            if (Canvas.GetLeft(_currentBall) < 0
+                || Canvas.GetLeft(_currentBall)> 750
+                || Canvas.GetTop(_currentBall) < 0
+                || Canvas.GetTop(_currentBall) >500)
             {
                 _aimSet = false;
                 _ballChosen = false;
@@ -137,20 +147,15 @@ namespace JoshMkhariPROG7312Game.Views
             Path currentHex = (Path)sender;
             _destination = currentHex;
             double left =Canvas.GetLeft(currentHex) + 30;
-            Debug.WriteLine("Left vaklue 1 Round " + left);
-            
+
             double top =Canvas.GetTop(currentHex) + 30;
-            Debug.WriteLine("Top vaklue 1 Round " + top);
-            
+
             string name = currentHex.Name;
             _ballDestination = new Point(left, top);
-            
-            
-            //_ballTimer.Interval = new TimeSpan(0,0,0,0,1);
-            //_ballTimer.Start();
-            
+
             _gaugeTimer.Interval = new TimeSpan(0,0,0,0,1);
             _gaugeTimer.Start();
+            IdentifyAreaCanvas.Focus();
         }
         
         private void OnBallClick(object sender, RoutedEventArgs e)
@@ -168,9 +173,77 @@ namespace JoshMkhariPROG7312Game.Views
         {
             if (e.Key == Key.Space)
             {
-                //Stop Guage and store guage value
+                //Stop Gauge and store gauge value
+                _gaugeTimer.Stop();
+                SetTargetAccuracy(Canvas.GetTop(indicatorLevel));
+
             }
         }
-        
+
+        private void SetTargetAccuracy(double gauge)
+        {
+            //236
+            //424
+            Debug.WriteLine(" Ball destination X at start " + _ballDestination.X);
+            Debug.WriteLine(" Ball destination Y at start " + _ballDestination.Y);
+            Debug.WriteLine(" Guage value " + gauge);
+            var rnd = new Random();
+
+            
+            
+            
+            int updateAccuracy = 0;
+            
+            
+            if (gauge < 250)
+            {
+                _scored++;
+            }
+            
+            if (gauge < 300 && gauge > 250)
+            {
+                updateAccuracy = 20;
+            }
+            if (gauge > 300 && gauge < 350 )
+            {
+                updateAccuracy = 40;
+            }
+            if (gauge > 350 && gauge < 400)
+            {
+                updateAccuracy = 60;
+            }
+            if (gauge > 400 )
+            {
+                updateAccuracy = 100;
+            }
+
+            if (updateAccuracy != 0)
+            {
+                int both = rnd.Next(1, 10);
+                if (both % 2 == 0)
+                {
+                    _ballDestination.X += rnd.Next(20, updateAccuracy);
+                    _ballDestination.Y += rnd.Next(20, updateAccuracy);
+                }
+                else
+                {
+                    int one = rnd.Next(1, 2);
+                    if (one == 1)
+                    {
+                        _ballDestination.X += rnd.Next(20, updateAccuracy);
+                    }
+                    else
+                    {
+                        _ballDestination.Y += rnd.Next(20, updateAccuracy); 
+                    }
+                }
+            }
+            
+            
+            Debug.WriteLine(" Ball destination X at end " + _ballDestination.X);
+            Debug.WriteLine(" Ball destination Y at end " + _ballDestination.Y);
+            _ballTimer.Interval = new TimeSpan(0,0,0,0,1);
+            _ballTimer.Start();
+        }
     }
 }
