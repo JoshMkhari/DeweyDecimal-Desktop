@@ -240,7 +240,30 @@ namespace JoshMkhariPROG7312Game.Views
             
             if (_gameMode == 0)
             {
+                Debug.WriteLine("We in 0");
                 _borderModel = new BorderModel(1);
+
+                _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,7,0, _hexagonModel,2);
+                
+                foreach (Border currentBorder in _borderModel.CallBlockBordersList)
+                {
+                    //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                    IdentifyAreaCanvas.Children.Add(currentBorder);
+                }
+                
+                _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers,_gameMode);
+                _borderModel.CreateQuestionBlocks(_questionsAnswersModel,_gameMode,_hexagonModel, _replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings);
+                foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)
+                {
+                    //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                    IdentifyAreaCanvas.Children.Add(currentBorder);
+                }
+            }
+            else
+            {
+                Debug.WriteLine("We in 1");
+                _borderModel = new BorderModel(2);
+                
                 _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers,_gameMode);
                 List<string> texts = new List<string>();
                 for (int i = 0; i < _questionsAnswersModel._ChosenSet.Count; i++)
@@ -261,28 +284,7 @@ namespace JoshMkhariPROG7312Game.Views
                     //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
                     IdentifyAreaCanvas.Children.Add(currentBorder);
                 
-                }   
-            }
-            else
-            {
-                _borderModel = new BorderModel(2);
-                
-                _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,7,0, _hexagonModel,2);
-                
-                foreach (Border currentBorder in _borderModel.CallBlockBordersList)
-                {
-                    //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
-                    IdentifyAreaCanvas.Children.Add(currentBorder);
-                }
-                
-                _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers,_gameMode);
-                _borderModel.CreateQuestionBlocks(_questionsAnswersModel,_gameMode,_hexagonModel, new List<double>(),new List<string>());
-                foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)
-                {
-                    //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
-                    IdentifyAreaCanvas.Children.Add(currentBorder);
-                
-                }   
+                }    
             }
 
         }
