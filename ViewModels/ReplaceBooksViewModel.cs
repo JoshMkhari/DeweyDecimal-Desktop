@@ -36,46 +36,52 @@ namespace JoshMkhariPROG7312Game.ViewModels
         public IDictionary<int, bool>
             ActiveAscDescStacks{ get; private set;} //Stores Set difficulty for current game
 
-        public ReplaceBooksViewModel()
+        public ReplaceBooksViewModel(int mode)
         {
-            CurrentDifficulty = 0;
-            RectangleNumber = new[] { 4, 4 };//Origin and Destination
-            //rectangleNumber 0 The rectangle that is receiving the number
-            //rectangleNumber 1 The rectangle that is sending the number
-            BottomRectCanvasYLocations =new[] { 422, 396, 369, 342, 315, 288 }; //For bottom rectangle 
-            TopRectCanvasYLocations = new[]{ 198, 171, 144, 117, 90, 63}; //For top rectangle
             CallNumbersStringValues = new List<int>();
             CallNumbers = new List<double>();
             CallNumbersStrings = new List<string>();
-            RectValueNamePair = new Dictionary<double, int>();
-            RectangleSortOrder = new[] { 'A', 'A', 'A', 'A' };
-            StackSizes = new[] { 6.0, 6.0, 6.0, 6.0 };
-            
-            GameCounts = new []{0,0};//movesCount, activatedCount
-            //_movesCount keeps track of amount of total moves
-            //_activatedBlockCount keeps track of current num of blocks that are active
-            
-            //To store initial numbers in relevant rectangle
-            //0 = top
-            //1 = bottom
-            //2 = left
-            //3 = right
-            CallNumberStacks = new List<Stack<double>>();
-            for (int i = 0; i < 4; i++)
+
+            if (mode == 0)
             {
-                CallNumberStacks.Add(new Stack<double>());
-            }
+                CallNumberStacks = new List<Stack<double>>();
+                for (int i = 0; i < 4; i++)
+                {
+                    CallNumberStacks.Add(new Stack<double>());
+                }
+                
+                CurrentDifficulty = 0;
+                RectangleNumber = new[] { 4, 4 };//Origin and Destination
+                //rectangleNumber 0 The rectangle that is receiving the number
+                //rectangleNumber 1 The rectangle that is sending the number
+                BottomRectCanvasYLocations =new[] { 422, 396, 369, 342, 315, 288 }; //For bottom rectangle 
+                TopRectCanvasYLocations = new[]{ 198, 171, 144, 117, 90, 63}; //For top rectangle
 
-            PreSetDiff = new PreSetDifficulty();
-            ActiveAscDescStacks = PreSetDiff.ChangeDifficulty(CurrentDifficulty);//Determine sort order for each stack
+                RectValueNamePair = new Dictionary<double, int>();
+                RectangleSortOrder = new[] { 'A', 'A', 'A', 'A' };
+                StackSizes = new[] { 6.0, 6.0, 6.0, 6.0 };
             
-            //RectangleSortOrder[0] = 'A';
-            //RectangleSortOrder[1] = 'A';
+                GameCounts = new []{0,0};//movesCount, activatedCount
+                //_movesCount keeps track of amount of total moves
+                //_activatedBlockCount keeps track of current num of blocks that are active
+            
+                //To store initial numbers in relevant rectangle
+                //0 = top
+                //1 = bottom
+                //2 = left
+                //3 = right
 
-            InitializeStacks();
+
+                PreSetDiff = new PreSetDifficulty();
+                ActiveAscDescStacks = PreSetDiff.ChangeDifficulty(CurrentDifficulty);//Determine sort order for each stack
+            
+                //RectangleSortOrder[0] = 'A';
+                //RectangleSortOrder[1] = 'A';
+            }
+            InitializeStacks(mode);
         }
         
-        private void InitializeStacks()
+        private void InitializeStacks(int mode)
         {
             //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
             var rnd = new Random();
@@ -91,12 +97,18 @@ namespace JoshMkhariPROG7312Game.ViewModels
                 //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
             }
             
-            for (int i = 0; i < 10; i++)
+            if (mode == 0)
             {
-                RectValueNamePair.Add(CallNumbers.ElementAt(i), i+1); //storing the value with the rectangle name
+                for (int i = 0; i < 10; i++)
+                {
+                    RectValueNamePair.Add(CallNumbers.ElementAt(i), i+1); //storing the value with the rectangle name
+                }
+
+                InitializeTopAndBottomStacks();
             }
 
-            InitializeTopAndBottomStacks();
+            
+
         }
 
         public void InitializeTopAndBottomStacks()

@@ -35,7 +35,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 }
                 case 1:
                 {
-                    BorderInitialLeft = 250;
+                    BorderInitialLeft = 185;
                     break;
                 }
             }
@@ -93,9 +93,9 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 }
                 case 1:
                 {
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < 4; i++)
                     {
-                        Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft+(i*133));
+                        Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft+(i*113));
                         Canvas.SetTop(CallBlockBordersList.ElementAt(i),465);
                     }
                     break;

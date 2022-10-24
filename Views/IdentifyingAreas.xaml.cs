@@ -9,6 +9,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using JoshMkhariPROG7312Game.Logic.Identifying_Areas;
 using JoshMkhariPROG7312Game.Logic.Replacing_Books;
+using JoshMkhariPROG7312Game.ViewModels;
 
 namespace JoshMkhariPROG7312Game.Views
 {
@@ -29,7 +30,8 @@ namespace JoshMkhariPROG7312Game.Views
         private Image _currentBall;
         private Path _destination;
         private DispatcherTimer _ballTimer, _gaugeTimer;
-        
+
+        private QuestionsAnswersModel _questionsAnswersModel;
         public IdentifyingAreas()
         {
             InitializeComponent();
@@ -65,10 +67,19 @@ namespace JoshMkhariPROG7312Game.Views
                 
             }
             
+            _questionsAnswersModel = new QuestionsAnswersModel();
+            //_questionsAnswersModel._ChosenSet;
 
-            //BorderModel borderModel = new BorderModel(1);
-            //borderModel.AssignValuesToBlocks();
+            ReplaceBooksViewModel replaceBooksViewModel = new ReplaceBooksViewModel(1);
+            BorderModel borderModel = new BorderModel(1);
+            borderModel.AssignValuesToBlocks(replaceBooksViewModel.CallNumbers,replaceBooksViewModel.CallNumbersStrings,4,0);
             
+            foreach (Border currentBorder in borderModel.CallBlockBordersList)
+            {
+                //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
+                IdentifyAreaCanvas.Children.Add(currentBorder);
+                
+            }
             _ballTimer = new DispatcherTimer();
             _ballTimer.Tick += ballTimer_Tick;
 

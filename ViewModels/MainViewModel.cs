@@ -9,7 +9,7 @@ namespace JoshMkhariPROG7312Game.ViewModels
         public MainViewModel()
         {
             HomeVm = new HomeViewModel();
-            ReplaceVm = new ReplaceBooksViewModel();
+            ReplaceVm = new ReplaceBooksViewModel(0);
             IdentifyingAreasVm = new IdentifyingAreasViewModel();
             
             CurrentView = HomeVm;

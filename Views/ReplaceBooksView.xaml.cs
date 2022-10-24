@@ -33,7 +33,7 @@ namespace JoshMkhariPROG7312Game.Views
         public ReplaceBooksView()
         {
             InitializeComponent();
-            _replaceBooksViewModel = new ReplaceBooksViewModel();
+            _replaceBooksViewModel = new ReplaceBooksViewModel(0);
             _labelModel = new LabelsModel();
 
             _arrowModel = new ArrowModel();
