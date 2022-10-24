@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using JoshMkhariPROG7312Game.Logic.Identifying_Areas;
 using JoshMkhariPROG7312Game.Logic.Replacing_Books;
 
@@ -21,12 +22,14 @@ namespace JoshMkhariPROG7312Game.Views
         private int _scored = 0;
         private int _currentRound = 0;
 
+        private int _gaugeSpeed = 2;
         private Point _ballDestination;
 
         private bool _aimSet, _ballChosen;
         private Image _currentBall;
         private Path _destination;
-        private System.Windows.Threading.DispatcherTimer _ballTimer, _guageTimer;
+        private DispatcherTimer _ballTimer, _gaugeTimer;
+        
         public IdentifyingAreas()
         {
             InitializeComponent();
@@ -67,11 +70,25 @@ namespace JoshMkhariPROG7312Game.Views
             //BorderModel borderModel = new BorderModel(1);
             //borderModel.AssignValuesToBlocks();
             
-            _ballTimer = new System.Windows.Threading.DispatcherTimer();
+            _ballTimer = new DispatcherTimer();
             _ballTimer.Tick += ballTimer_Tick;
+
+            _gaugeTimer = new DispatcherTimer();
+            _gaugeTimer.Tick += gaugeTimer_Tick;
 
         }
 
+        private void gaugeTimer_Tick(object sender, EventArgs e)
+        {
+            //Move ball up towards target
+            Canvas.SetTop(indicatorLevel,Canvas.GetTop(indicatorLevel)-_gaugeSpeed);
+            //236
+            //424
+            if (Canvas.GetTop(indicatorLevel)<236 || Canvas.GetTop(indicatorLevel)>424)
+            {
+                _gaugeSpeed = -_gaugeSpeed;
+            }
+        }
         private void ballTimer_Tick(object sender, EventArgs e)
         {
             Debug.WriteLine(Canvas.GetLeft(_currentBall) + " currentBall Left");
@@ -128,10 +145,12 @@ namespace JoshMkhariPROG7312Game.Views
             string name = currentHex.Name;
             _ballDestination = new Point(left, top);
             
-            _ballTimer.Interval = new TimeSpan(0,0,0,0,1);
-            _ballTimer.Start();
             
+            //_ballTimer.Interval = new TimeSpan(0,0,0,0,1);
+            //_ballTimer.Start();
             
+            _gaugeTimer.Interval = new TimeSpan(0,0,0,0,1);
+            _gaugeTimer.Start();
         }
         
         private void OnBallClick(object sender, RoutedEventArgs e)

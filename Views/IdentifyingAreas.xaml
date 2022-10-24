@@ -33,7 +33,7 @@
                Source="/Theme/Assets/GuageLevel.png"
                HorizontalAlignment="Right"
                VerticalAlignment="Bottom" 
-               Canvas.Top="415" 
+               Canvas.Top="424" 
                Canvas.Left="653"/>
 
         <Image Width="46"
