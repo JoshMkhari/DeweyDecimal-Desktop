@@ -45,7 +45,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 
         public void CreateQuestionBlocks(QuestionsAnswersModel questionsAnswersModel, int mode, HexagonModel hexagonModel,List<double> numbers, List<string> texts)
         {
-            if (mode == 0)
+            if (mode == 1)
             {
                 for (int i = 0; i < 4; i++)
                 {
@@ -91,7 +91,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                                texts.ElementAt(i)
                     };
                     rectBlock.Child = textForBlock;
-                    CallBlockBordersList.Add(rectBlock);
+                    AnswerBlockBordersList.Add(rectBlock);
                 }
             }
 
@@ -104,19 +104,18 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             //Those center positions the ball uses for targets
             if (mode == 0)
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 7; i++)
                 {
-                    Canvas.SetLeft(CallBlockBordersList.ElementAt(i),BorderInitialLeft+(i*113));
-                    Canvas.SetTop(CallBlockBordersList.ElementAt(i),465);
+                    Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
+                    Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
                 } 
             }
             else
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 4; i++)
                 {
-
-                    Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
-                    Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
+                    Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),BorderInitialLeft+(i*113));
+                    Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),465);
                 } 
             }
 
