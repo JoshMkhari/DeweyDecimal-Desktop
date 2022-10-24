@@ -28,6 +28,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
 
         private void PopulateChosenSet(List<double> numbers)
         {
+            IDictionary<string, int> Set = new Dictionary<string, int>();
             for (int i = 0; i < 4; i++)
             {
                 double changed = Math.Floor(numbers.ElementAt(i));
@@ -40,7 +41,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                     {
                         if (!found)
                         {
-                            _ChosenSet.Add(_descriptonsList.ElementAt(j),_numbersList.ElementAt(j));
+                            Set.Add(_descriptonsList.ElementAt(j),_numbersList.ElementAt(j));
                             found = true;
                         }
                         _numbersList.RemoveAt(j);
@@ -54,9 +55,17 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             {
                 var rnd = new Random();
                 int chosenIndex = rnd.Next(_descriptonsList.Count - 1);
-                _ChosenSet.Add(_descriptonsList.ElementAt(chosenIndex),_numbersList.ElementAt(chosenIndex));
+                Set.Add(_descriptonsList.ElementAt(chosenIndex),_numbersList.ElementAt(chosenIndex));
                 _numbersList.RemoveAt(chosenIndex);
                 _descriptonsList.RemoveAt(chosenIndex);
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                var rnd = new Random();
+                int chosenIndex = rnd.Next(Set.Count - 1);
+                _ChosenSet.Add(Set.ElementAt(chosenIndex));
+                Set.Remove(Set.Keys.ElementAt(chosenIndex));
             }
             
         }
