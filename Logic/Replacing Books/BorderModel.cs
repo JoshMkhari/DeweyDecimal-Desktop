@@ -87,8 +87,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                     TextBlock textForBlock = new TextBlock
                     {
                         HorizontalAlignment = HorizontalAlignment.Center,
-                        Text = NumberFormatter(numbers.ElementAt(i)) + 
-                               texts.ElementAt(i)
+                        Text = questionsAnswersModel._ChosenSet.Keys.ElementAt(i)
                     };
                     rectBlock.Child = textForBlock;
                     AnswerBlockBordersList.Add(rectBlock);
@@ -217,7 +216,6 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 {
                     for (int i = 0; i < 7; i++)
                     {
-                        Debug.WriteLine("We in plXWS n irwm");
                         Canvas.SetLeft(CallBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
                         Canvas.SetTop(CallBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
                     }

@@ -267,8 +267,7 @@ namespace JoshMkhariPROG7312Game.Views
                 _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,7,0, _hexagonModel,2);
                 foreach (Border currentBorder in _borderModel.CallBlockBordersList)
                 {
-                    Debug.WriteLine("We adding borders");
-                    Panel.SetZIndex(currentBorder,10);
+                    Panel.SetZIndex(currentBorder,6);
                     IdentifyAreaCanvas.Children.Add(currentBorder);
                 }
                 
