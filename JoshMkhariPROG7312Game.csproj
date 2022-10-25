@@ -215,5 +215,8 @@
   <ItemGroup>
     <Resource Include="Theme\Assets\IdentifyAreasTutorial.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\idenAreasClickable.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -111,7 +111,7 @@
                             MouseLeftButtonDown="identifyingAreasTutorial_MouseLeftButtonDown">
                         <Image Width="140"
                            Height="140"
-                           Source="/Theme/Assets/comingSoon.png"
+                           Source="/Theme/Assets/idenAreasClickable.png"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center" />
                     </Border>
