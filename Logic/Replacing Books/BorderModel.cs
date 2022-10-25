@@ -45,9 +45,9 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
 
         public void CreateQuestionBlocks(QuestionsAnswersModel questionsAnswersModel, int mode, HexagonModel hexagonModel,List<double> numbers, List<string> texts)
         {
-            if (mode == 1)
+            if (mode == 0)
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     Border rectBlock = new Border
                     {
@@ -72,7 +72,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             }
             else
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     Border rectBlock = new Border
                     {
@@ -208,7 +208,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 }
                 case 2:
                 {
-                    for (int i = 0; i < 7; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         Canvas.SetLeft(CallBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
                         Canvas.SetTop(CallBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);

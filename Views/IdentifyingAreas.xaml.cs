@@ -48,7 +48,7 @@ namespace JoshMkhariPROG7312Game.Views
             InitializeComponent();
             //https://stackoverflow.com/questions/11485843/how-can-i-create-hexagon-menu-using-wpf
 
-            _gameMode = 0;
+            _gameMode = 1;
             _numBasketBallsAvailable = 4; 
             _hexagonModel = new HexagonModel();
             _aimSet = false;
@@ -262,7 +262,7 @@ namespace JoshMkhariPROG7312Game.Views
             else
             {
                 Debug.WriteLine("We in 1");
-                _borderModel = new BorderModel(2);
+                _borderModel = new BorderModel(1);
                 
                 _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers,_gameMode);
                 List<string> texts = new List<string>();
@@ -270,13 +270,13 @@ namespace JoshMkhariPROG7312Game.Views
                 {
                     texts.Add(_questionsAnswersModel._ChosenSet.Keys.ElementAt(i));
                 }
-                _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,texts ,4,0, new HexagonModel(),1);
+                
+                _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,texts ,4,0, new HexagonModel(),2);
 
                 foreach (Border currentBorder in _borderModel.CallBlockBordersList)
                 {
                     //currentBall.MouseLeftButtonDown += OnBallClick;//https://stackoverflow.com/questions/22359525/creating-mouseleftbuttondown-for-dynamically-created-rectangles-in-wpf
                     IdentifyAreaCanvas.Children.Add(currentBorder);
-                
                 }
                 _borderModel.CreateQuestionBlocks(_questionsAnswersModel,_gameMode,_hexagonModel,_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings);
                 foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)

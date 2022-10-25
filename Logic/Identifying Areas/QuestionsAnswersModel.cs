@@ -49,7 +49,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 }
                 
             }
-
+            Debug.WriteLine("2 Set count " + Set.Count);
             int repeatSize = 4;
             if (mode == 0)
             {
@@ -70,9 +70,11 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                 }
 
             }
+            
             for (int i = 0; i < repeatSize; i++)
             {
                 var rnd = new Random();
+                Debug.WriteLine("3 Set count " + Set.Count);
                 int chosenIndex = rnd.Next(Set.Count - 1);
                 _ChosenSet.Add(Set.ElementAt(chosenIndex));
                 Set.Remove(Set.Keys.ElementAt(chosenIndex));
