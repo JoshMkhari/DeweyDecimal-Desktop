@@ -192,6 +192,7 @@ namespace JoshMkhariPROG7312Game.Views
                     _scored--;
                 }
                 TxtScoredCount.Content = _scored;
+                Debug.WriteLine("Balls avaialble " + _numBasketBallsAvailable);
                 if (_numBasketBallsAvailable == 0)
                 {
                     ChangeMode();
@@ -207,6 +208,7 @@ namespace JoshMkhariPROG7312Game.Views
 
         private void ChangeMode()
         {
+           
             if (_gameMode == 0)
             {
                 _gameMode++;
@@ -215,17 +217,16 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 _gameMode = 0;
             }
-
-            foreach (Image currentBall in _basketBallModel.BallLocationList)
-            {
-                currentBall.Visibility = Visibility.Visible;
-            }
             
-            //Remove CallBlocks
+            Debug.WriteLine("Changed to " + _gameMode);
+            
             foreach (Image currentBall in _basketBallModel.BallLocationList)
             {
                 currentBall.Visibility = Visibility.Visible;
             }
+
+            _numBasketBallsAvailable = 4;
+            
             foreach (Border currentBorder in _borderModel.CallBlockBordersList)
             {
                 IdentifyAreaCanvas.Children.Remove(currentBorder);

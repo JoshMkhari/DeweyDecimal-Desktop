@@ -118,8 +118,13 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         {
             //Debug.WriteLine("ChosenSetKey at elemtnet " + _questionsAnswersModel._ChosenSet.Keys.ElementAt(_textBlockNum));
             //Debug.WriteLine("ChosenSetKey at elemtnet " + _replaceBooksViewModel.CallNumbers.ElementAt(hexNum));
+            
+            Debug.WriteLine("Set key " + set.Key);
+            Debug.WriteLine("Set Value " + set.Value);
+            
             double changed = Math.Floor(answerPair);
             int rounded = (((int)changed) / 100 ) * 100;
+            Debug.WriteLine("AnswerPair " + rounded);
             if (rounded == set.Value)
             {
                 return true;
