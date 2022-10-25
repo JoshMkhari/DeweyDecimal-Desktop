@@ -80,12 +80,51 @@ namespace JoshMkhariPROG7312Game.ViewModels
             }
             InitializeStacks(mode);
         }
-        
+
+        private void addCallNumber()
+        {
+            var rnd = new Random();
+            int num1 = (char)rnd.Next(65, 90);
+            int num2 = (char)rnd.Next(65, 90);
+            int num3 = (char)rnd.Next(65, 90);
+            CallNumbersStringValues.Add(num1+num2+num3);
+            CallNumbersStrings.Add(" " +(char) num1 + (char) num2 + (char) num3);
+        }
+
+        private List<int> usedNums = new List<int>();
         private void InitializeStacks(int mode)
         {
             //To generate random numbers https://www.tutorialsteacher.com/articles/generate-random-numbers-in-csharp
             var rnd = new Random();
 
+
+            if (mode != 0)
+            {
+                while (CallNumbers.Count<7)
+                {
+                    double currentNum = (rnd.Next(1, ((99999) * 10 + 1)) + 1 * 10) / 1000.0;
+                    double changed = Math.Floor(currentNum);
+                    int rounded = (((int)changed) / 100 ) * 100;
+                    if (CallNumbers.Count == 0)
+                    {
+                        CallNumbers.Add(currentNum);
+                        usedNums.Add(rounded);
+                        addCallNumber();
+                    }
+                    else
+                    {
+                        if (!usedNums.Contains(rounded))
+                        {
+                            CallNumbers.Add(currentNum);
+                            usedNums.Add(rounded);
+                            addCallNumber();
+                        }
+                    } 
+                }
+
+                //https://stackoverflow.com/questions/27531759/generating-decimal-random-numbers-in-java-in-a-specific-range
+            }
+            
             for (int i = 0; i < 10; i++)
             {
                 CallNumbers.Add((rnd.Next(1,((99999)*10+1))+1*10)/1000.0); //add a value

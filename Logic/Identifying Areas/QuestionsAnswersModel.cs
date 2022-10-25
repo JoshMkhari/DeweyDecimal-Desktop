@@ -88,16 +88,16 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         
         private void PopulateDescriptions()
         {
-            _descriptonsList.Add("General Knowledge");
-            _descriptonsList.Add("Philosophy/Psych");
+            _descriptonsList.Add("General Know");
+            _descriptonsList.Add("Philo/Psych");
             _descriptonsList.Add("Religion");
             _descriptonsList.Add("Social Sciences");
             _descriptonsList.Add("Languages");
             _descriptonsList.Add("Science");
             _descriptonsList.Add("Technology");
-            _descriptonsList.Add("Arts/Recreation");
+            _descriptonsList.Add("Arts/Recreat");
             _descriptonsList.Add("Literature");
-            _descriptonsList.Add("History/Geography");
+            _descriptonsList.Add("History/Geo");
         }
 
         private void PopulateNumbers()

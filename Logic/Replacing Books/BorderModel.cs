@@ -54,7 +54,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                         //rectBlock.Name = "border" + i;
                         BorderThickness = new Thickness(2),
                         BorderBrush =Brushes.White,
-                        Width = 80,
+                        Width = 100,
                         Height = 22
                         //Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
                     };
@@ -79,7 +79,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                         //rectBlock.Name = "border" + i;
                         BorderThickness = new Thickness(2),
                         BorderBrush = new SolidColorBrush(Colors.Black),
-                        Width = 80,
+                        Width = 100,
                         Height = 22,
                         Background = new SolidColorBrush(Color.FromRgb(_coloursModel.ColourDefaults[0][i], _coloursModel.ColourDefaults[1][i], _coloursModel.ColourDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
                     };
@@ -105,7 +105,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
             {
                 for (int i = 0; i < 7; i++)
                 {
-                    Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
+                    Canvas.SetLeft(AnswerBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+10);
                     Canvas.SetTop(AnswerBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
                 } 
             }
@@ -132,7 +132,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                         //rectBlock.Name = "border" + i;
                         BorderThickness = new Thickness(2),
                         BorderBrush = new SolidColorBrush(Colors.White),
-                        Width = 80,
+                        Width = 100,
                         Height = 22,
                         Background = new SolidColorBrush(Color.FromRgb(_coloursModel.ColourDefaults[0][i], _coloursModel.ColourDefaults[1][i], _coloursModel.ColourDefaults[2][i])) //https://www.rapidtables.com/convert/color/hex-to-rgb.html
                     }; 
@@ -216,7 +216,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
                 {
                     for (int i = 0; i < 7; i++)
                     {
-                        Canvas.SetLeft(CallBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+20);
+                        Canvas.SetLeft(CallBlockBordersList.ElementAt(i),Canvas.GetLeft(hexagonModel.HexagonList.ElementAt(i))+10);
                         Canvas.SetTop(CallBlockBordersList.ElementAt(i),Canvas.GetTop(hexagonModel.HexagonList.ElementAt(i))+40);
                     }
                     break;
