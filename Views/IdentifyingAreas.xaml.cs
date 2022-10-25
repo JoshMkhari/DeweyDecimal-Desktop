@@ -243,7 +243,7 @@ namespace JoshMkhariPROG7312Game.Views
                 Debug.WriteLine("We in 0");
                 _borderModel = new BorderModel(1);
 
-                _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,7,0, _hexagonModel,2);
+                _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,4,0, _hexagonModel,1);
                 
                 foreach (Border currentBorder in _borderModel.CallBlockBordersList)
                 {

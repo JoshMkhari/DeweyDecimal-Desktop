@@ -122,7 +122,7 @@ namespace JoshMkhariPROG7312Game.Logic.Replacing_Books
         }
         public void AssignValuesToBlocks(List<double> numbers, List<string> texts, int numItems, int start,HexagonModel hexagonModel, int mode)
         {
-            if (mode == 0)
+            if (mode == 0 || mode == 1)
             {
                 for (int i = start; i < numItems; i++)
                 {
