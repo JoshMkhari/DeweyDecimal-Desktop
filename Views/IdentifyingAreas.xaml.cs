@@ -16,10 +16,8 @@ namespace JoshMkhariPROG7312Game.Views
 {
     public partial class IdentifyingAreas : UserControl
     {
-        //ball speed
-        private int _ballX = 0;
-        private int _ballY = 0;
-        
+        //ball speeed
+
         private int _missed = 0;
         private int _scored = 0;
         private int _currentRound = 0;

@@ -212,5 +212,8 @@
   <ItemGroup>
     <Resource Include="Theme\Assets\GuageLevel.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\IdentifyAreasTutorial.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
