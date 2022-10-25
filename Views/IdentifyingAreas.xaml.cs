@@ -265,13 +265,19 @@ namespace JoshMkhariPROG7312Game.Views
                 _borderModel = new BorderModel(1);
 
                 _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,7,0, _hexagonModel,2);
+                _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers,_gameMode);
+                if (QuestionsAnswersModel.setCount == 1)
+                {
+                    CreateQuestionsAnswers();
+                    return;
+                }
+                
                 foreach (Border currentBorder in _borderModel.CallBlockBordersList)
                 {
                     Panel.SetZIndex(currentBorder,6);
                     IdentifyAreaCanvas.Children.Add(currentBorder);
                 }
                 
-                _questionsAnswersModel = new QuestionsAnswersModel(_replaceBooksViewModel.CallNumbers,_gameMode);
                 _borderModel.CreateQuestionBlocks(_questionsAnswersModel,_gameMode,_hexagonModel, _replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings);
                 foreach (Border currentBorder in _borderModel.AnswerBlockBordersList)
                 {

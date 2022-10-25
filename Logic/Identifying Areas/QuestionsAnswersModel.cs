@@ -14,6 +14,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         private List<string> _descriptonsList;
         private List<int> _numbersList;
 
+        public static int setCount;
         public QuestionsAnswersModel(List<double> numbers, int mode)
         {
             _descriptonsList = new List<string>();
@@ -68,22 +69,25 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
                     _numbersList.RemoveAt(chosenIndex);
                     _descriptonsList.RemoveAt(chosenIndex);
                 }
+            }
 
+            if (Set.Count ==4 || Set.Count == 7)
+            {
+                for (int i = 0; i < repeatSize; i++)
+                {
+                    var rnd = new Random();
+                    Debug.WriteLine("3 Set count " + Set.Count);
+                    int chosenIndex = rnd.Next(Set.Count - 1);
+                    _ChosenSet.Add(Set.ElementAt(chosenIndex));
+                    Set.Remove(Set.Keys.ElementAt(chosenIndex));
+                }
+                setCount = repeatSize;
+            }
+            else
+            {
+                setCount = 1;
             }
             
-            for (int i = 0; i < repeatSize; i++)
-            {
-                var rnd = new Random();
-                Debug.WriteLine("3 Set count " + Set.Count);
-                int chosenIndex = rnd.Next(Set.Count - 1);
-                _ChosenSet.Add(Set.ElementAt(chosenIndex));
-                Set.Remove(Set.Keys.ElementAt(chosenIndex));
-            }
-
-            for (int i = 0; i < repeatSize; i++)
-            {
-                Debug.WriteLine("Chosen Set 0 : " + _ChosenSet.Keys.ElementAt(i) + " value " + _ChosenSet.Values.ElementAt(i) );
-            }
         }
         
         
