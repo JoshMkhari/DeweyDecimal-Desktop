@@ -24,7 +24,7 @@ namespace JoshMkhariPROG7312Game.Views
         private int _scored = 0;
         private int _currentRound = 0;
 
-        private int _gaugeSpeed = 2;
+        private int _gaugeSpeed = 1;
 
         private int _textBlockNum;
 
@@ -163,6 +163,7 @@ namespace JoshMkhariPROG7312Game.Views
         private void StopBall()
         {
             _ballTimer.Stop();
+            
             _aimSet = false;
             _ballChosen = false;
             _ballStop = false;
@@ -203,12 +204,14 @@ namespace JoshMkhariPROG7312Game.Views
                 _missed++;
                 TxtMissedCount.Content = _missed;
             }
-            
+            TxtInstructions.Content = "Click on a Ball";
         }
 
         private void ChangeMode()
         {
-           
+            _currentRound++;
+            _gaugeSpeed *= 2;
+            TxtRoundCount.Content = _currentRound.ToString();
             if (_gameMode == 0)
             {
                 _gameMode++;
@@ -324,7 +327,7 @@ namespace JoshMkhariPROG7312Game.Views
             double top =Canvas.GetTop(currentHex) + 30;
             
             _ballDestination = new Point(left, top);
-
+            TxtInstructions.Content = "Click Space Bar";
             _gaugeTimer.Interval = new TimeSpan(0,0,0,0,1);
             _gaugeTimer.Start();
             IdentifyAreaCanvas.Focus();
@@ -335,7 +338,7 @@ namespace JoshMkhariPROG7312Game.Views
             //https://stackoverflow.com/questions/67609123/wpf-c-sharp-create-click-event-for-dynamically-created-button
             if(_ballChosen){return;}
             Image currentBall = (Image)sender;
-            
+            TxtInstructions.Content = "Click on a hexagon";
             string name = currentBall.Name;
             _currentBall = currentBall;
             _ballStartLocation = new Point(Canvas.GetLeft(_currentBall), Canvas.GetTop(_currentBall));
@@ -350,6 +353,7 @@ namespace JoshMkhariPROG7312Game.Views
 
             _textBlockNum = Convert.ToInt32(_currentBall.Name.Substring(3));
             //Debug.WriteLine("From text block " + _textBlockNum);
+            TxtInstructions.Content = "";
             _gaugeTimer.Stop();
             SetTargetAccuracy(Canvas.GetTop(indicatorLevel));
         }

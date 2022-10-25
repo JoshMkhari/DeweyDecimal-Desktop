@@ -67,6 +67,14 @@
                Foreground="Green"
                Canvas.Left="177"
                Canvas.Top="348" RenderTransformOrigin="2.671,1.37" />
+        
+        <Label FontSize="20"
+               Name="TxtInstructions"
+               Content="Click a ball"
+               Panel.ZIndex="2"
+               Foreground="Blue"
+               Canvas.Left="360"
+               Canvas.Top="340" RenderTransformOrigin="2.671,1.37" />
 
 
 
