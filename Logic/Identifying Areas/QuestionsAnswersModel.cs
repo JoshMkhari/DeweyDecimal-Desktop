@@ -34,16 +34,11 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             {
                 double changed = Math.Floor(numbers.ElementAt(i));
                 int rounded = (((int)changed) / 100 ) * 100;
-                bool found = false;
                 for (int j = 0; j < _numbersList.Count; j++)
                 {
                     if (rounded == _numbersList.ElementAt(j))
                     {
-                        if (!found)
-                        {
-                            Set.Add(_descriptonsList.ElementAt(j),_numbersList.ElementAt(j));
-                            found = true;
-                        }
+                        Set.Add(_descriptonsList.ElementAt(j),_numbersList.ElementAt(j));
                         _numbersList.RemoveAt(j);
                         _descriptonsList.RemoveAt(j);
                     }
@@ -94,24 +89,20 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
         private void PopulateDescriptions()
         {
             _descriptonsList.Add("General Knowledge");
-            _descriptonsList.Add("Philosophy");
-            _descriptonsList.Add("Psychology");
+            _descriptonsList.Add("Philosophy/Psych");
             _descriptonsList.Add("Religion");
             _descriptonsList.Add("Social Sciences");
             _descriptonsList.Add("Languages");
             _descriptonsList.Add("Science");
             _descriptonsList.Add("Technology");
-            _descriptonsList.Add("Arts");
-            _descriptonsList.Add("Recreation");
+            _descriptonsList.Add("Arts/Recreation");
             _descriptonsList.Add("Literature");
-            _descriptonsList.Add("History");
-            _descriptonsList.Add("Geography");
+            _descriptonsList.Add("History/Geography");
         }
 
         private void PopulateNumbers()
         {
             _numbersList.Add(0);
-            _numbersList.Add(100);
             _numbersList.Add(100);
             _numbersList.Add(200);
             _numbersList.Add(300);
@@ -119,9 +110,7 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             _numbersList.Add(500);
             _numbersList.Add(600);
             _numbersList.Add(700);
-            _numbersList.Add(700);
             _numbersList.Add(800);
-            _numbersList.Add(900);
             _numbersList.Add(900);
         }
 

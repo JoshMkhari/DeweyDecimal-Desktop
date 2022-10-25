@@ -177,9 +177,15 @@ namespace JoshMkhariPROG7312Game.Views
                 {
                     _scored++;
                     _currentBall.Visibility = Visibility.Collapsed;
-                    _borderModel.CallBlockBordersList.ElementAt(_textBlockNum).Visibility = Visibility.Collapsed;
                     _numBasketBallsAvailable--;
-                    
+                    if (_gameMode == 0)
+                    {
+                        _borderModel.CallBlockBordersList.ElementAt(_textBlockNum).Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        _borderModel.AnswerBlockBordersList.ElementAt(_textBlockNum).Visibility = Visibility.Collapsed;
+                    }
                 }
                 else
                 {
