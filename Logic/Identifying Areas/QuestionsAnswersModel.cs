@@ -125,10 +125,17 @@ namespace JoshMkhariPROG7312Game.Logic.Identifying_Areas
             _numbersList.Add(900);
         }
 
-        public bool CheckAnswerString(String input,IDictionary<string, int> set  )
+        public bool CheckAnswerString(KeyValuePair<string, int> set,double answerPair )
         {
-
-            return true;
+            //Debug.WriteLine("ChosenSetKey at elemtnet " + _questionsAnswersModel._ChosenSet.Keys.ElementAt(_textBlockNum));
+            //Debug.WriteLine("ChosenSetKey at elemtnet " + _replaceBooksViewModel.CallNumbers.ElementAt(hexNum));
+            double changed = Math.Floor(answerPair);
+            int rounded = (((int)changed) / 100 ) * 100;
+            if (rounded == set.Value)
+            {
+                return true;
+            }
+            return false;
         }
         
         public bool CheckAnswerNumber(double input,IDictionary<string, int> set,int answerLocation )

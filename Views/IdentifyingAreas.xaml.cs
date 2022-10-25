@@ -261,7 +261,6 @@ namespace JoshMkhariPROG7312Game.Views
             }
             else
             {
-                Debug.WriteLine("We in 1");
                 _borderModel = new BorderModel(1);
 
                 _borderModel.AssignValuesToBlocks(_replaceBooksViewModel.CallNumbers,_replaceBooksViewModel.CallNumbersStrings,7,0, _hexagonModel,2);
@@ -297,10 +296,11 @@ namespace JoshMkhariPROG7312Game.Views
                return _questionsAnswersModel.CheckAnswerNumber(_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum),
                     _questionsAnswersModel._ChosenSet,hexNum);
             }
-
-            //return _questionsAnswersModel.CheckAnswerString(_replaceBooksViewModel.CallNumbers.ElementAt(_textBlockNum),
-                //_questionsAnswersModel._ChosenSet);
-                return false;
+            else
+            {
+                return _questionsAnswersModel.CheckAnswerString(
+                    _questionsAnswersModel._ChosenSet.ElementAt(_textBlockNum),_replaceBooksViewModel.CallNumbers.ElementAt(hexNum));
+            }
 
         }
         private void OnHexClick(object sender, RoutedEventArgs e)
