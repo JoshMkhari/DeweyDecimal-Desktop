@@ -152,12 +152,12 @@
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}" 
                              Command="{Binding IdentifyingAreasCommand}"/>
-                <RadioButton Content="Finding call numbers"
+                <RadioButton Content="Find call numbers"
                              Height="50"
-                             Foreground="DimGray"
+                             Foreground="White"
                              FontSize="14"
-                             IsEnabled="False"
-                             Style="{StaticResource MenuButtonTheme}" />
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding FindCallNumsCommand}"/>
             </StackPanel>
 
             <ContentControl Grid.Row="2"
