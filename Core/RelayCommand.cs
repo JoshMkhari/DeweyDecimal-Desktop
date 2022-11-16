@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace JoshMkhariPROG7312Game.Core
 {
-    internal class RelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         private readonly Func<object, bool> _canExecute;
 

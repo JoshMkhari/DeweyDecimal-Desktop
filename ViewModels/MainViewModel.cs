@@ -14,16 +14,16 @@ namespace JoshMkhariPROG7312Game.ViewModels
             
             CurrentView = HomeVm;
 
-            HomeViewCommand = new RelayCOmmand(o => { CurrentView = HomeVm; });
+            HomeViewCommand = new RelayCommand(o => { CurrentView = HomeVm; });
 
-            ReplaceViewCommand = new RelayCOmmand(o => { CurrentView = ReplaceVm; });
+            ReplaceViewCommand = new RelayCommand(o => { CurrentView = ReplaceVm; });
             
-            IdentifyingAreasCommand = new RelayCOmmand(o => { CurrentView = IdentifyingAreasVm; });
+            IdentifyingAreasCommand = new RelayCommand(o => { CurrentView = IdentifyingAreasVm; });
         }
 
-        public RelayCOmmand HomeViewCommand { get; set; }
-        public RelayCOmmand ReplaceViewCommand { get; set; }
-        public RelayCOmmand IdentifyingAreasCommand { get; set; }
+        public RelayCommand HomeViewCommand { get; set; }
+        public RelayCommand ReplaceViewCommand { get; set; }
+        public RelayCommand IdentifyingAreasCommand { get; set; }
 
         public HomeViewModel HomeVm { get; set; }
         public ReplaceBooksViewModel ReplaceVm { get; set; }

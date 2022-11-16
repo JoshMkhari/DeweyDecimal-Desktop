@@ -165,7 +165,7 @@ namespace JoshMkhariPROG7312Game.Views
                                 _replaceBooksViewModel.GameCounts[0];
                         }
                         TextBlockModel.TextBlocksList.ElementAt(_replaceBooksViewModel.CurrentDifficulty).Text
-                            = TextBlockModel.difficulty[_replaceBooksViewModel.CurrentDifficulty] + ": " + "Wins: " +
+                            = TextBlockModel.Difficulty[_replaceBooksViewModel.CurrentDifficulty] + ": " + "Wins: " +
                               TextBlockModel.WinData[1][_replaceBooksViewModel.CurrentDifficulty] + " Best: " +
                               TextBlockModel.WinData[2][_replaceBooksViewModel.CurrentDifficulty];
                         MessageBox.Show("You win");
