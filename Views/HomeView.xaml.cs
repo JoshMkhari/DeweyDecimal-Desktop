@@ -41,7 +41,20 @@ namespace JoshMkhariPROG7312Game.Views
             CanvasBack.Background =
                 new SolidColorBrush(Colors.Transparent); //https://www.rapidtables.com/convert/color/hex-to-rgb.html
             ReplacingBooksBackground.Visibility = Visibility.Collapsed;
+            IdentifyingAreasBackground.Visibility = Visibility.Collapsed;
             BtnCloseTutorial.Visibility = Visibility.Collapsed;
+        }
+
+        private void identifyingAreasTutorial_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Hide all other elements
+            StackPanelBackground.Visibility = Visibility.Collapsed;
+            PageNameTitleTextBlock.Text = "Replacing books tutorial";
+            PageNameTitleTextBlock.Foreground = new SolidColorBrush(Colors.Black);
+            CanvasBack.Background =
+                new SolidColorBrush(Color.FromRgb(246, 239, 231)); //https://www.rapidtables.com/convert/color/hex-to-rgb.html
+            IdentifyingAreasBackground.Visibility = Visibility.Visible;
+            BtnCloseTutorial.Visibility = Visibility.Visible;
         }
     }
 }

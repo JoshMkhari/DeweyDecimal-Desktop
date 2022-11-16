@@ -1,188 +1,222 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{2AEB3C88-747F-4533-A41F-0A87D4CD8B9A}</ProjectGuid>
-        <OutputType>WinExe</OutputType>
-        <RootNamespace>JoshMkhariPROG7312Game</RootNamespace>
-        <AssemblyName>JoshMkhariPROG7312Game</AssemblyName>
-        <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
-        <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-        <WarningLevel>4</WarningLevel>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-        <Deterministic>true</Deterministic>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="System" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="System.Net.Http" />
-        <Reference Include="System.Xaml">
-            <RequiredTargetFramework>4.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="WindowsBase" />
-        <Reference Include="PresentationCore" />
-        <Reference Include="PresentationFramework" />
-    </ItemGroup>
-    <ItemGroup>
-        <ApplicationDefinition Include="App.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </ApplicationDefinition>
-        <Compile Include="Core\ObservableObjects.cs" />
-        <Compile Include="Core\RelayCommand.cs" />
-        <Compile Include="Logic\Home\TextBlockModel.cs" />
-        <Compile Include="Logic\Replacing Books\ArrowModel.cs" />
-        <Compile Include="Logic\Replacing Books\BorderModel.cs" />
-        <Compile Include="Logic\Replacing Books\LabelsModel.cs" />
-        <Compile Include="Logic\Replacing Books\PreSetDifficulty.cs" />
-        <Compile Include="Logic\Replacing Books\RectangleModel.cs" />
-        <Compile Include="ViewModels\HomeViewModel.cs" />
-        <Compile Include="ViewModels\MainViewModel.cs" />
-        <Compile Include="ViewModels\ReplaceBooksViewModel.cs" />
-        <Compile Include="Views\HomeView.xaml.cs">
-            <DependentUpon>HomeView.xaml</DependentUpon>
-        </Compile>
-        <Compile Include="Views\ReplaceBooksView.xaml.cs">
-            <DependentUpon>ReplaceBooksView.xaml</DependentUpon>
-        </Compile>
-        <Page Include="MainWindow.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </Page>
-        <Compile Include="App.xaml.cs">
-            <DependentUpon>App.xaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
-        <Compile Include="MainWindow.xaml.cs">
-            <DependentUpon>MainWindow.xaml</DependentUpon>
-            <SubType>Code</SubType>
-        </Compile>
-        <Page Include="Theme\MEnuButtonTheme.xaml">
-            <SubType>Designer</SubType>
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-        <Page Include="Views\HomeView.xaml">
-            <SubType>Designer</SubType>
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-        <Page Include="Views\ReplaceBooksView.xaml">
-            <SubType>Designer</SubType>
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="Properties\AssemblyInfo.cs">
-            <SubType>Code</SubType>
-        </Compile>
-        <Compile Include="Properties\Resources.Designer.cs">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Resources.resx</DependentUpon>
-        </Compile>
-        <Compile Include="Properties\Settings.Designer.cs">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Settings.settings</DependentUpon>
-            <DesignTimeSharedInput>True</DesignTimeSharedInput>
-        </Compile>
-        <EmbeddedResource Include="Properties\Resources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-        <None Include="Properties\Settings.settings">
-            <Generator>SettingsSingleFileGenerator</Generator>
-            <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="App.config" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\twitter.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\Settings.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\UpBlack.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\Restart.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\Background.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\DownBlack.png" />
-        <Resource Include="Theme\Assets\DownRed.png" />
-        <Resource Include="Theme\Assets\UpGreen.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\Difficult.png" />
-        <Resource Include="Theme\Assets\Easy.png" />
-        <Resource Include="Theme\Assets\Extreme.png" />
-        <Resource Include="Theme\Assets\Hard.png" />
-        <Resource Include="Theme\Assets\Insane.png" />
-        <Resource Include="Theme\Assets\Normal.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\Close.png" />
-        <Resource Include="Theme\Assets\Save.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\ReplacingBooksTutotial.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\repBooksIcon.png" />
-        <Resource Include="Theme\Assets\uTubeIcon.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\comingSoon.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\closeIcon.png" />
-        <Resource Include="Theme\Assets\closeIconHover.png" />
-        <Resource Include="Theme\Assets\CoolLines.png" />
-        <Resource Include="Theme\Assets\minimize iconHover.png" />
-        <Resource Include="Theme\Assets\minimizeIcon.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\myAppIcon.ico" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\InAppIcon.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\InAppLogo.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <Resource Include="Theme\Assets\GridTitle.png" />
-    </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2AEB3C88-747F-4533-A41F-0A87D4CD8B9A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>JoshMkhariPROG7312Game</RootNamespace>
+    <AssemblyName>JoshMkhariPROG7312Game</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Core\ObservableObjects.cs" />
+    <Compile Include="Core\RelayCOmmand.cs" />
+    <Compile Include="Logic\ColoursModel.cs" />
+    <Compile Include="Logic\Home\TextBlockModel.cs" />
+    <Compile Include="Logic\Identifying Areas\BasketBallModel.cs" />
+    <Compile Include="Logic\Identifying Areas\HexagonModel.cs" />
+    <Compile Include="Logic\Identifying Areas\QuestionsAnswersModel.cs" />
+    <Compile Include="Logic\Identifying Areas\RimNetModel.cs" />
+    <Compile Include="Logic\Replacing Books\ArrowModel.cs" />
+    <Compile Include="Logic\Replacing Books\BorderModel.cs" />
+    <Compile Include="Logic\Replacing Books\LabelsModel.cs" />
+    <Compile Include="Logic\Replacing Books\PreSetDifficulty.cs" />
+    <Compile Include="Logic\Replacing Books\RectangleModel.cs" />
+    <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\IdentifyingAreasViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ReplaceBooksViewModel.cs" />
+    <Compile Include="Views\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IdentifyingAreas.xaml.cs">
+      <DependentUpon>IdentifyingAreas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReplaceBooksView.xaml.cs">
+      <DependentUpon>ReplaceBooksView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Theme\MEnuButtonTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\IdentifyingAreas.xaml" />
+    <Page Include="Views\ReplaceBooksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\twitter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\UpBlack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Restart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\DownBlack.png" />
+    <Resource Include="Theme\Assets\DownRed.png" />
+    <Resource Include="Theme\Assets\UpGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Difficult.png" />
+    <Resource Include="Theme\Assets\Easy.png" />
+    <Resource Include="Theme\Assets\Extreme.png" />
+    <Resource Include="Theme\Assets\Hard.png" />
+    <Resource Include="Theme\Assets\Insane.png" />
+    <Resource Include="Theme\Assets\Normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\Close.png" />
+    <Resource Include="Theme\Assets\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\ReplacingBooksTutotial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\repBooksIcon.png" />
+    <Resource Include="Theme\Assets\uTubeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\comingSoon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\closeIcon.png" />
+    <Resource Include="Theme\Assets\closeIconHover.png" />
+    <Resource Include="Theme\Assets\CoolLines.png" />
+    <Resource Include="Theme\Assets\minimize iconHover.png" />
+    <Resource Include="Theme\Assets\minimizeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\myAppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\InAppIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\InAppLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\GridTitle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\editedBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\scoreboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\ball.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\net.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\verticalGuage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\GuageLevel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\IdentifyAreasTutorial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Theme\Assets\idenAreasClickable.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

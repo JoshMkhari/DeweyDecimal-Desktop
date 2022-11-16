@@ -9,24 +9,30 @@ namespace JoshMkhariPROG7312Game.ViewModels
         public MainViewModel()
         {
             HomeVm = new HomeViewModel();
-            ReplaceVm = new ReplaceBooksViewModel();
+            ReplaceVm = new ReplaceBooksViewModel(0);
+            IdentifyingAreasVm = new IdentifyingAreasViewModel();
+            
             CurrentView = HomeVm;
 
-            HomeViewCommand = new RelayCommand(o => { CurrentView = HomeVm; });
+            HomeViewCommand = new RelayCOmmand(o => { CurrentView = HomeVm; });
 
-            ReplaceViewCommand = new RelayCommand(o => { CurrentView = ReplaceVm; });
+            ReplaceViewCommand = new RelayCOmmand(o => { CurrentView = ReplaceVm; });
+            
+            IdentifyingAreasCommand = new RelayCOmmand(o => { CurrentView = IdentifyingAreasVm; });
         }
 
-        public RelayCommand HomeViewCommand { get; }
-        public RelayCommand ReplaceViewCommand { get; }
+        public RelayCOmmand HomeViewCommand { get; set; }
+        public RelayCOmmand ReplaceViewCommand { get; set; }
+        public RelayCOmmand IdentifyingAreasCommand { get; set; }
 
-        private HomeViewModel HomeVm { get; }
-        private ReplaceBooksViewModel ReplaceVm { get; }
+        public HomeViewModel HomeVm { get; set; }
+        public ReplaceBooksViewModel ReplaceVm { get; set; }
+        public IdentifyingAreasViewModel IdentifyingAreasVm { get; set; }
 
         public object CurrentView
         {
             get => _currentView;
-            private set
+            set
             {
                 _currentView = value;
                 OnPropertyChanged();
