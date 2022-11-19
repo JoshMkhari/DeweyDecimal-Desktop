@@ -58,6 +58,7 @@
     <Compile Include="Core\ObservableObjects.cs" />
     <Compile Include="Core\RelayCOmmand.cs" />
     <Compile Include="Logic\ColoursModel.cs" />
+    <Compile Include="Logic\FindCallNumbers\DeweySystem.cs" />
     <Compile Include="Logic\Home\TextBlockModel.cs" />
     <Compile Include="Logic\Identifying Areas\BasketBallModel.cs" />
     <Compile Include="Logic\Identifying Areas\HexagonModel.cs" />
@@ -222,6 +223,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Theme\Assets\idenAreasClickable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Logic\FindCallNumbers\MySystem.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
