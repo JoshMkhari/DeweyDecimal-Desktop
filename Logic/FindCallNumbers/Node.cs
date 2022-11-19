@@ -1,4 +1,6 @@
-﻿namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
+﻿using System.Diagnostics;
+
+namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
 {
     public class Node
     {
@@ -51,6 +53,32 @@
                 return _left.ReturnObject(num);
             }
             return _right.ReturnObject(num);
-        } 
+        }
+
+        public void PrintInOrder()
+        {
+            if (_left != null)
+            {
+                _left.PrintInOrder();
+            }
+            Debug.WriteLine(_data._number);
+            if (_right != null)
+            {
+                _right.PrintInOrder();
+            }
+        }
+
+        public void PrintPreOrder()
+        {
+            Debug.WriteLine(_data._number);
+            if (_left != null)
+            {
+                _left.PrintPreOrder();
+            }
+            if (_right != null)
+            {
+                _right.PrintPreOrder();
+            }
+        }
     }
 }
