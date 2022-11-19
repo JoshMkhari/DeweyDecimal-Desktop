@@ -162,10 +162,11 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 currentNum -= 25;
             }
             
-            _root.PrintInOrder();
+            //_root.PrintInOrder();
 
-            int find = 732;
-            
+            int find = 78;
+            Debug.WriteLine("We are searching for " + find);
+            Debug.WriteLine("");
             DeweyObject foundObject = _root.ReturnObject(find);
 
             if (foundObject._number == find)
@@ -178,7 +179,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 {
                     if (VARIABLE._number == find)
                     {
-                        Debug.WriteLine(VARIABLE._description);
+                        Debug.WriteLine(VARIABLE._number + " : " +VARIABLE._description);
                     }
                 } 
             }
