@@ -9,9 +9,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
     {
         public DeweySystem()
         {
-            //Read a textfile line by line
-            //https://www.c-sharpcorner.com/UploadFile/mahesh/how-to-read-a-text-file-in-C-Sharp/
-            
+            //https://yetanotherchris.dev/csharp/6-ways-to-get-the-current-directory-in-csharp/
             char[] path = Directory.GetCurrentDirectory().ToCharArray();
             
             int eCount = 0;
@@ -36,9 +34,12 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 stringBuilder.Append(path[i]);
             }
 
+            //https://zetcode.com/csharp/path/
             string filePath = Path.Combine(stringBuilder.ToString(), @"Logic\FindCallNumbers\MySystem.txt");
+            
+            //Read a textfile line by line
+            //https://www.c-sharpcorner.com/UploadFile/mahesh/how-to-read-a-text-file-in-C-Sharp/
             string[] lines = File.ReadAllLines(filePath);
-
 
             foreach (string line in lines)
             {
