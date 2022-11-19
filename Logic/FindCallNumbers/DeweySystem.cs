@@ -103,8 +103,8 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 _root.Insert(deweyObject);
             }
             
-            //InsertBottomLevel();
-            _root.PrintInOrder(); 
+            InsertBottomLevel();
+            //_root.PrintInOrder();
         }
 
         private void InsertBottomLevel()
@@ -112,26 +112,30 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             int currentNum = 500;
             DeweyObject deweyObject;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 5; i++)
             {
                 currentNum += 25;
-                if (currentNum % 100 == 0)
-                {
-                    currentNum += 25;
-                }
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
                 _root.Insert(deweyObject);
+                
+                currentNum += 50;
+                deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                _root.Insert(deweyObject);
+                
+                currentNum += 25;
             }
             currentNum = 500;
             for (int i = 0; i < 5; i++)
             {
                 currentNum -= 25;
-                if (currentNum % 100 == 0)
-                {
-                    currentNum -= 25;
-                }
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
                 _root.Insert(deweyObject);
+                
+                currentNum -= 50;
+                deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                _root.Insert(deweyObject);
+                
+                currentNum -= 25;
             }
             
             _root.PrintInOrder(); 

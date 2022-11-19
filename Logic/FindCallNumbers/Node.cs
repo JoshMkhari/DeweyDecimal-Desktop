@@ -22,7 +22,10 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 }
                 else
                 {
-                    _left.Insert(value);
+                    if (_left._data._number != value._number)
+                    {
+                        _left.Insert(value);
+                    }
                 }
             }
             else
@@ -33,7 +36,10 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 }
                 else
                 {
-                    _right.Insert(value);
+                    if (_right._data._number != value._number)
+                    {
+                        _right.Insert(value);
+                    }
                 }
             }
         }
@@ -44,14 +50,17 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
         public DeweyObject ReturnObject(int num)
         {
             //data number = 700
+            Debug.WriteLine("This is current num " + _data._number);
             if (num == _data._number || (num>_data._number && num<_data._number+25))
             {
                 return _data;
             }
             if (num < _data._number)
             {
+                Debug.WriteLine("we going left " + _data._number);
                 return _left.ReturnObject(num);
             }
+            Debug.WriteLine("we going right " + _data._number);
             return _right.ReturnObject(num);
         }
 
