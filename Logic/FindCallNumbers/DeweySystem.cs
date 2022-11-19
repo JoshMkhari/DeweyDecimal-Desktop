@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -54,23 +55,40 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             InsertTopLevel();
         }
 
+        private List<DeweyObject> InsertLeaves(int num)
+        {
+            List<DeweyObject> leaves = new List<DeweyObject>();
+            
+            for (int i = 1; i < 25; i++)
+            {
+                DeweyObject deweyObject = new DeweyObject(Int32.Parse(lines[num+i].Substring(0, 3)), lines[num+i].Substring(4));
+                leaves.Add(deweyObject);
+            }
+
+            return leaves;
+        }
         private void InsertTopLevel()
         {
             int currentNum = 500;
-            DeweyObject deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+            DeweyObject deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4));
+            deweyObject._leaves = InsertLeaves(currentNum);
             _root = new Node(deweyObject);
-
+            
+            
             for (int i = 0; i < 4; i++)
             {
                 currentNum += 100;
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
+                
             }
             currentNum = 500;
             for (int i = 0; i < 5; i++)
             {
                 currentNum -= 100;
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
             }
             InsertMidLevel();
@@ -89,6 +107,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                     currentNum += 50;
                 }
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
             }
             currentNum = 500;
@@ -100,11 +119,12 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                     currentNum -= 50;
                 }
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
             }
             
             InsertBottomLevel();
-            //_root.PrintInOrder();
+
         }
 
         private void InsertBottomLevel()
@@ -116,10 +136,12 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             {
                 currentNum += 25;
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
                 
                 currentNum += 50;
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
                 
                 currentNum += 25;
@@ -129,16 +151,38 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             {
                 currentNum -= 25;
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
                 
                 currentNum -= 50;
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
+                deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
                 
                 currentNum -= 25;
             }
             
-            _root.PrintInOrder(); 
+            _root.PrintInOrder();
+
+            int find = 732;
+            
+            DeweyObject foundObject = _root.ReturnObject(find);
+
+            if (foundObject._number == find)
+            {
+                Debug.WriteLine(foundObject._description);
+            }
+            else
+            {
+                foreach (var VARIABLE in foundObject._leaves)
+                {
+                    if (VARIABLE._number == find)
+                    {
+                        Debug.WriteLine(VARIABLE._description);
+                    }
+                } 
+            }
+            
         }
     }
 }

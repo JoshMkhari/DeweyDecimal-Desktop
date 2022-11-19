@@ -6,7 +6,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
     {
         public int _number { get; }
         public string _description { get; }
-        public List<DeweyObject> _leaves { get; }
+        public List<DeweyObject> _leaves { get; set; }
 
         public DeweyObject(int number, string description)
         {
@@ -14,10 +14,6 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             _description = description;
             _leaves = new List<DeweyObject>();
         }
-
-        public void AddLeaf(DeweyObject leaf)
-        {
-            _leaves.Add(leaf);
-        }
+        
     }
 }
