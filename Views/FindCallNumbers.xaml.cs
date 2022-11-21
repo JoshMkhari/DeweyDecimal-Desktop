@@ -100,7 +100,6 @@ namespace JoshMkhariPROG7312Game.Views
             _options = new List<DeweyObject>();
             _options.Add( _deweySystem.ReturnMid(_myRanNum));
             _answer = _options.ElementAt(0);
-
             List<int> setOfOptions = new List<int>();
             
             setOfOptions.Add(_options.ElementAt(0)._number);

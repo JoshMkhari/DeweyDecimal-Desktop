@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Windows;
 
 namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
 {
@@ -183,6 +184,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
 
         public DeweyObject ReturnTop(int num)
         {
+            
             for (int i = 0; i < _offHun.Count; i++)
             {
                 if (_offHun.ElementAt(i)._number == num / 100 * 100)
@@ -196,11 +198,13 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
         
         public DeweyObject ReturnMid(int num)
         {
-            for (int i = 0; i < _offHun.Count; i++)
+            num -= num % 10;
+            MessageBox.Show("New mnid " + num);
+            for (int i = 0; i < _offTen.Count; i++)
             {
-                if (_offTen.ElementAt(i)._number == num / 110 * 100)
+                if (_offTen.ElementAt(i)._number ==num )
                 {
-                    return _offHun.ElementAt(i);
+                    return _offTen.ElementAt(i);
                 }
             }
 
