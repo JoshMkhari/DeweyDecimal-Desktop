@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -11,10 +12,14 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
     {
         private Node _root;
         private string[] lines;
+        public List<DeweyObject> _offTen;
+        public List<DeweyObject> _offHun;
         public DeweySystem()
         {
             //https://yetanotherchris.dev/csharp/6-ways-to-get-the-current-directory-in-csharp/
-            
+
+            _offTen = new List<DeweyObject>();
+            _offHun = new List<DeweyObject>();
             char[] path = Directory.GetCurrentDirectory().ToCharArray();
             
             int eCount = 0;
@@ -45,13 +50,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             //Read a textfile line by line
             //https://www.c-sharpcorner.com/UploadFile/mahesh/how-to-read-a-text-file-in-C-Sharp/
             lines = File.ReadAllLines(filePath);
-
             
-            //Debug.WriteLine("What line is this " + lines[startnum].Substring(0,3));
-            //Debug.WriteLine("What line is this " + lines[startnum].Substring(4));
-            //500
-
-
             InsertTopLevel();
         }
 
@@ -61,8 +60,14 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             
             for (int i = 1; i < 25; i++)
             {
-                DeweyObject deweyObject = new DeweyObject(Int32.Parse(lines[num+i].Substring(0, 3)), lines[num+i].Substring(4));
+                int current = Int32.Parse(lines[num + i].Substring(0, 3));
+                DeweyObject deweyObject = new DeweyObject(current, lines[num+i].Substring(4));
                 leaves.Add(deweyObject);
+
+                if (current%10 == 0)
+                {
+                    _offTen.Add(deweyObject);
+                }
             }
 
             return leaves;
@@ -73,7 +78,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             DeweyObject deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4));
             deweyObject._leaves = InsertLeaves(currentNum);
             _root = new Node(deweyObject);
-            
+            _offHun.Add(deweyObject);
             
             for (int i = 0; i < 4; i++)
             {
@@ -81,6 +86,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
                 deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
+                _offHun.Add(deweyObject);
                 
             }
             currentNum = 500;
@@ -90,6 +96,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
                 deweyObject._leaves = InsertLeaves(currentNum);
                 _root.Insert(deweyObject);
+                _offHun.Add(deweyObject);
             }
             InsertMidLevel();
         }
@@ -120,6 +127,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 }
                 deweyObject = new DeweyObject(Int32.Parse(lines[currentNum].Substring(0, 3)), lines[currentNum].Substring(4)); 
                 deweyObject._leaves = InsertLeaves(currentNum);
+                _offTen.Add(deweyObject);
                 _root.Insert(deweyObject);
             }
             
@@ -161,29 +169,29 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
                 
                 currentNum -= 25;
             }
-            
-            //_root.PrintInOrder();
+        }
+        
+        //public List<DeweyObject> ReturnNodes(int find)
+        public DeweyObject ReturnNodes(int find)
+        {
 
-            int find = 78;
             Debug.WriteLine("We are searching for " + find);
             Debug.WriteLine("");
-            DeweyObject foundObject = _root.ReturnObject(find);
-
-            if (foundObject._number == find)
-            {
-                Debug.WriteLine(foundObject._description);
-            }
-            else
-            {
-                foreach (var VARIABLE in foundObject._leaves)
-                {
-                    if (VARIABLE._number == find)
-                    {
-                        Debug.WriteLine(VARIABLE._number + " : " +VARIABLE._description);
-                    }
-                } 
-            }
             
+            return _root.ReturnObjectLeaf(find);
+        }
+
+        public DeweyObject ReturnTop(int num)
+        {
+            for (int i = 0; i < _offHun.Count; i++)
+            {
+                if (_offHun.ElementAt(i)._number == num / 100 * 100)
+                {
+                    return _offHun.ElementAt(i);
+                }
+            }
+
+            return new DeweyObject(0, "0");
         }
     }
 }

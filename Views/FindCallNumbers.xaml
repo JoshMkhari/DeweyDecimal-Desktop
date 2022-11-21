@@ -7,7 +7,19 @@
              mc:Ignorable="d"
              d:DesignHeight="460" d:DesignWidth="800"
              Background="#f6efe7">
-    <Canvas>
+    <Canvas Name="CanvasFindCallNumbers">
+        <TextBlock Text="Quiz time"
+                   Foreground="Black"
+                   FontSize="50"
+                   Canvas.Left="94"
+                   Canvas.Top="27"/>
+
+        <TextBlock Text="Colour"
+                   Foreground="Red"
+                   FontSize="25"
+                   Canvas.Left="156"
+                   Canvas.Top="154"
+                   Name="TextBlockQuestion"/>
         
     </Canvas>
 </UserControl>

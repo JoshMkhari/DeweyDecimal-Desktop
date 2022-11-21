@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
 {
@@ -10,6 +11,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
         public Node(DeweyObject data)
         {
             _data = data;
+            
         }
 
         public void Insert(DeweyObject value)
@@ -44,7 +46,7 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             }
         }
         
-        public DeweyObject ReturnObject(int num)
+        public DeweyObject ReturnObjectLeaf(int num)
         {
             Debug.WriteLine("This is current num " + _data._number);
             if (num == _data._number || (num>_data._number && num<_data._number+25))
@@ -54,10 +56,10 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
             if (num < _data._number)
             {
                 Debug.WriteLine("we going left ");
-                return _left.ReturnObject(num);
+                return _left.ReturnObjectLeaf(num);
             }
             Debug.WriteLine("we going right ");
-            return _right.ReturnObject(num);
+            return _right.ReturnObjectLeaf(num);
         }
 
         public void PrintInOrder()

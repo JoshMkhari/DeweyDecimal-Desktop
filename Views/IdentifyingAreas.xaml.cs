@@ -48,7 +48,7 @@ namespace JoshMkhariPROG7312Game.Views
 
             _gameMode = 1;
             _numBasketBallsAvailable = 4; 
-            _hexagonModel = new HexagonModel();
+            _hexagonModel = new HexagonModel(1);
             _aimSet = false;
             _ballChosen = false;
             //https://stackoverflow.com/questions/51594536/add-a-textbox-to-a-wpf-canvas-programmatically
