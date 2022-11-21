@@ -199,7 +199,6 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
         public DeweyObject ReturnMid(int num)
         {
             num -= num % 10;
-            MessageBox.Show("New mnid " + num);
             for (int i = 0; i < _offTen.Count; i++)
             {
                 if (_offTen.ElementAt(i)._number ==num )
