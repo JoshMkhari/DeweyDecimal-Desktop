@@ -148,6 +148,7 @@ namespace JoshMkhariPROG7312Game.Views
             {
                 if (_boolOnMid)
                 {
+                    MessageBox.Show("Both correct");
                     GenerateQuestion();
                 }
                 else
