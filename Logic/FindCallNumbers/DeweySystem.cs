@@ -193,5 +193,18 @@ namespace JoshMkhariPROG7312Game.Logic.FindCallNumbers
 
             return new DeweyObject(0, "0");
         }
+        
+        public DeweyObject ReturnMid(int num)
+        {
+            for (int i = 0; i < _offHun.Count; i++)
+            {
+                if (_offTen.ElementAt(i)._number == num / 110 * 100)
+                {
+                    return _offHun.ElementAt(i);
+                }
+            }
+
+            return new DeweyObject(0, "0");
+        }
     }
 }

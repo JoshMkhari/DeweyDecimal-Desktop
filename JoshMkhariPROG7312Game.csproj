@@ -61,6 +61,7 @@
     <Compile Include="Logic\FindCallNumbers\DeweyObject.cs" />
     <Compile Include="Logic\FindCallNumbers\DeweySystem.cs" />
     <Compile Include="Logic\FindCallNumbers\Node.cs" />
+    <Compile Include="Logic\FindCallNumbers\ShuffleClass.cs" />
     <Compile Include="Logic\Home\TextBlockModel.cs" />
     <Compile Include="Logic\Identifying Areas\BasketBallModel.cs" />
     <Compile Include="Logic\Identifying Areas\HexagonModel.cs" />
