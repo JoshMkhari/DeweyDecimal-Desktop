@@ -58,6 +58,10 @@
     <Compile Include="Core\ObservableObjects.cs" />
     <Compile Include="Core\RelayCOmmand.cs" />
     <Compile Include="Logic\ColoursModel.cs" />
+    <Compile Include="Logic\FindCallNumbers\DeweyObject.cs" />
+    <Compile Include="Logic\FindCallNumbers\DeweySystem.cs" />
+    <Compile Include="Logic\FindCallNumbers\Node.cs" />
+    <Compile Include="Logic\FindCallNumbers\ShuffleClass.cs" />
     <Compile Include="Logic\Home\TextBlockModel.cs" />
     <Compile Include="Logic\Identifying Areas\BasketBallModel.cs" />
     <Compile Include="Logic\Identifying Areas\HexagonModel.cs" />
@@ -68,10 +72,14 @@
     <Compile Include="Logic\Replacing Books\LabelsModel.cs" />
     <Compile Include="Logic\Replacing Books\PreSetDifficulty.cs" />
     <Compile Include="Logic\Replacing Books\RectangleModel.cs" />
+    <Compile Include="ViewModels\FindCallNumbersViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\IdentifyingAreasViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ReplaceBooksViewModel.cs" />
+    <Compile Include="Views\FindCallNumbers.xaml.cs">
+      <DependentUpon>FindCallNumbers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
@@ -97,6 +105,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\FindCallNumbers.xaml" />
     <Page Include="Views\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -217,6 +226,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Theme\Assets\idenAreasClickable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Logic\FindCallNumbers\MySystem.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
